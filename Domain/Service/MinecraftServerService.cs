@@ -4,5 +4,7 @@ namespace SteveLauncher.Domain.Service;
 
 [Transient]
 public class MinecraftServerService {
-    
+    public MinecraftServerService() {
+        
+    }
 }

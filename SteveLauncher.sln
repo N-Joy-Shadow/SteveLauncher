@@ -5,8 +5,6 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SteveLauncher", "SteveLauncher.csproj", "{71DEA1F1-0A41-4AF5-9476-E5C07AC3998B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SteveLauncher.Tests", "..\SteveLauncher.Tests\SteveLauncher.Tests.csproj", "{B7A54EFE-D73A-4350-996E-2862F296EE9F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McLib", "..\McLib\McLib\McLib.csproj", "{E0019B10-2EE6-40CE-A8F8-9E5501091D0E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMotd", "..\McMotd.Net\McMotd\McMotd.csproj", "{243CBA12-9DE9-433E-AA70-658B7DAFC98E}"

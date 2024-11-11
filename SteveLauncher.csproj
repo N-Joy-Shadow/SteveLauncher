@@ -123,8 +123,6 @@
 	  <Folder Include="Data\RepositoryImpl\" />
 	  <Folder Include="Domain\Entity\" />
 	  <Folder Include="Extension\" />
-	  <Folder Include="Views\Components\" />
-	  <Folder Include="Views\Home\Cell\" />
 	</ItemGroup>
 
 	<PropertyGroup Label="MauiAppAccelerator">
