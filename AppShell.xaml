@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SteveLauncher.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SteveLauncher"
+    xmlns:views="clr-namespace:SteveLauncher.Views"
+    xmlns:home="clr-namespace:SteveLauncher.Views.Home"
+    NavBarIsVisible="False" FlyoutBehavior="{OnIdiom Phone=Disabled, Default=Locked}">
+
+    <!-- <FlyoutItem Title="Home" Icon="tab_home.png"> -->
+    <!--     <ShellContent ContentTemplate="{DataTemplate views:ExampleMaterialFontUsagePage}" Title="hi3"/> -->
+    <!-- </FlyoutItem> -->
+    <!-- <FlyoutItem Title="Favorites" Icon="tab_favorites.png"> -->
+    <!--     <ShellContent ContentTemplate="{DataTemplate views:LocalizationPage}" Title="hi2"/> -->
+    <!-- </FlyoutItem> -->
+    <!-- <FlyoutItem Title="Map" Icon="tab_map.png"> -->
+    <!--     <ShellContent ContentTemplate="{DataTemplate home:MainPage}" Title="hi"/> -->
+    <!-- </FlyoutItem> -->
+    <!-- -->
+    <!-- -->
+    <!-- <TabBar IsVisible="{OnIdiom Phone=Enable}"> -->
+    <!--     <ShellContent -->
+    <!--         Title="Main" -->
+    <!--         ContentTemplate="{DataTemplate home:MainPage}" -->
+    <!--         Icon="iconblank.png" /> -->
+    <!--     <ShellContent -->
+    <!--         Title="ExampleMaterialFontUsage" -->
+    <!--         ContentTemplate="{DataTemplate views:ExampleMaterialFontUsagePage}" -->
+    <!--         Icon="iconmaterial.png" /> -->
+    <!--     <ShellContent -->
+    <!--         Title="Lottie" -->
+    <!--         ContentTemplate="{DataTemplate views:LottiePage}" -->
+    <!--         Icon="iconlottie.png" /> -->
+    <!--     <ShellContent -->
+    <!--         Title="Localization" -->
+    <!--         ContentTemplate="{DataTemplate views:LocalizationPage}" -->
+    <!--         Icon="iconlocalization.png" /> -->
+    <!-- </TabBar> -->
+</Shell>
