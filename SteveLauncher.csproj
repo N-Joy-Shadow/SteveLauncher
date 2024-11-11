@@ -95,6 +95,7 @@
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="UraniumUI" Version="2.10.2" />
+		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.10.2" />
 		<PackageReference Include="UraniumUI.Material" Version="2.10.2" />
 	</ItemGroup>
 	
@@ -117,12 +118,16 @@
 
 
 	<ItemGroup>
-	  <Folder Include="API\Repository\" />
-	  <Folder Include="Data\Database\" />
 	  <Folder Include="Data\Network\" />
 	  <Folder Include="Data\RepositoryImpl\" />
-	  <Folder Include="Domain\Entity\" />
 	  <Folder Include="Extension\" />
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+	  <ProjectReference Include="..\McLib\McLib\McLib.csproj" />
+	  <ProjectReference Include="..\McMotd.Net\McMotd\McMotd.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup Label="MauiAppAccelerator">
