@@ -1,4 +1,8 @@
-﻿using Microsoft.Maui.LifecycleEvents;
+﻿using McLib.API.Services;
+using McLib.Service;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Maui.LifecycleEvents;
+using SteveLauncher.Data.Database;
 using UraniumUI;
 
 namespace SteveLauncher;
@@ -14,6 +18,8 @@ public static class MauiProgram
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
 			.UseSkiaSharp()
+			.UsePageResolver(true)
+			.UseAutodependencies()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialSymbol");
@@ -21,34 +27,14 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddMaterialIconFonts();
 			});
-		builder.Services.UsePageResolver();
-		
-		
-#if WINDOWS
-    builder.ConfigureLifecycleEvents(events =>
-    {
-        events.AddWindows(windows =>
-        {
-            windows.OnWindowCreated(window =>
-            {
-                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hwnd));
-                
-                // 타이틀 바 커스터마이징
-                if (appWindow != null)
-                {
-                    var titleBar = appWindow.TitleBar;
-                    
-                    // 타이틀 바 숨기기
-                    titleBar.ExtendsContentIntoTitleBar = true;
-                    titleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
-                    titleBar.ButtonInactiveBackgroundColor = Microsoft.UI.Colors.Transparent;
-                }
-            });
-        });
-    });
-#endif
 
+		builder.Services.AddDbContext<SteveDbContext>(options => {
+			options.UseSqlite($"Data Source={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "steveLauncher.db")}");
+		});
+
+		builder.Services.AddScoped<IDnsCheckService,DnsCheckService>();
+		builder.Services.AddScoped<IMcStatusRequestService,McStatusRequestService>();
+		
 		return builder.Build();
 	}
 }

@@ -3,5 +3,26 @@
 namespace SteveLauncher.Data.Database;
 
 public class SteveDbContext: DbContext {
-    DbSet<LocalServerListDatabase> LocalServerList { get; set; }
+    #region constructor
+    public SteveDbContext(DbContextOptions<SteveDbContext> options)
+        : base(options) {
+        SQLitePCL.Batteries_V2.Init();
+        this.Database.EnsureCreated();
+    }
+    public SteveDbContext() {
+        SQLitePCL.Batteries_V2.Init();
+        this.Database.EnsureCreated();
+    }
+    #endregion
+    
+    public DbSet<LocalServerListDatabase> LocalServerList { get; set; }
+    
+    
+    #region overriding method
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite($"Filename={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "steveLauncher.db")}");
+    }
+    #endregion
+
 }
