@@ -20,11 +20,10 @@ public partial class HomeViewModel : BaseViewModel {
     }
 
     //TODO: 최적화 필요 4개 있으니 ㅈㄴ 느림
-    public async Task LoadServerStatusAsync() {
-        foreach (var info in await this.serverService.GetServerStatusList()) {
+    public void LoadServerStatusAsync() {
+        foreach (var info in this.serverService.GetServerStatusList()) {
             ServerStatusList.Add(info);
         }
-
     }
 
     [RelayCommand]

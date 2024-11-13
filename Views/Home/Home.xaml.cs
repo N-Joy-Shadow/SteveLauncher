@@ -16,7 +16,7 @@ public partial class Home : ContentPage {
     }
 
 
-    private async void Home_OnLoaded(object? sender, EventArgs e) {
-        await vm.LoadServerStatusAsync();
+    private void Home_OnLoaded(object? sender, EventArgs e) {
+        vm.LoadServerStatusAsync();
     }
 }

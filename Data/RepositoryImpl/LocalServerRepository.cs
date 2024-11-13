@@ -17,9 +17,25 @@ public class LocalServerRepository: ILocalServerListRepository {
             x.HostName, x.Port, x.SRVHostName, x.SRVPort)).ToList();
     }
 
-    public Task<bool> AddServer(MinecraftURL server) {
-        throw new NotImplementedException();
+    public async Task<bool> AddServer(MinecraftHost host) {
+        try {
+            this.context.LocalServerList.Add(new LocalServerListDatabase() {
+                HostName = host.Host.HostName,
+                Port = host.Host.Port,
+                SRVHostName = host.SRVHost.HostName,
+                SRVPort = host.SRVHost.Port
+            });
+
+            this.context.SaveChanges();
+            return true;
+        }
+        catch (Exception E) {
+            //TODO: 예외 만들기
+        }
+
+        return false;
     }
+    
 
     public Task<bool> RemoveServer(MinecraftURL server) {
         throw new NotImplementedException();

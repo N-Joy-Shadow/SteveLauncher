@@ -1,4 +1,6 @@
 ﻿using Maui.Plugins.PageResolver.Attributes;
+using McLib.API.Services;
+using McLib.Model.Network.Dns;
 using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
 using SteveLauncher.Domain.Entity;
@@ -8,18 +10,21 @@ namespace SteveLauncher.Domain.Service;
 public class MinecraftServerService: IMinecraftServerService {
     private readonly IMinecraftServerStatusRepository serverRepository;
     private readonly ILocalServerListRepository localServerListRepository;
+    private readonly IDnsCheckService dnsService;
     public MinecraftServerService(
         ILocalServerListRepository localServerListRepository,
-        IMinecraftServerStatusRepository serverRepository) {
+        IMinecraftServerStatusRepository serverRepository,
+        IDnsCheckService dnsService) {
         this.serverRepository = serverRepository;
         this.localServerListRepository = localServerListRepository;
+        this.dnsService = dnsService;
     }
 
-    public async Task<List<MinecraftServerInfo>> GetServerStatusList() {
+    public List<MinecraftServerInfo> GetServerStatusList() {
         var result = new List<MinecraftServerInfo>();
         var list = localServerListRepository.GetServerList();
         foreach (var host in list) {
-            var info = await serverRepository.FetchServer(host.SRVHost);
+            var info = serverRepository.FetchServer(host);
             result.Add(new () {
                 isOnline = info.ServerUpdatable.isOnline,
                 Motd = info.ServerUpdatable.Motd,
@@ -47,5 +52,10 @@ public class MinecraftServerService: IMinecraftServerService {
         }
 
         return true;
+    }
+
+    public async Task<bool> RegisterServer(MinecraftURL hostname) {
+        var srv = await this.dnsService.executeAsync(hostname);
+        return await this.localServerListRepository.AddServer(new (hostname,srv));
     }
 }

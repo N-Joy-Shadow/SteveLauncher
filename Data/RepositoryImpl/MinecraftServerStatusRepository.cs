@@ -2,6 +2,7 @@
 using McLib.Model.Network.Dns;
 using McLib.Model.Network.Mc;
 using SteveLauncher.API.Repository;
+using SteveLauncher.Domain.Entity;
 
 namespace SteveLauncher.Data.RepositoryImpl;
 
@@ -13,9 +14,8 @@ public class MinecraftServerStatusRepository: IMinecraftServerStatusRepository {
         IDnsCheckService dnsCheckService
         ) {
         this.mcStatusRequestService = mcStatusRequestService;
-        this.dnsCheckService = dnsCheckService;
     }
-    public async Task<McServerInfo> FetchServer(MinecraftURL hostname) {
-        return await this.mcStatusRequestService.excuteAsync(hostname);
+    public McServerInfo FetchServer(MinecraftHost hostname) {
+        return this.mcStatusRequestService.executeWithSRVAsync(hostname.Host,hostname.SRVHost);
     }
 }

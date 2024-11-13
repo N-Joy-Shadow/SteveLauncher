@@ -5,7 +5,7 @@ namespace SteveLauncher.API.Repository;
 
 public interface ILocalServerListRepository {
     public List<MinecraftHost> GetServerList();
-    public Task<bool> AddServer(MinecraftURL server);
+    public Task<bool> AddServer(MinecraftHost host);
     public Task<bool> RemoveServer(MinecraftURL server);
     public Task<MinecraftHost> FindServer(string server);
 }
