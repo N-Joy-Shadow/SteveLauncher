@@ -8,6 +8,7 @@
     xmlns:type="using:SteveLauncher.Domain.Entity"
     xmlns:component="using:SteveLauncher.Views.Components"
     xmlns:vm="using:SteveLauncher.Views.Home"
+    x:Name="HomeView"
     Loaded="Home_OnLoaded"
     x:DataType="vm:HomeViewModel">
     <Grid>
@@ -29,10 +30,15 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Column="0" RefreshAllowed="False" ItemsSource="{Binding ServerStatusList}" >
+            <ListView Grid.Column="0" RefreshAllowed="True" ItemsSource="{Binding ServerStatusList}"
+                      Margin="20,0">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="type:MinecraftServerInfo">
-                        <cell:ServerListCell BindingContext="{Binding }" />
+                        <cell:ServerListCell BindingContext="{Binding }" 
+                                              CommandParameter="{Binding}"
+                                              DeleteCommand="{Binding Source={x:Reference HomeView},Path=BindingContext.DeleteServerCommand}"
+                                              TappedCommand="{Binding Source={x:Reference HomeView},Path=BindingContext.GetServerInfoCommand}"/>
+                        
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

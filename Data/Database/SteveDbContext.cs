@@ -28,7 +28,8 @@ public class SteveDbContext: DbContext {
         base.OnModelCreating(modelBuilder);
 #if DEBUG
         modelBuilder.Entity<LocalServerListDatabase>().HasData(
-            new LocalServerListDatabase() { Id = 1, HostName = "mc.hypixel.net", Port = 25565, SRVHostName = "mc.hypixel.net",SRVPort = 25565}
+            new LocalServerListDatabase() { Id = 1, HostName = "mc.hypixel.net", Port = 25565, SRVHostName = "mc.hypixel.net",SRVPort = 25565},
+            new LocalServerListDatabase() { Id = 4, HostName = "hub.opblocks.com", Port = 25565, SRVHostName = "hub.opblocks.com",SRVPort = 25565}
             );
 #endif
     }

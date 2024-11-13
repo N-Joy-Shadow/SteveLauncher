@@ -1,8 +1,4 @@
-﻿using CmlLib.Core.Auth.Microsoft;
-using Maui.Plugins.PageResolver.Attributes;
-using XboxAuthNet.Game;
-
-namespace SteveLauncher.Domain.Service;
+﻿namespace SteveLauncher.Domain.Service;
 
 public class MinecraftLoginService {
     private readonly HttpClient client;
@@ -13,8 +9,6 @@ public class MinecraftLoginService {
 
     }
     async Task Login() {
-        var loginHandler = JELoginHandlerBuilder.BuildDefault();
-        var session = await loginHandler.Authenticate();       
-        
+
     }
 }

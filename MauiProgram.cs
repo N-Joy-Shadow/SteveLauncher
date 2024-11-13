@@ -9,9 +9,17 @@ using SteveLauncher.Data.RepositoryImpl;
 using SteveLauncher.Views.Home;
 using SteveLauncher.Views.Login;
 using SteveLauncher.Views.Setting;
-using UIKit;
 using UraniumUI;
 
+#if OSX
+using UIKit
+#endif
+
+#if WINDOWS
+    using Microsoft.UI;
+    using Microsoft.UI.Windowing;
+    using Windows.Graphics;
+#endif
 namespace SteveLauncher;
 
 public static class MauiProgram
@@ -59,21 +67,27 @@ public static class MauiProgram
 		builder.Services.AddSingleton<ILocalServerListRepository, LocalServerRepository>();
 		builder.Services.AddSingleton<IMinecraftServerStatusRepository, MinecraftServerStatusRepository>();
 
-
+#if OSX
 		builder.ConfigureLifecycleEvents(events => {
-#if MACCATALYST
 			events.AddiOS(osx => {
 				osx.SceneWillConnect(SceneWillConnectDelegate);
 			});
-#elif WINDOWS
-
-#endif
-
 		});
+#elif WINDOWS
+		builder.ConfigureLifecycleEvents(events => {
+			events.AddWindows(windowEvent => {
+				windowEvent.OnWindowCreated(window => {
+					window.ExtendsContentIntoTitleBar = true;
+					window.Title = "SteveLauncher";
+					window.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+				});
+			});
+		});
+#endif
 		
 		return builder.Build();
 	}
-
+#if OSX
 	private static void SceneWillConnectDelegate(UIScene scene, UISceneSession session, UISceneConnectionOptions connectionoptions) {
 		if (scene is UIWindowScene windowScene) {
 			if (windowScene.Titlebar != null) {
@@ -82,4 +96,5 @@ public static class MauiProgram
 			}
 		}
 	}
+#endif
 }

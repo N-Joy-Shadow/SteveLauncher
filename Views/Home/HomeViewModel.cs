@@ -12,31 +12,28 @@ public partial class HomeViewModel : BaseViewModel {
     public ObservableCollection<MinecraftServerInfo> serverStatusList = new();
     
     private readonly IMinecraftServerService serverService;
-    private readonly SteveDbContext context;
     public HomeViewModel(
-        IMinecraftServerService minecraftServerService,
-        SteveDbContext context
+        IMinecraftServerService minecraftServerService
         ) {
-        this.context = context;
         this.serverService = minecraftServerService;
         
     }
 
+    //TODO: 최적화 필요 4개 있으니 ㅈㄴ 느림
     public async Task LoadServerStatusAsync() {
         foreach (var info in await this.serverService.GetServerStatusList()) {
-            serverStatusList.Add(info);
-            
+            ServerStatusList.Add(info);
         }
+
     }
 
     [RelayCommand]
-    async Task GetServerInfo() {
-        
+    async Task GetServerInfo(MinecraftServerInfo serverInfo) {
+        Debug.WriteLine(serverInfo.Motd.ToString());
     }
 
     [RelayCommand]
-    async Task DeleteServer() {
-    //    this.serverService.DeleteServer(serverInfo);
-    //    serverStatusList.Remove(serverInfo);
+    async Task DeleteServer(MinecraftServerInfo serverInfo) {
+        Debug.WriteLine(serverInfo.Motd.ToString());
     }
 }
