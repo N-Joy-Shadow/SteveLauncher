@@ -13,12 +13,9 @@ public class MinecraftServerStatusRepository: IMinecraftServerStatusRepository {
         IDnsCheckService dnsCheckService
         ) {
         this.mcStatusRequestService = mcStatusRequestService;
+        this.dnsCheckService = dnsCheckService;
     }
-    public async Task<McServerInfo> fetchServer(MinecraftURL hostname) {
-        MinecraftURL SRVHostName = await  dnsCheckService.excuteAsync(hostname); 
-        
+    public async Task<McServerInfo> FetchServer(MinecraftURL hostname) {
         return await this.mcStatusRequestService.excuteAsync(hostname);
-        
-        
     }
 }

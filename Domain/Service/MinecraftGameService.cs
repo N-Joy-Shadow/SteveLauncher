@@ -1,8 +1,8 @@
-﻿using Maui.Plugins.PageResolver.Attributes;
+﻿using SteveLauncher.API.Service;
 
 namespace SteveLauncher.Domain.Service;
 
-[Transient]
-public class MinecraftGameService {
+public class MinecraftGameService: IMinecraftGameService {
     
 }
+

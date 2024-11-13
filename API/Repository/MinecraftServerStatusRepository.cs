@@ -4,5 +4,5 @@ using McLib.Model.Network.Mc;
 namespace SteveLauncher.API.Repository;
 
 public interface IMinecraftServerStatusRepository {
-     Task<McServerInfo> fetchServer(MinecraftURL hostname);
+     Task<McServerInfo> FetchServer(MinecraftURL hostname);
 }

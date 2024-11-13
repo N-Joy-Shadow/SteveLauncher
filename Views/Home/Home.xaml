@@ -1,47 +1,48 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="SteveLauncher.Views.Home.Home"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:cell="using:SteveLauncher.Views.Home.Cell"
-    xmlns:component="using:SteveLauncher.Views.Components">
+    xmlns:type="using:SteveLauncher.Domain.Entity"
+    xmlns:component="using:SteveLauncher.Views.Components"
+    xmlns:vm="using:SteveLauncher.Views.Home"
+    Loaded="Home_OnLoaded"
+    x:DataType="vm:HomeViewModel">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="75" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="75" />
         </Grid.RowDefinitions>
-        
+
         <!--네비게이션 바-->
         <StackLayout Grid.Row="0" Margin="8">
-            <component:NavigationView/>
-            <BoxView StyleClass="Divider"/>
+            <component:NavigationView />
+            <BoxView StyleClass="Divider" />
         </StackLayout>
-        
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
-            <ListView Grid.Column="0" RefreshAllowed="False" ItemsSource="{Binding }">
+
+            <ListView Grid.Column="0" RefreshAllowed="False" ItemsSource="{Binding ServerStatusList}" >
                 <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <cell:ServerListCell/>
-                        </ViewCell>
+                    <DataTemplate x:DataType="type:MinecraftServerInfo">
+                        <cell:ServerListCell BindingContext="{Binding }" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        
-        
-        
+
+
         <!--프로그래스 바 및 시작 버튼-->
-        <StackLayout  Grid.Row="2" Orientation="Horizontal">
-            <ProgressBar Height="4" Width="100"/>
-            <Button Text="게임 시작"/>
+        <StackLayout Grid.Row="2" Orientation="Horizontal">
+            <ProgressBar Height="4" Width="100" />
+            <Button Text="게임 시작" />
         </StackLayout>
     </Grid>
 </ContentPage>

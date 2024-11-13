@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Views;
 
-namespace SteveLauncher.Views.Home.Cell;
+namespace SteveLauncher.Views.Login;
 
-public partial class ServerListCell : ViewCell {
-    public ServerListCell() {
+public partial class Login : Popup {
+    public Login() {
         InitializeComponent();
     }
 }

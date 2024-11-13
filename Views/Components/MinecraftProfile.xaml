@@ -5,7 +5,7 @@
              x:Class="SteveLauncher.Views.Components.MinecraftProfile">
     <StackLayout Orientation="Horizontal" VerticalOptions="Center">
         <Button StyleClass="OutlinedButton" Text="로그인"/>
-        <Image Source="https://crafthead.net/avatar/d61967c50f784faea6b6fd6e2115b599"/>
+        <Image Source="https://crafthead.net/avatar/d61967c50f784faea6b6fd6e2115b599" WidthRequest="40" Height="40"/>
         <Label Text="NJoyShadow"/>
     </StackLayout>
 </ContentView>

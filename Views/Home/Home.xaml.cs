@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 namespace SteveLauncher.Views.Home;
 
 public partial class Home : ContentPage {
-    public Home(MainViewModel viewModel) {
+    private readonly HomeViewModel vm;
+    public Home(HomeViewModel viewModel) {
         InitializeComponent();
         BindingContext = viewModel;
+        this.vm = viewModel;
+    }
+
+
+    private async void Home_OnLoaded(object? sender, EventArgs e) {
+        await vm.LoadServerStatusAsync();
     }
 }

@@ -4,7 +4,7 @@ using McMotd;
 
 namespace SteveLauncher.Domain.Entity;
 
-public class Server {
+public class MinecraftServerInfo {
     public bool isOnline { get; set; }
     public Motd Motd { get; set; }
     public string Icon { get; set; }
@@ -17,5 +17,4 @@ public class Server {
 public class MinecraftPlayer {
     public int Max { get; set; }
     public int Currnet { get; set; }
-    public List<McPlayer> Players { get; set; }
 }

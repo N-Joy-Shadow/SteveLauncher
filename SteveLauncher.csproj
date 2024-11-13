@@ -84,6 +84,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CmlLib.Core" Version="4.0.3" />
+		<PackageReference Include="CmlLib.Core.Auth.Microsoft" Version="3.2.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.3.2" />
 		<PackageReference Include="Goldie.MauiPlugins.PageResolver" Version="2.5.0" />
@@ -92,6 +93,7 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />

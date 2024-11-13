@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ViewCell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SteveLauncher.Views.Home.Cell.ServerListCell">
+             xmlns:type="using:SteveLauncher.Domain.Entity"
+             x:Class="SteveLauncher.Views.Home.Cell.ServerListCell"
+             x:DataType="type:MinecraftServerInfo">
     <FlexLayout>
-        
+        <FlyoutBase.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="서버 삭제"/>
+                                <!--Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=DeleteServerCommand}" />-->
+            </MenuFlyout>
+        </FlyoutBase.ContextFlyout>
+        <VerticalStackLayout>
+            <!-- <Image WidthRequest="64" HeightRequest="64" Source="{Binding Icon}"/> -->
+            
+            <FlexLayout AlignContent="SpaceBetween">
+                    <Label Text="{Binding HostName.HostName}"/>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding PlayerInfo.Currnet}"></Span>
+                                <Span Text=" / "></Span>
+                                <Span Text="{Binding PlayerInfo.Max}"></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+            </FlexLayout>
+        </VerticalStackLayout>
     </FlexLayout>
-</ContentView>
+</ViewCell>
