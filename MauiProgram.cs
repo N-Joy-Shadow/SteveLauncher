@@ -6,13 +6,15 @@ using SteveLauncher.Data.Database;
 using Microsoft.Extensions.Logging;
 using SteveLauncher.API.Repository;
 using SteveLauncher.Data.RepositoryImpl;
+using SteveLauncher.Utils.Popups;
 using SteveLauncher.Views.Home;
+using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Login;
 using SteveLauncher.Views.Setting;
 using UraniumUI;
 
-#if OSX
-using UIKit
+#if MACCATALYST
+using UIKit;
 #endif
 
 #if WINDOWS
@@ -56,18 +58,28 @@ public static class MauiProgram
 #endif
 		});
 
+		//external services
 		builder.Services.AddSingleton<IDnsCheckService,DnsCheckService>();
 		builder.Services.AddSingleton<IMcStatusRequestService,McStatusRequestService>();
 		
+		//Views
 		builder.Services.AddSingleton<Home>();
-		builder.Services.AddSingleton<Setting>();
-		builder.Services.AddSingleton<Login>();
+		
+		
+		//Popup
+		builder.Services.AddTransientPopup<RegisterServerPopup,RegisterServerPopupViewModel>();
+		builder.Services.AddTransientPopup<Setting,SettingViewModel>();
+		builder.Services.AddSingleton<Login,LoginViewModel>();
 
+		//Repositories
 		builder.Services.AddSingleton<IMinecraftLoginRepository, MinecraftLoginRepository>();
 		builder.Services.AddSingleton<ILocalServerListRepository, LocalServerRepository>();
 		builder.Services.AddSingleton<IMinecraftServerStatusRepository, MinecraftServerStatusRepository>();
+		
+		//misc
+		builder.Services.AddSingleton<PopupSizeConstants>();
 
-#if OSX
+#if MACCATALYST
 		builder.ConfigureLifecycleEvents(events => {
 			events.AddiOS(osx => {
 				osx.SceneWillConnect(SceneWillConnectDelegate);
@@ -87,7 +99,7 @@ public static class MauiProgram
 		
 		return builder.Build();
 	}
-#if OSX
+#if MACCATALYST
 	private static void SceneWillConnectDelegate(UIScene scene, UISceneSession session, UISceneConnectionOptions connectionoptions) {
 		if (scene is UIWindowScene windowScene) {
 			if (windowScene.Titlebar != null) {

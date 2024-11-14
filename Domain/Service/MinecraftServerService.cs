@@ -11,6 +11,7 @@ public class MinecraftServerService: IMinecraftServerService {
     private readonly IMinecraftServerStatusRepository serverRepository;
     private readonly ILocalServerListRepository localServerListRepository;
     private readonly IDnsCheckService dnsService;
+    
     public MinecraftServerService(
         ILocalServerListRepository localServerListRepository,
         IMinecraftServerStatusRepository serverRepository,
@@ -56,6 +57,9 @@ public class MinecraftServerService: IMinecraftServerService {
 
     public async Task<bool> RegisterServer(MinecraftURL hostname) {
         var srv = await this.dnsService.executeAsync(hostname);
-        return await this.localServerListRepository.AddServer(new (hostname,srv));
+        var result = serverRepository.FetchServer(new MinecraftHost(srv,hostname));
+        if(result.ServerUpdatable.isOnline)
+            return await this.localServerListRepository.AddServer(new (hostname,srv));
+        return false;
     }
 }

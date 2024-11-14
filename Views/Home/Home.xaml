@@ -8,6 +8,7 @@
     xmlns:type="using:SteveLauncher.Domain.Entity"
     xmlns:component="using:SteveLauncher.Views.Components"
     xmlns:vm="using:SteveLauncher.Views.Home"
+    xmlns:homecomponent="using:SteveLauncher.Views.Home.Components"
     x:Name="HomeView"
     Loaded="Home_OnLoaded"
     x:DataType="vm:HomeViewModel">
@@ -31,7 +32,8 @@
             </Grid.ColumnDefinitions>
 
             <ListView Grid.Column="0" RefreshAllowed="True" ItemsSource="{Binding ServerStatusList}"
-                      Margin="20,0">
+                      RowHeight="120"
+                      Margin="20,10">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="type:MinecraftServerInfo">
                         <cell:ServerListCell BindingContext="{Binding }" 
@@ -41,7 +43,16 @@
                         
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.Header>
+                    <FlexLayout JustifyContent="SpaceBetween" VerticalOptions="Center">
+                        <Label Text="서버"/>
+                        <Button Text="설정" Command="{Binding ShowRegisterPopupCommand}"/>
+                    </FlexLayout>
+                </ListView.Header>
             </ListView>
+            <Frame Grid.Column="1">
+                <homecomponent:ServerInfoView BindingContext="{Binding SelectedServerInfo}"/>
+            </Frame>
         </Grid>
 
 
