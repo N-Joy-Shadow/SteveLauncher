@@ -3,6 +3,7 @@ using Maui.Plugins.PageResolver.Attributes;
 using SteveLauncher.API.Service;
 using SteveLauncher.Data.Database;
 using SteveLauncher.Domain.Entity;
+using SteveLauncher.Utils;
 using SteveLauncher.Views.Home.Popups;
 
 namespace SteveLauncher.Views.Home;
@@ -10,32 +11,41 @@ namespace SteveLauncher.Views.Home;
 public partial class HomeViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
     private readonly IPopupService popupService;
-    
-    [ObservableProperty]
-    public ObservableCollection<MinecraftServerInfo> serverStatusList = new();
 
-    [ObservableProperty]
-    private MinecraftServerInfo? selectedServerInfo = null;
+    [ObservableProperty] private RangeObservableCollection<MinecraftServerInfo> serverStatusList = new();
+
+    //바인딩 안해도 됨
+    [ObservableProperty] private bool isLoading = true;
+
+    [ObservableProperty] private MinecraftServerInfo? selectedServerInfo = null;
     public event Action<MinecraftServerInfo> OnServerInfoChange;
-    
+
     public HomeViewModel(
         IMinecraftServerService minecraftServerService,
         IPopupService popupService
-        ) {
+    ) {
         this.serverService = minecraftServerService;
         this.popupService = popupService;
     }
 
-    //TODO: 최적화 필요 4개 있으니 ㅈㄴ 느림
-    public void LoadServerStatusAsync() {
-        foreach (var info in this.serverService.GetServerStatusList()) {
-            ServerStatusList.Add(info);
+    public async void LoadServerStatusAsync() {
+        try {
+            var serverStatusList = await Task.Run(() => serverService.GetServerStatusList());
+            this.ServerStatusList.Clear();
+            this.ServerStatusList.AddRange(serverStatusList);
+
+        }
+        catch (Exception e) {
+            Debug.WriteLine(e);
+        }
+        finally {
+            IsLoading = false;
         }
     }
 
     [RelayCommand]
     async Task GetServerInfo(MinecraftServerInfo serverInfo) {
-        selectedServerInfo = serverInfo;
+        SelectedServerInfo = serverInfo;
         OnServerInfoChange.Invoke(serverInfo);
     }
 
@@ -46,6 +56,6 @@ public partial class HomeViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task ShowRegisterPopup() {
-        this.popupService.ShowPopup<RegisterServerPopupViewModel>();
+        popupService.ShowPopup<RegisterServerPopupViewModel>();
     }
 }

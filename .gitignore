@@ -3,4 +3,4 @@ obj/*
 
 .vscode/*
 .idea/*
-.vs/*
+.vs/*!/Views/Home/Cell/ServerListCell.xaml.cs

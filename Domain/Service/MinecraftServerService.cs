@@ -21,7 +21,7 @@ public class MinecraftServerService: IMinecraftServerService {
         this.dnsService = dnsService;
     }
 
-    public List<MinecraftServerInfo> GetServerStatusList() {
+    public ICollection<MinecraftServerInfo> GetServerStatusList() {
         var result = new List<MinecraftServerInfo>();
         var list = localServerListRepository.GetServerList();
         foreach (var host in list) {

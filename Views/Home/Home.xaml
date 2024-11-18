@@ -31,27 +31,33 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Column="0" RefreshAllowed="True" ItemsSource="{Binding ServerStatusList}"
-                      RowHeight="120"
-                      Margin="20,10">
-                <ListView.ItemTemplate>
+            <CollectionView Grid.Column="0" ItemsSource="{Binding ServerStatusList}"
+                            VerticalOptions="Fill"
+                            HorizontalOptions="Fill"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            Margin="20,10">
+                <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="type:MinecraftServerInfo">
-                        <cell:ServerListCell BindingContext="{Binding }" 
-                                              CommandParameter="{Binding}"
-                                              DeleteCommand="{Binding Source={x:Reference HomeView},Path=BindingContext.DeleteServerCommand}"
-                                              TappedCommand="{Binding Source={x:Reference HomeView},Path=BindingContext.GetServerInfoCommand}"/>
-                        
+                        <cell:ServerListCell BindingContext="{Binding}"
+                                             TappedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GetServerInfoCommand}"
+                                             ContextMenuCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=DeleteServerCommand}" />
+
                     </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.Header>
-                    <FlexLayout JustifyContent="SpaceBetween" VerticalOptions="Center">
-                        <Label Text="서버"/>
-                        <Button Text="설정" Command="{Binding ShowRegisterPopupCommand}"/>
-                    </FlexLayout>
-                </ListView.Header>
-            </ListView>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+                    <!--나중에 따로 컴포넌트로 빼기-->
+                    <ContentView>
+                        <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                            <Label Text="Loading..."/>
+                            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}"/> 
+                        </VerticalStackLayout>
+                    </ContentView>
+                </CollectionView.EmptyView>
+                
+            </CollectionView>
             <Frame Grid.Column="1">
-                <homecomponent:ServerInfoView BindingContext="{Binding SelectedServerInfo}"/>
+                <homecomponent:ServerInfoView BindingContext="{Binding SelectedServerInfo}" />
             </Frame>
         </Grid>
 

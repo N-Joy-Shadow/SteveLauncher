@@ -5,25 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SteveLauncher.Domain.Entity;
-
+using SteveLauncher.Extension;
 namespace SteveLauncher.Views.Home.Cell;
 
-public partial class ServerListCell : ViewCell {
-    public static readonly BindableProperty DeleteCommandProperty =
-        BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ServerListCell));
-
+public partial class ServerListCell : ContentView {
     public static readonly BindableProperty TappedCommandProperty =
         BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ServerListCell));
-
-    public static readonly BindableProperty CommandParameterProperty  =
-        BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ServerListCell));
-
     
-    public ICommand DeleteCommand
-    {
-        get => (ICommand)GetValue(DeleteCommandProperty);
-        set => SetValue(DeleteCommandProperty, value);
-    }
+    public static readonly BindableProperty ContextMenuCommandProperty =
+        BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ServerListCell));
 
     
     public ICommand TappedCommand
@@ -31,30 +21,36 @@ public partial class ServerListCell : ViewCell {
         get => (ICommand)GetValue(TappedCommandProperty);
         set => SetValue(TappedCommandProperty, value);
     }
-    
-    public object CommandParameter
+    public ICommand ContextMenuCommand
     {
-        get => GetValue(CommandParameterProperty);
-        set => SetValue(CommandParameterProperty, value);
+        get => (ICommand)GetValue(ContextMenuCommandProperty);
+        set => SetValue(ContextMenuCommandProperty, value);
     }
 
-
+    private MinecraftServerInfo serverInfo; 
     
     public ServerListCell() {
         InitializeComponent();
-        Icon.Source = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(((MinecraftServerInfo)BindingContext).Icon.Split(",")[1])));
         
-        ContextMenu.Clicked += ContextMenuOnClicked;
-        
-        var tapGestureRecognizer = new TapGestureRecognizer();
-        tapGestureRecognizer.Tapped += OnTapped;
-        CellItem.GestureRecognizers.Add(tapGestureRecognizer);    }
+        //별로 마음에 안드는 코드   
+        BindingContextChanged += OnBindingContextChanged;
 
-    private void OnTapped(object? sender, TappedEventArgs e) {
-        TappedCommand.Execute(CommandParameter);
     }
 
-    private void ContextMenuOnClicked(object? sender, EventArgs e) {
-        DeleteCommand.Execute(CommandParameter);
+    private void OnBindingContextChanged(object? sender, EventArgs e) {
+        if(BindingContext is MinecraftServerInfo serverInfo) {
+            this.serverInfo = serverInfo;
+            Icon.Source = ImageSourceExtension.FromBase64(serverInfo.Icon);
+
+        }
+    }
+
+
+    private void OnTapped(object? sender, TappedEventArgs e) {
+        TappedCommand.Execute(serverInfo);
+    }
+
+    private void OnContextMenuClicked(object? sender, EventArgs e) {
+        ContextMenuCommand.Execute(serverInfo);
     }
 }

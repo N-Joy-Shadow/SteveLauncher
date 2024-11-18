@@ -1,44 +1,43 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ViewCell
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView
     x:Class="SteveLauncher.Views.Home.Cell.ServerListCell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:motd="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
     xmlns:type="using:SteveLauncher.Domain.Entity"
-    x:DataType="type:MinecraftServerInfo">
+    x:DataType="type:MinecraftServerInfo" Height="120">
+
     <Frame
+        HeightRequest="120"
         HorizontalOptions="Fill"
         x:Name="CellItem"
         BorderColor="Transparent"
         CornerRadius="20">
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </Frame.GestureRecognizers>
         <FlyoutBase.ContextFlyout>
             <MenuFlyout>
-                <MenuFlyoutItem x:Name="ContextMenu" Text="서버 삭제" />
+                <MenuFlyoutItem x:Name="ContextMenu" Text="서버 삭제" Clicked="OnContextMenuClicked" />
             </MenuFlyout>
         </FlyoutBase.ContextFlyout>
-        <FlexLayout Padding="4" HorizontalOptions="Fill">
+        <FlexLayout Padding="4" HorizontalOptions="Fill" Direction="Row" JustifyContent="SpaceBetween">
             <VerticalStackLayout>
-                <FlexLayout JustifyContent="SpaceBetween" HorizontalOptions="Fill">
-                    <Label Text="{Binding HostName.HostName}" FontAttributes="Bold" FontSize="24" />
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding PlayerInfo.Currnet}" />
-                                <Span Text=" / " />
-                                <Span Text="{Binding PlayerInfo.Max}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </FlexLayout>
+                <Label Text="{Binding HostName.HostName}" FontAttributes="Bold" FontSize="24" />
                 <motd:MotdView Motd="{Binding Motd}" />
             </VerticalStackLayout>
             <AbsoluteLayout>
+                <Label Text="{Binding PlayerInfo.Currnet}" />
                 <Image
-                    AbsoluteLayout.LayoutBounds="1,0.5,0,0"
+                    Opacity="0.5"
+                    AbsoluteLayout.LayoutBounds="0, 0.5, AutoSize, AutoSize"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
                     x:Name="Icon"
                     HeightRequest="120"
                     WidthRequest="120" />
             </AbsoluteLayout>
         </FlexLayout>
     </Frame>
-</ViewCell>
+
+</ContentView>
