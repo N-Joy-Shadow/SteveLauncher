@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Maui.LifecycleEvents;
 using SteveLauncher.Data.Database;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Platform;
 using SteveLauncher.API.Repository;
 using SteveLauncher.Data.RepositoryImpl;
 using SteveLauncher.Utils.Popups;
@@ -19,9 +20,15 @@ using UIKit;
 #endif
 
 #if WINDOWS
-    using Microsoft.UI;
-    using Microsoft.UI.Windowing;
-    using Windows.Graphics;
+using SteveLauncher.WinUI;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using Windows.Graphics;
+using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Xaml.Media;
+using Color = Windows.UI.Color;
+using Colors = Microsoft.UI.Colors;
+
 #endif
 namespace SteveLauncher;
 
@@ -94,9 +101,14 @@ public static class MauiProgram
 		builder.ConfigureLifecycleEvents(events => {
 			events.AddWindows(windowEvent => {
 				windowEvent.OnWindowCreated(window => {
-					window.ExtendsContentIntoTitleBar = true;
-					window.Title = "SteveLauncher";
+					#if WINDOWS10_0_17763_0_OR_GREATER
+					window.SystemBackdrop = new DesktopAcrylicBackdrop();
+					#endif
+					window.AppWindow.Resize(new SizeInt32(1280,720));
 					window.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+					window.AppWindow.Title = "SteveLauncher";
+					window.AppWindow.TitleBar.BackgroundColor = Colors.Black;
+					window.Title = "SteveLauncher";
 				});
 			});
 		});

@@ -11,6 +11,7 @@
     xmlns:homecomponent="using:SteveLauncher.Views.Home.Components"
     x:Name="HomeView"
     Loaded="Home_OnLoaded"
+    BackgroundColor="Transparent"
     x:DataType="vm:HomeViewModel">
     <Grid>
         <Grid.RowDefinitions>
