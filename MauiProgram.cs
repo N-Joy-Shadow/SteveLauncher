@@ -1,4 +1,5 @@
-﻿using McLib.API.Services;
+﻿using DotNet.Meteor.HotReload.Plugin;
+using McLib.API.Services;
 using McLib.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Maui.LifecycleEvents;
@@ -37,6 +38,10 @@ public static class MauiProgram
 			.UseSkiaSharp()
 			.UsePageResolver(true)
 			.UseAutodependencies()
+#if DEBUG
+			.EnableHotReload()
+#endif
+
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialSymbol");
