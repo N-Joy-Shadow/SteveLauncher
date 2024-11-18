@@ -30,7 +30,6 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
             <ListView Grid.Column="0" RefreshAllowed="True" ItemsSource="{Binding ServerStatusList}"
                       RowHeight="120"
                       Margin="20,10">
@@ -51,7 +50,8 @@
                 </ListView.Header>
             </ListView>
             <Frame Grid.Column="1">
-                <homecomponent:ServerInfoView BindingContext="{Binding SelectedServerInfo}"/>
+                <Label Text="hi"></Label>
+                <!-- <homecomponent:ServerInfoView BindingContext="{Binding SelectedServerInfo}"/> -->
             </Frame>
         </Grid>
 

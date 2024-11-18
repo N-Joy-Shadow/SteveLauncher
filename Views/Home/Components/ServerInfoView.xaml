@@ -8,5 +8,6 @@
     <VerticalStackLayout>
         <Label Text="{Binding HostName.HostName}"/>
         <BoxView StyleClass="Divider"/>
+        <Label Text="{Binding Icon}"></Label>
     </VerticalStackLayout>
 </ContentView>
