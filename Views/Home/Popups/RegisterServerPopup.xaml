@@ -9,17 +9,18 @@
              xmlns:vm="using:SteveLauncher.Views.Home.Popups"
              xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              x:Class="SteveLauncher.Views.Home.Popups.RegisterServerPopup"
-             x:DataType="vm:RegisterServerPopupViewModel">
-    <VerticalStackLayout Padding="8">
+             x:DataType="vm:RegisterServerPopupViewModel"
+             Color="Black">
+    <FlexLayout Direction="Column" AlignItems="Center" >
         <Label Text="서버 등록" FontAttributes="Bold" FontSize="48"/>
         <BoxView StyleClass="Divider"/>
         <input:FormView SubmitCommand="{Binding SubmitServerCommand }" Spacing="30">
-            <material:TextField Title="마인크래프트 서버" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Home_filled}}"
+            <material:TextField Title="Host Name" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Home_filled}}"
                                 AllowClear="True"
                 Text="{Binding Hostname , Mode=TwoWay}"/>
             <BoxView StyleClass="Divider"/>
             <Button input:FormView.IsSubmitButton="True" Text="Submit"/>
         </input:FormView>
         
-    </VerticalStackLayout>
+    </FlexLayout>
 </toolkit:Popup>

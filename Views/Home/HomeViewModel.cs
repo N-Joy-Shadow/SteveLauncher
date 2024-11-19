@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.Messaging;
 using Maui.Plugins.PageResolver.Attributes;
 using SteveLauncher.API.Service;
 using SteveLauncher.Data.Database;
 using SteveLauncher.Domain.Entity;
 using SteveLauncher.Utils;
+using SteveLauncher.Views.Home.Message;
 using SteveLauncher.Views.Home.Popups;
 
 namespace SteveLauncher.Views.Home;
@@ -26,6 +28,14 @@ public partial class HomeViewModel : BaseViewModel {
     ) {
         this.serverService = minecraftServerService;
         this.popupService = popupService;
+    }
+
+    protected override void BindingMessageCenter() {
+        WeakReferenceMessenger.Default.Register<ServerAddedMessage>(this, (r, m) => {
+            if (m.Value) 
+                LoadServerStatusAsync();            
+        });
+            
     }
 
     public async void LoadServerStatusAsync() {

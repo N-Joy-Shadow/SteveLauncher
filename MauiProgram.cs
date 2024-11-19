@@ -51,6 +51,11 @@ public static class MauiProgram
 
 			.ConfigureFonts(fonts =>
 			{
+				fonts.AddFont("Monocraft.ttf","Monocraft");
+				fonts.AddFont("Monocraft-Bold.ttf","MonocraftBold");
+				fonts.AddFont("Monocraft-SemmiBold.ttf","MonocraftSemiBold");
+				fonts.AddFont("Monocraft-Italic.ttf","MonocraftItalic");
+				fonts.AddFont("Monocraft-Light.ttf","MonocraftLight");
 				fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialSymbol");
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
@@ -94,8 +99,19 @@ public static class MauiProgram
 #if MACCATALYST
 		builder.ConfigureLifecycleEvents(events => {
 			events.AddiOS(osx => {
-				osx.SceneWillConnect(SceneWillConnectDelegate);
-			});
+				osx.SceneWillConnect((scene, session, options) => {
+					if (scene is UIWindowScene) {
+						var windowScene = scene as UIWindowScene;
+						if (windowScene.Titlebar != null) {
+							windowScene.Titlebar.TitleVisibility = UITitlebarTitleVisibility.Hidden;
+							windowScene.Titlebar.Toolbar = null;
+						}
+					}
+					else {
+						Debug.WriteLine("Scene is not UIWindowScene");
+					}
+				});
+			});			
 		});
 #elif WINDOWS
 		builder.ConfigureLifecycleEvents(events => {

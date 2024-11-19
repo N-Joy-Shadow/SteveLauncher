@@ -32,31 +32,38 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <CollectionView Grid.Column="0" ItemsSource="{Binding ServerStatusList}"
-                            VerticalOptions="Fill"
-                            HorizontalOptions="Fill"
-                            ItemSizingStrategy="MeasureFirstItem"
-                            Margin="20,10">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="type:MinecraftServerInfo">
-                        <cell:ServerListCell BindingContext="{Binding}"
-                                             TappedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GetServerInfoCommand}"
-                                             ContextMenuCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=DeleteServerCommand}" />
+            <VerticalStackLayout Grid.Column="0">
+                <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Margin="5">
+                    <Label Text="서버 목록" FontSize="24"/>
+                    <Button Text="서버 추가" Command="{Binding ShowRegisterPopupCommand}"/>
+                </FlexLayout>
+                <CollectionView ItemsSource="{Binding ServerStatusList}"
+                                VerticalOptions="Fill"
+                                HorizontalOptions="Fill"
+                                ItemSizingStrategy="MeasureFirstItem"
+                                SelectionMode="None"
+                                Margin="20,10">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="type:MinecraftServerInfo">
+                            <cell:ServerListCell BindingContext="{Binding}"
+                                                 TappedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GetServerInfoCommand}"
+                                                 ContextMenuCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=DeleteServerCommand}"
+                                                 Margin="5" />
 
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
 
-                <CollectionView.EmptyView>
-                    <!--나중에 따로 컴포넌트로 빼기-->
-                    <ContentView>
-                        <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-                            <Label Text="Loading..."/>
-                            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}"/> 
-                        </VerticalStackLayout>
-                    </ContentView>
-                </CollectionView.EmptyView>
-                
-            </CollectionView>
+                    <CollectionView.EmptyView>
+                        <!--나중에 따로 컴포넌트로 빼기-->
+                        <ContentView>
+                            <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                                <Label Text="Loading..." />
+                                <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+                            </VerticalStackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </VerticalStackLayout>
             <Frame Grid.Column="1">
                 <homecomponent:ServerInfoView BindingContext="{Binding SelectedServerInfo}" />
             </Frame>
@@ -64,9 +71,12 @@
 
 
         <!--프로그래스 바 및 시작 버튼-->
-        <StackLayout Grid.Row="2" Orientation="Horizontal">
-            <ProgressBar Height="4" Width="100" />
-            <Button Text="게임 시작" />
-        </StackLayout>
+        <FlexLayout Grid.Row="2" JustifyContent="SpaceEvenly" Direction="Row">
+            <VerticalStackLayout FlexLayout.Grow="1" HorizontalOptions="Start">
+                <ProgressBar Height="4" />
+                <Label Text="" FontSize="12" />
+            </VerticalStackLayout>
+            <Button FlexLayout.Grow="0" Text="게임 시작" Margin="5" WidthRequest="200" />
+        </FlexLayout>
     </Grid>
 </ContentPage>

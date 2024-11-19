@@ -6,38 +6,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:motd="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
     xmlns:type="using:SteveLauncher.Domain.Entity"
+    xmlns:pixel="using:SteveLauncher.Views.Components.UI"
+    xmlns:cell="clr-namespace:SteveLauncher.Views.Home.Cell"
     x:DataType="type:MinecraftServerInfo" Height="120">
-
-    <Frame
-        HeightRequest="120"
-        HorizontalOptions="Fill"
-        x:Name="CellItem"
-        BorderColor="Transparent"
-        CornerRadius="20">
-        <Frame.GestureRecognizers>
-            <TapGestureRecognizer Tapped="OnTapped" />
-        </Frame.GestureRecognizers>
-        <FlyoutBase.ContextFlyout>
-            <MenuFlyout>
-                <MenuFlyoutItem x:Name="ContextMenu" Text="서버 삭제" Clicked="OnContextMenuClicked" />
-            </MenuFlyout>
-        </FlyoutBase.ContextFlyout>
-        <FlexLayout Padding="4" HorizontalOptions="Fill" Direction="Row" JustifyContent="SpaceBetween">
-            <VerticalStackLayout>
-                <Label Text="{Binding HostName.HostName}" FontAttributes="Bold" FontSize="24" />
-                <motd:MotdView Motd="{Binding Motd}" />
-            </VerticalStackLayout>
-            <AbsoluteLayout>
-                <Label Text="{Binding PlayerInfo.Currnet}" />
-                <Image
-                    Opacity="0.5"
-                    AbsoluteLayout.LayoutBounds="0, 0.5, AutoSize, AutoSize"
-                    AbsoluteLayout.LayoutFlags="PositionProportional"
-                    x:Name="Icon"
-                    HeightRequest="120"
-                    WidthRequest="120" />
-            </AbsoluteLayout>
-        </FlexLayout>
-    </Frame>
+        <Frame
+            HeightRequest="120"
+            HorizontalOptions="Fill"
+            x:Name="CellItem"
+            BorderColor="Transparent"
+            >
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnTapped" />
+            </Frame.GestureRecognizers>
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem x:Name="ContextMenu" Text="서버 삭제" Clicked="OnContextMenuClicked" />
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
+            <FlexLayout Padding="4" HorizontalOptions="Fill" Direction="Row" JustifyContent="SpaceBetween">
+                <VerticalStackLayout>
+                    <Label Text="{Binding HostName.HostName}" FontFamily="MonocraftBold" FontSize="24" />
+                    <motd:MotdView Motd="{Binding Motd}" />
+                </VerticalStackLayout>
+                <AbsoluteLayout>
+                    <Label Text="{Binding PlayerInfo.Currnet}" />
+                    <Image
+                        Opacity="0.5"
+                        AbsoluteLayout.LayoutBounds="0, 0.5, AutoSize, AutoSize"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        x:Name="Icon"
+                        HeightRequest="120"
+                        WidthRequest="120" />
+                </AbsoluteLayout>
+            </FlexLayout>
+        </Frame>
 
 </ContentView>

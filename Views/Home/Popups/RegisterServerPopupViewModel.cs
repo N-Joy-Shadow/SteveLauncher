@@ -1,13 +1,14 @@
+using CommunityToolkit.Mvvm.Messaging;
 using McLib.Model.Network.Dns;
 using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
+using SteveLauncher.Views.Home.Message;
 
 namespace SteveLauncher.Views.Home.Popups;
 
 public partial class RegisterServerPopupViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
 
-    public event Action<string> RecievedAlert;
 
     [ObservableProperty] 
     private string hostname = "";
@@ -22,9 +23,10 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
     async Task SubmitServer() {
         MinecraftURL host = (MinecraftURL)Hostname;
         var res = await serverService.RegisterServer(host);
-        if(res)
-            RecievedAlert?.Invoke("등록 성공");
-        else
-            RecievedAlert.Invoke("등록 실패");
+        WeakReferenceMessenger.Default.Send(new ServerAddedMessage(res));
+
+        if (res) {
+            WeakReferenceMessenger.Default.Send(new ServerAddedMessage(res));
+        }
     }
 }

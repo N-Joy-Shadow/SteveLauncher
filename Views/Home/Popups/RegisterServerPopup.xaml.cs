@@ -16,10 +16,6 @@ public partial class RegisterServerPopup : Popup {
         this.vm = (RegisterServerPopupViewModel)BindingContext;
         Size = new Size(400, 300);
         
-        this.vm.RecievedAlert += OnRecievedAlert;
     }
-
-    private async void OnRecievedAlert(string obj) {
-        
-    }
+    
 }
