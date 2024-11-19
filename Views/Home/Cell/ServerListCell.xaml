@@ -1,44 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentView
     x:Class="SteveLauncher.Views.Home.Cell.ServerListCell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:motd="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
-    xmlns:type="using:SteveLauncher.Domain.Entity"
-    xmlns:pixel="using:SteveLauncher.Views.Components.UI"
     xmlns:cell="clr-namespace:SteveLauncher.Views.Home.Cell"
-    x:DataType="type:MinecraftServerInfo" Height="120">
-        <Frame
-            HeightRequest="120"
+    xmlns:motd="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
+    xmlns:pixel="using:SteveLauncher.Views.Components.UI"
+    xmlns:type="using:SteveLauncher.Domain.Entity"
+    xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
+    x:DataType="type:MinecraftServerInfo">
+    <ui:AcrylicView
+        x:Name="CellItem"
+        EffectStyle="Light"
+        HeightRequest="120"
+        HorizontalOptions="Fill"
+        IsClippedToBounds="True"
+        >
+        <ui:AcrylicView.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </ui:AcrylicView.GestureRecognizers>
+        <FlyoutBase.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem
+                    x:Name="ContextMenu"
+                    Clicked="OnContextMenuClicked"
+                    Text="서버 삭제" />
+            </MenuFlyout>
+        </FlyoutBase.ContextFlyout>
+        <FlexLayout
+            Padding="20"
+            Direction="Row"
             HorizontalOptions="Fill"
-            x:Name="CellItem"
-            BorderColor="Transparent"
-            >
-            <Frame.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnTapped" />
-            </Frame.GestureRecognizers>
-            <FlyoutBase.ContextFlyout>
-                <MenuFlyout>
-                    <MenuFlyoutItem x:Name="ContextMenu" Text="서버 삭제" Clicked="OnContextMenuClicked" />
-                </MenuFlyout>
-            </FlyoutBase.ContextFlyout>
-            <FlexLayout Padding="4" HorizontalOptions="Fill" Direction="Row" JustifyContent="SpaceBetween">
-                <VerticalStackLayout>
-                    <Label Text="{Binding HostName.HostName}" FontFamily="MonocraftBold" FontSize="24" />
-                    <motd:MotdView Motd="{Binding Motd}" />
-                </VerticalStackLayout>
-                <AbsoluteLayout>
-                    <Label Text="{Binding PlayerInfo.Currnet}" />
+            JustifyContent="SpaceBetween">
+            <VerticalStackLayout>
+                <Label
+                    FontFamily="MonocraftBold"
+                    FontSize="24"
+                    Text="{Binding HostName.HostName}" />
+                <motd:MotdView Motd="{Binding Motd}" />
+            </VerticalStackLayout>
+
+            <AbsoluteLayout>
+                <Label
+                    AbsoluteLayout.LayoutBounds="0,0.5,AutoSize,AutoSize"
+                    FontFamily="MonocraftSemiBold"
+                    FontSize="24"
+                    Text="{Binding PlayerInfo.Currnet}"
+                    VerticalOptions="Center" />
+                <Frame
+                    AbsoluteLayout.LayoutBounds="7, 0, AutoSize, AutoSize"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    CornerRadius="20"
+                    HeightRequest="120"
+                    IsClippedToBounds="True"
+                    WidthRequest="120">
                     <Image
-                        Opacity="0.5"
-                        AbsoluteLayout.LayoutBounds="0, 0.5, AutoSize, AutoSize"
-                        AbsoluteLayout.LayoutFlags="PositionProportional"
                         x:Name="Icon"
                         HeightRequest="120"
                         WidthRequest="120" />
-                </AbsoluteLayout>
-            </FlexLayout>
-        </Frame>
+
+                </Frame>
+                <!--
+                -->
+            </AbsoluteLayout>
+        </FlexLayout>
+    </ui:AcrylicView>
 
 </ContentView>

@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Maui.LifecycleEvents;
 using SteveLauncher.Data.Database;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Platform;
 using SteveLauncher.API.Repository;
 using SteveLauncher.Data.RepositoryImpl;
 using SteveLauncher.Utils.Popups;
@@ -14,6 +13,7 @@ using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Login;
 using SteveLauncher.Views.Setting;
 using UraniumUI;
+using Xe.AcrylicView;
 
 #if MACCATALYST
 using UIKit;
@@ -26,7 +26,6 @@ using Microsoft.UI.Windowing;
 using Windows.Graphics;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml.Media;
-using Color = Windows.UI.Color;
 using Colors = Microsoft.UI.Colors;
 
 #endif
@@ -40,11 +39,14 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
-			.UseUraniumUI()
-			.UseUraniumUIMaterial()
+			//.UseUraniumUI()
+			//.UseUraniumUIMaterial()
 			.UseSkiaSharp()
 			.UsePageResolver(true)
 			.UseAutodependencies()
+#if MACCATALYST14_2_OR_GREATER || WINDOWS || ANDROID || IOS
+			.UseAcrylicView()
+#endif
 #if DEBUG
 			.EnableHotReload()
 #endif
@@ -53,7 +55,7 @@ public static class MauiProgram
 			{
 				fonts.AddFont("Monocraft.ttf","Monocraft");
 				fonts.AddFont("Monocraft-Bold.ttf","MonocraftBold");
-				fonts.AddFont("Monocraft-SemmiBold.ttf","MonocraftSemiBold");
+				fonts.AddFont("Monocraft-SemiBold.ttf","MonocraftSemiBold");
 				fonts.AddFont("Monocraft-Italic.ttf","MonocraftItalic");
 				fonts.AddFont("Monocraft-Light.ttf","MonocraftLight");
 				fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialSymbol");
@@ -118,14 +120,18 @@ public static class MauiProgram
 			events.AddWindows(windowEvent => {
 				windowEvent.OnWindowCreated(window => {
 					#if WINDOWS10_0_17763_0_OR_GREATER
-					window.SystemBackdrop = new DesktopAcrylicBackdrop();
+					window.SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.BaseAlt };
+					//window.SystemBackdrop = new DesktopAcrylicBackdrop();
 					#endif
-					window.AppWindow.Resize(new SizeInt32(1280,720));
-					window.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-					window.AppWindow.Title = "SteveLauncher";
-					window.AppWindow.TitleBar.BackgroundColor = Colors.Black;
-					window.Title = "SteveLauncher";
-				});
+					var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);               
+					var id = Win32Interop.GetWindowIdFromWindow(handle);
+
+					var appWindow = AppWindow.GetFromWindowId(id);
+
+					var titleBar = appWindow.TitleBar;
+					appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+
+                });
 			});
 		});
 #endif
