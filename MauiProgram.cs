@@ -11,7 +11,6 @@ using SteveLauncher.Utils.Popups;
 using SteveLauncher.Views.Home;
 using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Login;
-using SteveLauncher.Views.Setting;
 using UraniumUI;
 using Xe.AcrylicView;
 
@@ -27,7 +26,6 @@ using Windows.Graphics;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml.Media;
 using Colors = Microsoft.UI.Colors;
-
 #endif
 namespace SteveLauncher;
 
@@ -87,7 +85,7 @@ public static class MauiProgram
 		
 		//Popup
 		builder.Services.AddTransientPopup<RegisterServerPopup,RegisterServerPopupViewModel>();
-		builder.Services.AddTransientPopup<Setting,SettingViewModel>();
+		builder.Services.AddTransientPopup<SettingPopup,SettingPopupViewModel>();
 		builder.Services.AddSingleton<Login,LoginViewModel>();
 
 		//Repositories

@@ -69,6 +69,10 @@
 		  <DependentUpon>MainPage.xaml</DependentUpon>
 		  <SubType>Code</SubType>
 		</Compile>
+		<Compile Update="Views\Home\Components\NavigationView.xaml.cs">
+		  <DependentUpon>NavigationView.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -119,6 +123,9 @@
 	    <SubType>Designer</SubType>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MainView.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Home\Components\NavigationView.xaml">
 	    <SubType>Designer</SubType>
 	  </MauiXaml>
 	</ItemGroup>

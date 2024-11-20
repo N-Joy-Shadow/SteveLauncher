@@ -3,10 +3,15 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:type="using:SteveLauncher.Domain.Entity"
+             xmlns:view="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
+             xmlns:extension="clr-namespace:SteveLauncher.Extension"
              x:Class="SteveLauncher.Views.Home.Components.ServerInfoView"
              x:DataType="type:MinecraftServerInfo">
-    <VerticalStackLayout>
-        <Label Text="{Binding HostName.HostName}"/>
-        <BoxView StyleClass="Divider"/>
+    <VerticalStackLayout Margin="10">
+        <Label Text="{Binding HostName.HostName}" FontFamily="MonocraftBold"
+               FontSize="48"/>
+        <BoxView Height="2" BackgroundColor="Aqua"/>
+        <view:MotdView Motd="{Binding Motd}" FontSize="24"/>
+        <extension:ImageView SourceFromBase64="{Binding Icon}"/>
     </VerticalStackLayout>
 </ContentView>

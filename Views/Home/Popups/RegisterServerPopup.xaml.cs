@@ -10,9 +10,9 @@ namespace SteveLauncher.Views.Home.Popups;
 
 public partial class RegisterServerPopup : Popup {
     private RegisterServerPopupViewModel vm;
-    public RegisterServerPopup(RegisterServerPopupViewModel vm) {
+    public RegisterServerPopup(RegisterServerPopupViewModel viewModel) {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
         this.vm = (RegisterServerPopupViewModel)BindingContext;
         Size = new Size(400, 300);
         

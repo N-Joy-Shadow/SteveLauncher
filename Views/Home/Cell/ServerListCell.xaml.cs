@@ -40,7 +40,7 @@ public partial class ServerListCell : ContentView {
     private void OnBindingContextChanged(object? sender, EventArgs e) {
         if(BindingContext is MinecraftServerInfo serverInfo) {
             this.serverInfo = serverInfo;
-            Icon.Source = ImageSourceExtension.FromBase64(serverInfo.Icon);
+            //Icon.Source = ImageSourceExtension.FromBase64(serverInfo.Icon);
 
         }
     }

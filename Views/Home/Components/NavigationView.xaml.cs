@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommunityToolkit.Maui.Views;
 
-namespace SteveLauncher.Views.Setting;
+namespace SteveLauncher.Views.Home.Components;
 
-public partial class Setting : Popup {
-    public Setting() {
+public partial class NavigationView : ContentView {
+    public NavigationView() {
         InitializeComponent();
     }
 }

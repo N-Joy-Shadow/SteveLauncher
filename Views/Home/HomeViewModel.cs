@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Messaging;
 using Maui.Plugins.PageResolver.Attributes;
+using Microsoft.EntityFrameworkCore.Query;
 using SteveLauncher.API.Service;
 using SteveLauncher.Data.Database;
 using SteveLauncher.Domain.Entity;
@@ -14,12 +15,19 @@ public partial class HomeViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
     private readonly IPopupService popupService;
 
-    [ObservableProperty] private RangeObservableCollection<MinecraftServerInfo> serverStatusList = new();
+    [ObservableProperty]
+    private RangeObservableCollection<MinecraftServerInfo> serverStatusList = new();
 
     //바인딩 안해도 됨
-    [ObservableProperty] private bool isLoading = true;
+    [ObservableProperty]
+    private bool isLoading = true;
 
-    [ObservableProperty] private MinecraftServerInfo? selectedServerInfo = null;
+    [ObservableProperty]
+    private MinecraftServerInfo? selectedServerInfo = null;
+
+    [ObservableProperty]
+    private string currentAuthState = "Auth";
+
     public event Action<MinecraftServerInfo> OnServerInfoChange;
 
     public HomeViewModel(
@@ -32,18 +40,17 @@ public partial class HomeViewModel : BaseViewModel {
 
     protected override void BindingMessageCenter() {
         WeakReferenceMessenger.Default.Register<ServerAddedMessage>(this, (r, m) => {
-            if (m.Value) 
-                LoadServerStatusAsync();            
+            if (m.Value)
+                LoadServerStatusAsync();
         });
-            
     }
 
+    //TOOD: 나중에 커맨드로 빼기
     public async void LoadServerStatusAsync() {
         try {
             var serverStatusList = await Task.Run(() => serverService.GetServerStatusList());
             this.ServerStatusList.Clear();
             this.ServerStatusList.AddRange(serverStatusList);
-
         }
         catch (Exception e) {
             Debug.WriteLine(e);
@@ -66,6 +73,21 @@ public partial class HomeViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task ShowRegisterPopup() {
-        popupService.ShowPopup<RegisterServerPopupViewModel>();
+        var b = await popupService.ShowPopupAsync<RegisterServerPopupViewModel>();
+        
+    }
+
+    [RelayCommand]
+    async Task Login() {
+    }
+
+    [RelayCommand]
+    async Task Logout() {
+    }
+
+    [RelayCommand]
+    async Task ShowSettingPopup() {
+        var a = await popupService.ShowPopupAsync<SettingPopupViewModel>();
+        
     }
 }

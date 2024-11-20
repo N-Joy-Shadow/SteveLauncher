@@ -9,7 +9,8 @@ namespace SteveLauncher.Views.Home.Popups;
 public partial class RegisterServerPopupViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
 
-
+    public event Action<MinecraftURL> OnClosePopup;
+    
     [ObservableProperty] 
     private string hostname = "";
     
