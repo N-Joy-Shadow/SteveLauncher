@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using SteveLauncher.API.Repository;
 using SteveLauncher.Data.RepositoryImpl;
 using SteveLauncher.Utils.Popups;
+using SteveLauncher.Views.GameLog;
 using SteveLauncher.Views.Home;
 using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Login;
@@ -81,7 +82,7 @@ public static class MauiProgram
 		
 		//Views
 		builder.Services.AddSingleton<Home>();
-		
+		builder.Services.AddSingleton<GameLog>();
 		
 		//Popup
 		builder.Services.AddTransientPopup<RegisterServerPopup,RegisterServerPopupViewModel>();
@@ -95,7 +96,7 @@ public static class MauiProgram
 		
 		//misc
 		builder.Services.AddSingleton<PopupSizeConstants>();
-
+		builder.Services.AddSingleton<IDeviceDisplay>(DeviceDisplay.Current);
 #if MACCATALYST
 		builder.ConfigureLifecycleEvents(events => {
 			events.AddiOS(osx => {
@@ -118,14 +119,12 @@ public static class MauiProgram
 			events.AddWindows(windowEvent => {
 				windowEvent.OnWindowCreated(window => {
 					#if WINDOWS10_0_17763_0_OR_GREATER
-					window.SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.BaseAlt };
-					//window.SystemBackdrop = new DesktopAcrylicBackdrop();
+					window.SystemBackdrop = new DesktopAcrylicBackdrop();
 					#endif
 					var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);               
 					var id = Win32Interop.GetWindowIdFromWindow(handle);
 
 					var appWindow = AppWindow.GetFromWindowId(id);
-
 					var titleBar = appWindow.TitleBar;
 					appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 

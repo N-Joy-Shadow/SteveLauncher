@@ -22,12 +22,15 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task SubmitServer() {
+        if (Hostname is null)
+            return;
         MinecraftURL host = (MinecraftURL)Hostname;
+        
         var res = await serverService.RegisterServer(host);
-        WeakReferenceMessenger.Default.Send(new ServerAddedMessage(res));
-
-        if (res) {
-            WeakReferenceMessenger.Default.Send(new ServerAddedMessage(res));
-        }
+        // WeakReferenceMessenger.Default.Send(new ServerAddedMessage(res));
+        //
+        // if (res) {
+        //     WeakReferenceMessenger.Default.Send(new ServerAddedMessage(res));
+        // }
     }
 }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMotd", "..\McMotd.Net\McM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMotd.MAUI", "..\McMotd.Net\McMotd.MAUI\McMotd.MAUI.csproj", "{A48C4970-CA06-4D3B-B2BE-A84D63D96FF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McLib.Auth", "..\McLib\McLib.Auth\McLib.Auth.csproj", "{B264BBFC-1579-45CB-8E2F-658A415CAB30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A48C4970-CA06-4D3B-B2BE-A84D63D96FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A48C4970-CA06-4D3B-B2BE-A84D63D96FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A48C4970-CA06-4D3B-B2BE-A84D63D96FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B264BBFC-1579-45CB-8E2F-658A415CAB30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B264BBFC-1579-45CB-8E2F-658A415CAB30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B264BBFC-1579-45CB-8E2F-658A415CAB30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B264BBFC-1579-45CB-8E2F-658A415CAB30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

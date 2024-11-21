@@ -8,7 +8,14 @@ using CommunityToolkit.Maui.Views;
 namespace SteveLauncher.Views.Login;
 
 public partial class Login : Popup {
-    public Login() {
+    private LoginViewModel viewModel;
+    public Login(LoginViewModel viewModel) {
         InitializeComponent();
+        BindingContext = viewModel;
+        this.viewModel = (LoginViewModel)BindingContext;
+    }
+
+    private void WebView_OnNavigated(object? sender, WebNavigatedEventArgs e) {
+        throw new NotImplementedException();
     }
 }

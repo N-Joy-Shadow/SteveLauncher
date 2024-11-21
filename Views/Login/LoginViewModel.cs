@@ -1,5 +1,6 @@
 namespace SteveLauncher.Views.Login;
 
-public class LoginViewModel: BaseViewModel {
-    
+public partial class LoginViewModel : BaseViewModel {
+    [ObservableProperty]
+    private string msChallengeSource;
 }

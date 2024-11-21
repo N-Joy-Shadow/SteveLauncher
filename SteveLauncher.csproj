@@ -133,7 +133,6 @@
 
 
 	<ItemGroup>
-	  <Folder Include="Data\Network\" />
 	  <Folder Include="Domain\Service\BackgroundService\" />
 	</ItemGroup>
 

@@ -73,7 +73,7 @@ public partial class HomeViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task ShowRegisterPopup() {
-        var b = await popupService.ShowPopupAsync<RegisterServerPopupViewModel>();
+        var hostname = await popupService.ShowPopupAsync<RegisterServerPopupViewModel>();
         
     }
 
