@@ -6,7 +6,5 @@
              xmlns:vm="using:SteveLauncher.Views.Login"
              x:Class="SteveLauncher.Views.Login.Login"
              x:DataType="vm:LoginViewModel">
-    <ContentPage.Content>
-        <WebView Source="{Binding MsChallengeSource }" Navigated="WebView_OnNavigated"></WebView>
-    </ContentPage.Content>
+        <WebView x:Name="webView" Loaded="WebView_OnLoaded" Navigated="WebView_OnNavigated"/>
 </toolkit:Popup>

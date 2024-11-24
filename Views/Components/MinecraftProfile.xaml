@@ -4,17 +4,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SteveLauncher.Views.Components.MinecraftProfile">
-    <toolkit:StateContainer.StateViews>
-        <HorizontalStackLayout VerticalOptions="Center" Spacing="8"
-                               toolkit:StateView.StateKey="Auth">
-            <Label Text="NJoyShadow" VerticalTextAlignment="Center" />
-            <Frame CornerRadius="20" IsClippedToBounds="True" WidthRequest="40" HeightRequest="40"
-                   BackgroundColor="Transparent" BorderColor="Transparent">
-                <Image Source="https://crafthead.net/avatar/d61967c50f784faea6b6fd6e2115b599" WidthRequest="40"
-                       Height="40"
-                       Aspect="AspectFill" />
-            </Frame>
-        </HorizontalStackLayout>
-        <Button toolkit:StateView.StateKey="UnAuth" Text="Login"/>
-    </toolkit:StateContainer.StateViews>
+    
+    <HorizontalStackLayout toolkit:StateContainer.CurrentState="{Binding CurrentAuthState}">
+        
+        <toolkit:StateContainer.StateViews>
+            <HorizontalStackLayout VerticalOptions="Center" Spacing="8"
+                                   toolkit:StateView.StateKey="Auth">
+                <Label Text="NJoyShadow" VerticalTextAlignment="Center" />
+                <Frame CornerRadius="20" IsClippedToBounds="True" WidthRequest="40" HeightRequest="40"
+                       BackgroundColor="Transparent" BorderColor="Transparent">
+                    <Image Source="https://crafthead.net/avatar/d61967c50f784faea6b6fd6e2115b599" WidthRequest="40"
+                           Height="40"
+                           Aspect="AspectFill" />
+                </Frame>
+            </HorizontalStackLayout>
+            <Button toolkit:StateView.StateKey="UnAuth" Text="Login"/>
+        </toolkit:StateContainer.StateViews>
+    </HorizontalStackLayout>
+    
 </ContentView>

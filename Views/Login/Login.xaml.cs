@@ -16,6 +16,12 @@ public partial class Login : Popup {
     }
 
     private void WebView_OnNavigated(object? sender, WebNavigatedEventArgs e) {
-        throw new NotImplementedException();
+        if (e.NavigationEvent == WebNavigationEvent.NewPage) {
+            Debug.WriteLine(e.Source.ToString());
+        }
+    }
+
+    private void WebView_OnLoaded(object? sender, EventArgs e) {
+        webView.Source = viewModel.AuthUrl;
     }
 }

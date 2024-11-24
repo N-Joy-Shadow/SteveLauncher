@@ -139,6 +139,7 @@
 
 
 	<ItemGroup>
+	  <ProjectReference Include="..\McLib\McLib.Auth\McLib.Auth.csproj" />
 	  <ProjectReference Include="..\McLib\McLib\McLib.csproj" />
 	  <ProjectReference Include="..\McMotd.Net\McMotd.MAUI\McMotd.MAUI.csproj" />
 	  <ProjectReference Include="..\McMotd.Net\McMotd\McMotd.csproj" />

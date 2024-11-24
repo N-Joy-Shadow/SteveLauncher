@@ -26,7 +26,7 @@ public partial class HomeViewModel : BaseViewModel {
     private MinecraftServerInfo? selectedServerInfo = null;
 
     [ObservableProperty]
-    private string currentAuthState = "Auth";
+    private string currentAuthState = "UnAuth";
 
     public event Action<MinecraftServerInfo> OnServerInfoChange;
 

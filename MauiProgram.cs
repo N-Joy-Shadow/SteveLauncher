@@ -1,5 +1,7 @@
 ﻿using DotNet.Meteor.HotReload.Plugin;
 using McLib.API.Services;
+using McLib.Auth.API;
+using McLib.Auth.Service;
 using McLib.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Maui.LifecycleEvents;
@@ -79,6 +81,8 @@ public static class MauiProgram
 		//external services
 		builder.Services.AddSingleton<IDnsCheckService,DnsCheckService>();
 		builder.Services.AddSingleton<IMcStatusRequestService,McStatusRequestService>();
+
+		builder.Services.AddSingleton<IMcLoginService, McLoginService>();
 		
 		//Views
 		builder.Services.AddSingleton<Home>();
