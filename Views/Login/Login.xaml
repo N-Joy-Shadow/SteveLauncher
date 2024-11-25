@@ -6,5 +6,5 @@
              xmlns:vm="using:SteveLauncher.Views.Login"
              x:Class="SteveLauncher.Views.Login.Login"
              x:DataType="vm:LoginViewModel">
-        <WebView x:Name="webView" Loaded="WebView_OnLoaded" Navigated="WebView_OnNavigated"/>
+        <WebView x:Name="webView" Navigated="WebView_OnNavigated" Loaded="WebView_OnLoaded"/>
 </toolkit:Popup>

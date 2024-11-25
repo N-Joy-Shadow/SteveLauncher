@@ -5,8 +5,9 @@ public class PopupSizeConstants {
     {
         Tiny = new(100, 100);
         Small = new(300, 300);
-        Medium = new(0.5 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.5 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
-        Large = new(0.7 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.6 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
+        Medium = new Size(800, 600); 
+        MediumRatio = new(0.5 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.5 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
+        LargeRaito= new(0.7 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.6 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
     }
 
     // examples for fixed sizes
@@ -14,9 +15,11 @@ public class PopupSizeConstants {
 
     public Size Small { get; }
 
-    // examples for relative to screen sizes
     public Size Medium { get; }
+    
+    // examples for relative to screen sizes
+    public Size MediumRatio { get; }
 
-    public Size Large { get; }
+    public Size LargeRaito { get; }
 
 }

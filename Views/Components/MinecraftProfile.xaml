@@ -5,20 +5,26 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SteveLauncher.Views.Components.MinecraftProfile">
     
-    <HorizontalStackLayout toolkit:StateContainer.CurrentState="{Binding CurrentAuthState}">
-        
+    <HorizontalStackLayout toolkit:StateContainer.CurrentState="{Binding CurrentAuthState, Converter={StaticResource EnumToStringConverter}}">
+        <Label Text="{Binding CurrentAuthState, Converter={StaticResource EnumToStringConverter}}" />
         <toolkit:StateContainer.StateViews>
             <HorizontalStackLayout VerticalOptions="Center" Spacing="8"
                                    toolkit:StateView.StateKey="Auth">
-                <Label Text="NJoyShadow" VerticalTextAlignment="Center" />
-                <Frame CornerRadius="20" IsClippedToBounds="True" WidthRequest="40" HeightRequest="40"
-                       BackgroundColor="Transparent" BorderColor="Transparent">
-                    <Image Source="https://crafthead.net/avatar/d61967c50f784faea6b6fd6e2115b599" WidthRequest="40"
+                <FlyoutBase.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            x:Name="ContextMenu"
+                            Command="{Binding LogoutCommand}"
+                            Text="Logout" />
+                    </MenuFlyout>
+                </FlyoutBase.ContextFlyout>
+                <Label Text="{Binding UserProfile.UserName}" VerticalTextAlignment="Center" />
+
+                    <Image WidthRequest="40" x:Name="UserIconImage"
                            Height="40"
-                           Aspect="AspectFill" />
-                </Frame>
+                           Aspect="AspectFit" />
             </HorizontalStackLayout>
-            <Button toolkit:StateView.StateKey="UnAuth" Text="Login"/>
+            <Button toolkit:StateView.StateKey="UnAuth" Text="Login" Command="{Binding ShowLoginPopupCommand}"/>
         </toolkit:StateContainer.StateViews>
     </HorizontalStackLayout>
     

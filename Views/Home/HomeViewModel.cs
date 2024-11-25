@@ -1,18 +1,26 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Messaging;
 using Maui.Plugins.PageResolver.Attributes;
+using McLib.Auth.Model.Minecraft;
 using Microsoft.EntityFrameworkCore.Query;
+using SteveLauncher.API.Enum;
+using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
 using SteveLauncher.Data.Database;
 using SteveLauncher.Domain.Entity;
 using SteveLauncher.Utils;
 using SteveLauncher.Views.Home.Message;
 using SteveLauncher.Views.Home.Popups;
+using SteveLauncher.Views.Login;
 
 namespace SteveLauncher.Views.Home;
 
+
+
+
 public partial class HomeViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
+    private readonly ISecureStorageRepository secureStorageRepository;
     private readonly IPopupService popupService;
 
     [ObservableProperty]
@@ -25,16 +33,21 @@ public partial class HomeViewModel : BaseViewModel {
     [ObservableProperty]
     private MinecraftServerInfo? selectedServerInfo = null;
 
+    //나중에 Enum으로 바꾸기
     [ObservableProperty]
-    private string currentAuthState = "UnAuth";
-
+    private AuthStateEnum currentAuthState = AuthStateEnum.UnAuth;
+    
+    [ObservableProperty]
+    private UserProfile? userProfile = null;
     public event Action<MinecraftServerInfo> OnServerInfoChange;
 
     public HomeViewModel(
         IMinecraftServerService minecraftServerService,
+        ISecureStorageRepository secureStorageRepository,
         IPopupService popupService
     ) {
         this.serverService = minecraftServerService;
+        this.secureStorageRepository = secureStorageRepository; //나중에 서비스로 빼야함 
         this.popupService = popupService;
     }
 
@@ -73,21 +86,39 @@ public partial class HomeViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task ShowRegisterPopup() {
-        var hostname = await popupService.ShowPopupAsync<RegisterServerPopupViewModel>();
+        var hostname = await popupService.ShowPopupAsync<RegisterServerPopupViewModel>(CancellationToken.None);
         
     }
 
     [RelayCommand]
     async Task Login() {
     }
-
+    
     [RelayCommand]
-    async Task Logout() {
+    async Task ShowSettingPopup() {
+        var a = await popupService.ShowPopupAsync<SettingPopupViewModel>(CancellationToken.None);
+        
+    }
+    
+    [RelayCommand]
+    async void ShowLoginPopup() {
+        var res = await popupService.ShowPopupAsync<LoginViewModel>(CancellationToken.None);
+        if (res is string error) {
+            Debug.WriteLine(res);
+        }
+        //성공 할 경우
+        else if(res is McUserProfile profile) {
+            secureStorageRepository.InsertAsync(SecureStorageEnum.USER_PROFILE,profile);
+            CurrentAuthState = AuthStateEnum.Auth;
+            //나중에 리팩토링 필요 
+            UserProfile = new UserProfile(profile.UserName, profile.UUID);
+        }
     }
 
     [RelayCommand]
-    async Task ShowSettingPopup() {
-        var a = await popupService.ShowPopupAsync<SettingPopupViewModel>();
-        
+    async void Logout() {
+        UserProfile = null;
+        CurrentAuthState = AuthStateEnum.UnAuth;
+
     }
 }

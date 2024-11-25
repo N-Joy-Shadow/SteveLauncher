@@ -6,9 +6,9 @@ namespace SteveLauncher.Extension;
 
 public class MSessionExtension {
     public MSessionExtension() {
-        
+
     }
-    
+
     public static MSession Create(McUserProfile profile) {
         return new MSession {
             Username = profile.UserName,

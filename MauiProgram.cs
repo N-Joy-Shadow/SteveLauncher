@@ -59,9 +59,6 @@ public static class MauiProgram
 				fonts.AddFont("Monocraft-SemiBold.ttf","MonocraftSemiBold");
 				fonts.AddFont("Monocraft-Italic.ttf","MonocraftItalic");
 				fonts.AddFont("Monocraft-Light.ttf","MonocraftLight");
-				fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialSymbol");
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddMaterialIconFonts();
 			});
 
@@ -91,16 +88,18 @@ public static class MauiProgram
 		//Popup
 		builder.Services.AddTransientPopup<RegisterServerPopup,RegisterServerPopupViewModel>();
 		builder.Services.AddTransientPopup<SettingPopup,SettingPopupViewModel>();
-		builder.Services.AddSingleton<Login,LoginViewModel>();
+		builder.Services.AddTransientPopup<Login,LoginViewModel>();
 
 		//Repositories
 		builder.Services.AddSingleton<IMinecraftLoginRepository, MinecraftLoginRepository>();
 		builder.Services.AddSingleton<ILocalServerListRepository, LocalServerRepository>();
 		builder.Services.AddSingleton<IMinecraftServerStatusRepository, MinecraftServerStatusRepository>();
-		
+		builder.Services.AddSingleton<ISecureStorageRepository, SecureStorageRepository>();
+
 		//misc
 		builder.Services.AddSingleton<PopupSizeConstants>();
 		builder.Services.AddSingleton<IDeviceDisplay>(DeviceDisplay.Current);
+		builder.Services.AddHttpClient();
 #if MACCATALYST
 		builder.ConfigureLifecycleEvents(events => {
 			events.AddiOS(osx => {

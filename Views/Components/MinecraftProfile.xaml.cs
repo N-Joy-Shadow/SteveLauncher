@@ -4,28 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CmlLib.Core;
+using SteveLauncher.Views.Home;
 
 namespace SteveLauncher.Views.Components;
 
 public partial class MinecraftProfile : ContentView {
     
-    public static readonly BindableProperty SkinUrlProperty = BindableProperty.Create(
-        nameof(SkinUrl), typeof(string), typeof(MinecraftProfile), default(string));
-
-    public string SkinUrl {
-        get => (string)GetValue(SkinUrlProperty);
-        set => SetValue(SkinUrlProperty, value);
-    }
-
-    public static readonly BindableProperty PlayerNameProperty = BindableProperty.Create(
-        nameof(PlayerName), typeof(string), typeof(MinecraftProfile), default(string));
-
-    public string PlayerName {
-        get => (string)GetValue(PlayerNameProperty);
-        set => SetValue(PlayerNameProperty, value);
-    }
     public MinecraftProfile() {
         InitializeComponent();
+        this.PropertyChanged += OnPropertyChanged;
         
+    }
+
+    private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e) {
+        //TODO: 나중에 보수
+        if (BindingContext is HomeViewModel viewModel)
+            if (viewModel.UserProfile is not null)
+                UserIconImage.Source = ImageSource.FromUri(new Uri(viewModel.UserProfile.UserIcon));
+            else
+                UserIconImage.Source = null;
     }
 }
