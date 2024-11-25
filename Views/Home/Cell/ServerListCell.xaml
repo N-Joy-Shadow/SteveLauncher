@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentView
     x:Class="SteveLauncher.Views.Home.Cell.ServerListCell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:cell="clr-namespace:SteveLauncher.Views.Home.Cell"
+    xmlns:extension="clr-namespace:SteveLauncher.Extension"
     xmlns:motd="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
     xmlns:pixel="using:SteveLauncher.Views.Components.UI"
     xmlns:type="using:SteveLauncher.Domain.Entity"
     xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
-    xmlns:extension="clr-namespace:SteveLauncher.Extension"
     x:DataType="type:MinecraftServerInfo">
-    <ui:AcrylicView
+    <Grid
         x:Name="CellItem"
-        EffectStyle="Light"
         HeightRequest="120"
         HorizontalOptions="Fill"
         IsClippedToBounds="True">
-        <ui:AcrylicView.GestureRecognizers>
+        <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnTapped" />
-        </ui:AcrylicView.GestureRecognizers>
+        </Grid.GestureRecognizers>
         <FlyoutBase.ContextFlyout>
             <MenuFlyout>
                 <MenuFlyoutItem
@@ -35,25 +34,25 @@
             JustifyContent="SpaceBetween">
             <HorizontalStackLayout>
                 <extension:ImageView
-                    SourceFromBase64="{Binding Icon}"
+                    Margin="10"
                     HeightRequest="100"
-                    WidthRequest="100" Margin="10" />
+                    SourceFromBase64="{Binding Icon}"
+                    WidthRequest="100" />
 
                 <VerticalStackLayout>
                     <Label
                         FontFamily="MonocraftBold"
                         FontSize="24"
                         Text="{Binding HostName.HostName}" />
-                    <motd:MotdView Motd="{Binding Motd}" />
+                    <motd:MotdView FontSize="18" Motd="{Binding Motd}" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
             <Label
                 FontFamily="MonocraftSemiBold"
                 FontSize="24"
                 Text="{Binding PlayerInfo.Currnet}"
-                VerticalOptions="Center" 
-                ToolTipProperties.Text="aaa"/>
+                ToolTipProperties.Text="aaa"
+                VerticalOptions="Center" />
         </FlexLayout>
-    </ui:AcrylicView>
-
+    </Grid>
 </ContentView>

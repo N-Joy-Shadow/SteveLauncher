@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:type="using:SteveLauncher.Domain.Entity"
-             xmlns:view="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
-             xmlns:extension="clr-namespace:SteveLauncher.Extension"
-             x:Class="SteveLauncher.Views.Home.Components.ServerInfoView"
-             x:DataType="type:MinecraftServerInfo">
-    <VerticalStackLayout Margin="10">
-        <Label Text="{Binding HostName.HostName}" FontFamily="MonocraftBold"
-               FontSize="48"/>
-        <BoxView Height="2" BackgroundColor="Aqua"/>
-        <view:MotdView Motd="{Binding Motd}" FontSize="24"/>
-        <BoxView BackgroundColor="Gray" />
-    </VerticalStackLayout>
+<ContentView
+    x:Class="SteveLauncher.Views.Home.Components.ServerInfoView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extension="clr-namespace:SteveLauncher.Extension"
+    xmlns:type="using:SteveLauncher.Domain.Entity"
+    xmlns:view="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI">
+    <Grid Margin="10" VerticalOptions="FillAndExpand">
+        <VerticalStackLayout>
+            <Label
+                FontFamily="MonocraftBold"
+                FontSize="48"
+                Text="{Binding SelectedServerInfo.HostName.HostName}" />
+            <Label
+                FontFamily="MonocraftLight"
+                FontSize="14"
+                Text="{Binding SelectedServerInfo.Version}" />
+            <FlexLayout Direction="Row">
+                <!--  드랍 다운 추가  -->
+            </FlexLayout>
+            <BoxView
+                Margin="0,10"
+                BackgroundColor="LightGray"
+                HeightRequest="2" />
+            <view:MotdView FontSize="24" Motd="{Binding SelectedServerInfo.Motd}" />
+            <BoxView BackgroundColor="Gray" />
+            <CollectionView ItemsSource="{Binding SelectedServerInfo.PlayerInfo.UserNames}"
+                            VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Label Text="{Binding .}" TextColor="White" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        <AbsoluteLayout>
+            <extension:ImageViewExtension
+                AbsoluteLayout.LayoutBounds="1, 1, 200, 200"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                HeightRequest="200"
+                Opacity="0.5"
+                SourceFromBase64="{Binding SelectedServerInfo.Icon}"
+                WidthRequest="200" />
+        </AbsoluteLayout>
+    </Grid>
 </ContentView>

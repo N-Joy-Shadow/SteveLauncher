@@ -15,7 +15,6 @@ using SteveLauncher.Views.Home;
 using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Login;
 using UraniumUI;
-using Xe.AcrylicView;
 
 #if MACCATALYST
 using UIKit;
@@ -40,14 +39,12 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
-			//.UseUraniumUI()
-			//.UseUraniumUIMaterial()
+			.UseUraniumUI()
+			.UseUraniumUIMaterial()
+			.UseUraniumUIBlurs()
 			.UseSkiaSharp()
 			.UsePageResolver(true)
 			.UseAutodependencies()
-#if MACCATALYST14_2_OR_GREATER || WINDOWS || ANDROID || IOS
-			.UseAcrylicView()
-#endif
 #if DEBUG
 			.EnableHotReload()
 #endif
@@ -128,6 +125,8 @@ public static class MauiProgram
 					var id = Win32Interop.GetWindowIdFromWindow(handle);
 
 					var appWindow = AppWindow.GetFromWindowId(id);
+					
+					//appWindow.Resize(new SizeInt32() {Width = 1280, Height = 720});
 					var titleBar = appWindow.TitleBar;
 					appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 

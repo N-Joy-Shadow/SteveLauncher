@@ -8,23 +8,33 @@
     xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:v="clr-namespace:UraniumUI.Validations;assembly=UraniumUI.Validations.DataAnnotations"
     xmlns:vm="using:SteveLauncher.Views.Home.Popups"
-    x:DataType="vm:RegisterServerPopupViewModel" Closed="OnClosed"
-    Color="Black">
-    <FlexLayout AlignItems="Center" Direction="Column">
-        <Label
-            FontAttributes="Bold"
-            FontSize="48"
-            Text="서버 등록" />
-        <BoxView StyleClass="Divider" />
-        <input:FormView Spacing="30" SubmitCommand="{Binding SubmitServerCommand}">
-            <!--<material:TextField Title="Host Name" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Home_filled}}"
-                                AllowClear="True"
-                Text="{Binding Hostname , Mode=TwoWay}"/>-->
-            <BoxView StyleClass="Divider" />
-            <Button input:FormView.IsSubmitButton="True" Text="Submit" />
-        </input:FormView>
+    x:DataType="vm:RegisterServerPopupViewModel"
+    Color="Transparent">
 
-    </FlexLayout>
+    <Frame BackgroundColor="#1f808080" CornerRadius="20">
+        <FlexLayout AlignItems="Center" Direction="Column">
+            <Label
+                FontAttributes="Bold"
+                FontSize="48"
+                HorizontalTextAlignment="Start"
+                Text="Register Server" />
+            <input:FormView Spacing="15" SubmitCommand="{Binding SubmitServerCommand}">
+                <BoxView StyleClass="Divider" />
+                <material:TextField
+                    Title="Host Name"
+                    AllowClear="True"
+                    HorizontalOptions="StartAndExpand"
+                    Icon="{FontImageSource FontFamily=MaterialRegular,
+                                           Glyph={x:Static m:MaterialRegular.Home_filled}}"
+                    MinimumWidthRequest="360"
+                    Text="{Binding Hostname, Mode=TwoWay}" />
+                <Button
+                    input:FormView.IsSubmitButton="True"
+                    HorizontalOptions="EndAndExpand"
+                    Text="Submit" />
+            </input:FormView>
+
+        </FlexLayout>
+    </Frame>
 </toolkit:Popup>

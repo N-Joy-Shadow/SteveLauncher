@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using McLib.Extension;
 using Microsoft.EntityFrameworkCore;
 
 namespace SteveLauncher.Data.Database;
 
 [Table("LocalServerList")]
-public class LocalServerListDatabase {
+public class LocalServerListDatabase : IMinecraftServer {
  
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

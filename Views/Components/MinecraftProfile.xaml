@@ -1,14 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="SteveLauncher.Views.Components.MinecraftProfile">
-    
+<ContentView
+    x:Class="SteveLauncher.Views.Components.MinecraftProfile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
     <HorizontalStackLayout toolkit:StateContainer.CurrentState="{Binding CurrentAuthState, Converter={StaticResource EnumToStringConverter}}">
         <toolkit:StateContainer.StateViews>
-            <HorizontalStackLayout VerticalOptions="Center" Spacing="8"
-                                   toolkit:StateView.StateKey="Auth">
+            <HorizontalStackLayout
+                toolkit:StateView.StateKey="Auth"
+                Spacing="8"
+                VerticalOptions="Center">
                 <FlyoutBase.ContextFlyout>
                     <MenuFlyout>
                         <MenuFlyoutItem
@@ -18,11 +21,19 @@
                     </MenuFlyout>
                 </FlyoutBase.ContextFlyout>
                 <Label Text="{Binding UserProfile.UserName}" VerticalTextAlignment="Center" />
-                    <Image WidthRequest="40" x:Name="UserIconImage"
-                           Height="40"
-                           Aspect="AspectFit" />
+                <Image
+                    x:Name="UserIconImage"
+                    Height="40"
+                    Aspect="AspectFit"
+                    WidthRequest="40" />
             </HorizontalStackLayout>
-            <Button toolkit:StateView.StateKey="UnAuth" Text="Login" Command="{Binding ShowLoginPopupCommand}" Margin="4" BackgroundColor="Transparent"/>
+            <Button
+                Margin="4"
+                toolkit:StateView.StateKey="UnAuth"
+                BackgroundColor="Transparent"
+                Command="{Binding ShowLoginPopupCommand}"
+                Text="Login"
+                TextColor="White" />
         </toolkit:StateContainer.StateViews>
     </HorizontalStackLayout>
 </ContentView>

@@ -107,6 +107,7 @@
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="UraniumUI" Version="2.10.2" />
+		<PackageReference Include="UraniumUI.Blurs" Version="2.10.2" />
 		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.10.2" />
 		<PackageReference Include="UraniumUI.Material" Version="2.10.2" />
 		<PackageReference Include="UraniumUI.Validations.DataAnnotations" Version="2.10.2" />
@@ -144,18 +145,6 @@
 	  <ProjectReference Include="..\McLib\McLib\McLib.csproj" />
 	  <ProjectReference Include="..\McMotd.Net\McMotd.MAUI\McMotd.MAUI.csproj" />
 	  <ProjectReference Include="..\McMotd.Net\McMotd\McMotd.csproj" />
-	</ItemGroup>
-
-
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-maccatalyst'">
-	  <PackageReference Include="AcrylicView.Maui" Version="2.1.3" />
-	</ItemGroup>
-
-
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0'">
-	  <PackageReference Include="AcrylicView.Maui" Version="2.1.3" />
 	</ItemGroup>
 
 

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Maui.Plugins.PageResolver.Attributes;
 using McLib.Auth.Model.Minecraft;
+using McLib.Model.Network.Dns;
 using Microsoft.EntityFrameworkCore.Query;
 using SteveLauncher.API.Enum;
 using SteveLauncher.API.Repository;
@@ -14,9 +15,6 @@ using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Login;
 
 namespace SteveLauncher.Views.Home;
-
-
-
 
 public partial class HomeViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
@@ -36,9 +34,10 @@ public partial class HomeViewModel : BaseViewModel {
     //나중에 Enum으로 바꾸기
     [ObservableProperty]
     private AuthStateEnum currentAuthState = AuthStateEnum.UnAuth;
-    
+
     [ObservableProperty]
     private UserProfile? userProfile = null;
+
     public event Action<MinecraftServerInfo> OnServerInfoChange;
 
     public HomeViewModel(
@@ -81,25 +80,23 @@ public partial class HomeViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task DeleteServer(MinecraftServerInfo serverInfo) {
-        serverService.DeleteServer(serverInfo);
+        var result = serverService.DeleteServer(serverInfo);
+        if (result)
+            LoadServerStatusAsync();
     }
 
     [RelayCommand]
     async Task ShowRegisterPopup() {
-        var hostname = await popupService.ShowPopupAsync<RegisterServerPopupViewModel>(CancellationToken.None);
-        
+        var obj = await popupService.ShowPopupAsync<RegisterServerPopupViewModel>(CancellationToken.None);
+        if (obj is bool isRegistered)
+            LoadServerStatusAsync();
     }
 
     [RelayCommand]
-    async Task Login() {
-    }
-    
-    [RelayCommand]
     async Task ShowSettingPopup() {
-        var a = await popupService.ShowPopupAsync<SettingPopupViewModel>(CancellationToken.None);
-        
+        var res = await popupService.ShowPopupAsync<SettingPopupViewModel>(CancellationToken.None);
     }
-    
+
     [RelayCommand]
     async void ShowLoginPopup() {
         var res = await popupService.ShowPopupAsync<LoginViewModel>(CancellationToken.None);
@@ -107,8 +104,8 @@ public partial class HomeViewModel : BaseViewModel {
             Debug.WriteLine(res);
         }
         //성공 할 경우
-        else if(res is McUserProfile profile) {
-            secureStorageRepository.InsertAsync(SecureStorageEnum.USER_PROFILE,profile);
+        else if (res is McUserProfile profile) {
+            secureStorageRepository.InsertAsync(SecureStorageEnum.USER_PROFILE, profile);
             CurrentAuthState = AuthStateEnum.Auth;
             //나중에 리팩토링 필요 
             UserProfile = new UserProfile(profile.UserName, profile.UUID);
@@ -119,6 +116,5 @@ public partial class HomeViewModel : BaseViewModel {
     async void Logout() {
         UserProfile = null;
         CurrentAuthState = AuthStateEnum.UnAuth;
-
     }
 }

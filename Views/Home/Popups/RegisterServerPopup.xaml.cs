@@ -20,11 +20,7 @@ public partial class RegisterServerPopup : Popup {
         vm.OnClosePopup += OnClosedPopup;
     }
 
-    private void OnClosedPopup(MinecraftURL hostname) {
-        
-    }
-
-    private void OnClosed(object? sender, PopupClosedEventArgs e) {
-        OnClosedPopup(null);
+    private async void OnClosedPopup(bool isRegistered) {
+        await CloseAsync(isRegistered,CancellationToken.None);
     }
 }

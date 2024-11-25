@@ -1,4 +1,5 @@
-﻿using Maui.Plugins.PageResolver.Attributes;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using Maui.Plugins.PageResolver.Attributes;
 using McLib.API.Services;
 using McLib.Model.Network.Dns;
 using SteveLauncher.API.Repository;
@@ -34,7 +35,8 @@ public class MinecraftServerService: IMinecraftServerService {
                 Version = info.ServerUpdatable.Version,
                 PlayerInfo = new() {
                     Max = info.ServerUpdatable.MaxPlayer ?? 0,
-                    Currnet = info.ServerUpdatable.CurrentPlayer ?? 0
+                    Currnet = info.ServerUpdatable.CurrentPlayer ?? 0,
+                    UserNames = info.ServerUpdatable.Player.Select(x => x.Name).ToObservableCollection()
                 }
             });
         }
@@ -55,10 +57,11 @@ public class MinecraftServerService: IMinecraftServerService {
         return true;
     }
 
+    //TODO: 나중에 전부 예외처리로 바꾸기~
     public async Task<bool> RegisterServer(MinecraftURL hostname) {
         var srv = await this.dnsService.executeAsync(hostname);
         var result = serverRepository.FetchServer(new MinecraftHost(srv,hostname));
-        if(result.ServerUpdatable.isOnline)
+        if(result.ServerUpdatable.isOnline || result.ServerUpdatable.Motd is not null)
             return await this.localServerListRepository.AddServer(new (hostname,srv));
         return false;
     }

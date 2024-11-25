@@ -11,7 +11,7 @@ public class MinecraftHost {
         this.Host = Host;
     }
     
-    public MinecraftHost(string HostName, ushort Port, string SRVHostName, ushort SRVPort) {
+    public MinecraftHost(string SRVHostName, ushort SRVPort,string HostName, ushort Port) {
         this.Host = new MinecraftURL(HostName, Port);
         this.SRVHost = new MinecraftURL(SRVHostName, SRVPort);
     }

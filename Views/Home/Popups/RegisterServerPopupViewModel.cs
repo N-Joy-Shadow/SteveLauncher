@@ -9,28 +9,23 @@ namespace SteveLauncher.Views.Home.Popups;
 public partial class RegisterServerPopupViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
 
-    public event Action<MinecraftURL> OnClosePopup;
+    public event Action<bool> OnClosePopup;
     
     [ObservableProperty] 
     private string hostname = "";
     
     public RegisterServerPopupViewModel(
-        IMinecraftServerStatusRepository serverRepository) {
+        IMinecraftServerService serverService) {
         this.serverService = serverService;
     }
 
 
     [RelayCommand]
     async Task SubmitServer() {
-        if (Hostname is null)
+        if (string.IsNullOrEmpty(Hostname))
             return;
-        MinecraftURL host = (MinecraftURL)Hostname;
+        var res = await serverService.RegisterServer(new MinecraftURL(Hostname));
         
-        var res = await serverService.RegisterServer(host);
-        // WeakReferenceMessenger.Default.Send(new ServerAddedMessage(res));
-        //
-        // if (res) {
-        //     WeakReferenceMessenger.Default.Send(new ServerAddedMessage(res));
-        // }
+        OnClosePopup?.Invoke(res);
     }
 }
