@@ -4,11 +4,13 @@ using McLib.Auth.Model.Minecraft;
 
 namespace SteveLauncher.Extension;
 
-public class MSessionExtension {
-    public MSessionExtension() {
+public static class MSessionExtension {
+    
 
+    public static MSession CreateMSession(this McUserProfile profile) {
+        return MSessionExtension.Create(profile);
     }
-
+    
     public static MSession Create(McUserProfile profile) {
         return new MSession {
             Username = profile.UserName,

@@ -6,7 +6,6 @@
              x:Class="SteveLauncher.Views.Components.MinecraftProfile">
     
     <HorizontalStackLayout toolkit:StateContainer.CurrentState="{Binding CurrentAuthState, Converter={StaticResource EnumToStringConverter}}">
-        <Label Text="{Binding CurrentAuthState, Converter={StaticResource EnumToStringConverter}}" />
         <toolkit:StateContainer.StateViews>
             <HorizontalStackLayout VerticalOptions="Center" Spacing="8"
                                    toolkit:StateView.StateKey="Auth">
@@ -19,13 +18,11 @@
                     </MenuFlyout>
                 </FlyoutBase.ContextFlyout>
                 <Label Text="{Binding UserProfile.UserName}" VerticalTextAlignment="Center" />
-
                     <Image WidthRequest="40" x:Name="UserIconImage"
                            Height="40"
                            Aspect="AspectFit" />
             </HorizontalStackLayout>
-            <Button toolkit:StateView.StateKey="UnAuth" Text="Login" Command="{Binding ShowLoginPopupCommand}"/>
+            <Button toolkit:StateView.StateKey="UnAuth" Text="Login" Command="{Binding ShowLoginPopupCommand}" Margin="4" BackgroundColor="Transparent"/>
         </toolkit:StateContainer.StateViews>
     </HorizontalStackLayout>
-    
 </ContentView>

@@ -1,14 +1,14 @@
 using CommunityToolkit.Maui.Core;
 using McLib.Auth.API;
 using McLib.Auth.Model.Minecraft;
+using McLib.Auth.Utils;
 
 namespace SteveLauncher.Views.Login;
 
 public partial class LoginViewModel : BaseViewModel {
     private readonly IMcLoginService _loginService;
-    private readonly string clientId = "22253aaa-98bd-48b6-a004-f732131d6961";
-
-
+    private const string clientId = "22253aaa-98bd-48b6-a004-f732131d6961";
+    
     public McUserProfile userProfile;
     
     public LoginViewModel(
@@ -18,10 +18,15 @@ public partial class LoginViewModel : BaseViewModel {
     }
 
     public async Task<bool> LoginAsync(string redirectUrl) {
+        // if (!MicrosoftAuthCodeParser.TryParseCode(redirectUrl, out var code)) {
+        //     return false;
+        // } 
+
         if (!redirectUrl.Contains("code=")) {
             return false;
         }
         string code = redirectUrl.Split("=")[1].Split("&")[0];
+
         try {
             userProfile = await _loginService.LoginAsync(code, clientId);
             return true;

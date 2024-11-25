@@ -12,6 +12,6 @@
                FontSize="48"/>
         <BoxView Height="2" BackgroundColor="Aqua"/>
         <view:MotdView Motd="{Binding Motd}" FontSize="24"/>
-        <extension:ImageView SourceFromBase64="{Binding Icon}"/>
+        <BoxView BackgroundColor="Gray" />
     </VerticalStackLayout>
 </ContentView>

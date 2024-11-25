@@ -22,14 +22,14 @@ public partial class Login : Popup {
 
 
     private async void WebView_OnNavigated(object? sender, WebNavigatedEventArgs e) {
-        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-
-        if (await viewModel.LoginAsync(e.Url)) {
-             await CloseAsync(viewModel.userProfile,cts.Token);
-            
-        }
-        else { //타입 너무 대충 지은듯
-            await CloseAsync("오류가 발생하였습니다.",cts.Token);
+        if (e.Url.Contains("code=")) {
+            if (await viewModel.LoginAsync(e.Url)) {
+                await CloseAsync(viewModel.userProfile, CancellationToken.None);
+            }
+            else {
+                //타입 너무 대충 지은듯
+                await CloseAsync("오류가 발생하였습니다.", CancellationToken.None);
+            }
         }
 
         //Close("오류가 발생하였습니다.");

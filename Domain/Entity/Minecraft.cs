@@ -17,4 +17,5 @@ public class MinecraftServerInfo {
 public class MinecraftPlayer {
     public int Max { get; set; }
     public int Currnet { get; set; }
+    public string[] UserNames { get; set; }
 }

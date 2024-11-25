@@ -65,20 +65,8 @@
             </ui:AcrylicView>
         </Grid>
 
-
+        <homecomponent:FooterView Grid.Row="2"/>
         <!--  프로그래스 바 및 시작 버튼  -->
-        <FlexLayout
-            Grid.Row="2"
-            Direction="Row"
-            JustifyContent="SpaceEvenly">
-            <VerticalStackLayout FlexLayout.Grow="1">
-                <ProgressBar Height="4" />
-                <Label FontSize="8" Text="10%"/>
-            </VerticalStackLayout>
-            <Button
-                Margin="5"
-                FlexLayout.Grow="0"
-                Text="Start"/>
-        </FlexLayout>
+        
     </Grid>
 </ContentPage>
