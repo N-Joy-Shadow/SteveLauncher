@@ -27,6 +27,7 @@ public class MinecraftServerService: IMinecraftServerService {
         var list = localServerListRepository.GetServerList();
         foreach (var host in list) {
             var info = serverRepository.FetchServer(host);
+            Debug.WriteLine($"{info.HostName}: {string.Join(", ", info.ServerUpdatable.Player.Select(x => x.Name))}");
             result.Add(new () {
                 isOnline = info.ServerUpdatable.isOnline,
                 Motd = info.ServerUpdatable.Motd,
@@ -36,7 +37,7 @@ public class MinecraftServerService: IMinecraftServerService {
                 PlayerInfo = new() {
                     Max = info.ServerUpdatable.MaxPlayer ?? 0,
                     Currnet = info.ServerUpdatable.CurrentPlayer ?? 0,
-                    UserNames = info.ServerUpdatable.Player.Select(x => x.Name).ToObservableCollection()
+                    UserNames = info.ServerUpdatable.Player.Select(x => x.Name).ToHashSet().ToObservableCollection()
                 }
             });
         }

@@ -41,8 +41,8 @@
 
                 <VerticalStackLayout>
                     <Label
-                        FontFamily="MonocraftBold"
                         FontSize="24"
+                        FontAttributes="Bold"
                         Text="{Binding HostName.HostName}" />
                     <motd:MotdView FontSize="18" Motd="{Binding Motd}" />
                 </VerticalStackLayout>

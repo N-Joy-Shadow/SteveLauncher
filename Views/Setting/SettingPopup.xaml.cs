@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Maui.Views;
 using SteveLauncher.Utils.Popups;
 
-namespace SteveLauncher.Views.Home.Popups;
+namespace SteveLauncher.Views.Setting;
 
 public partial class SettingPopup : Popup {
     private SettingPopupViewModel vm;

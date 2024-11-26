@@ -61,7 +61,7 @@
                 </CollectionView>
             </VerticalStackLayout>
             <!-- <ui:AcrylicView Grid.Column="1" EffectStyle="ExtraDark"> -->
-            <homecomponent:ServerInfoView Grid.Column="1" />
+            <homecomponent:ServerInfoView Grid.Column="1" IsVisible="{Binding SelectedServerInfo,Converter={StaticResource NullToBoolConverter}}" />
             <!-- </ui:AcrylicView> -->
         </Grid>
 

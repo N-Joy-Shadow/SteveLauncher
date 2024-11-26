@@ -14,7 +14,6 @@
                 FontSize="48"
                 Text="{Binding SelectedServerInfo.HostName.HostName}" />
             <Label
-                FontFamily="MonocraftLight"
                 FontSize="14"
                 Text="{Binding SelectedServerInfo.Version}" />
             <FlexLayout Direction="Row">

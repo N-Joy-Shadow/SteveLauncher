@@ -8,7 +8,6 @@
     xmlns:components="clr-namespace:SteveLauncher.Views.Components"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui">
     <FlexLayout JustifyContent="SpaceBetween" VerticalOptions="Center">
-        <!--  오른쪽으로 정렬  -->
         <HorizontalStackLayout
             Margin="5"
             Spacing="8"

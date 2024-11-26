@@ -9,10 +9,12 @@ using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
 using SteveLauncher.Data.Database;
 using SteveLauncher.Domain.Entity;
+using SteveLauncher.Domain.Service;
 using SteveLauncher.Utils;
 using SteveLauncher.Views.Home.Message;
 using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Login;
+using SteveLauncher.Views.Setting;
 
 namespace SteveLauncher.Views.Home;
 
@@ -20,6 +22,7 @@ public partial class HomeViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
     private readonly ISecureStorageRepository secureStorageRepository;
     private readonly IPopupService popupService;
+    private readonly IMinecraftGameService gameService;
 
     [ObservableProperty]
     private RangeObservableCollection<MinecraftServerInfo> serverStatusList = new();
@@ -43,11 +46,13 @@ public partial class HomeViewModel : BaseViewModel {
     public HomeViewModel(
         IMinecraftServerService minecraftServerService,
         ISecureStorageRepository secureStorageRepository,
-        IPopupService popupService
+        IPopupService popupService,
+        IMinecraftGameService gameService
     ) {
         this.serverService = minecraftServerService;
         this.secureStorageRepository = secureStorageRepository; //나중에 서비스로 빼야함 
         this.popupService = popupService;
+        this.gameService = gameService;
     }
 
     protected override void BindingMessageCenter() {
@@ -94,7 +99,17 @@ public partial class HomeViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task ShowSettingPopup() {
-        var res = await popupService.ShowPopupAsync<SettingPopupViewModel>(CancellationToken.None);
+        var settings = await gameService.GetSetting();
+        
+        var res = await popupService.ShowPopupAsync<SettingPopupViewModel>((settingViewModel) => {
+            if (settings is not null) {
+                settingViewModel.MinecraftHeight = settings.Height;
+                settingViewModel.MinecraftWidth = settings.Width;
+                settingViewModel.AllocatedMemory = settings.AllocatedMemory;
+                settingViewModel.MinecraftPath = settings.MinecraftPath;
+            }
+            
+        },CancellationToken.None);
     }
 
     [RelayCommand]
@@ -116,5 +131,10 @@ public partial class HomeViewModel : BaseViewModel {
     async void Logout() {
         UserProfile = null;
         CurrentAuthState = AuthStateEnum.UnAuth;
+    }
+    
+    [RelayCommand]
+    async void StartGame() {
+        await gameService.StartGame("1.20.1");
     }
 }

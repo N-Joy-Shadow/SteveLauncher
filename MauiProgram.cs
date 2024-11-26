@@ -13,6 +13,7 @@ using SteveLauncher.Utils.Popups;
 using SteveLauncher.Views.GameLog;
 using SteveLauncher.Views.Home;
 using SteveLauncher.Views.Home.Popups;
+using SteveLauncher.Views.Setting;
 using SteveLauncher.Views.Login;
 using UraniumUI;
 
@@ -68,7 +69,7 @@ public static class MauiProgram
 #if DEBUG
 			options.UseInMemoryDatabase("steveLauncher");		
 #else
-			options.UseSqlite($"Data Source={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "steveLauncher.db")}");
+			options.UseSqlite($"Data Source={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "steveLauncher.db")}");
 #endif
 		});
 

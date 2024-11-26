@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="using:SteveLauncher.Views.Setting"
+             x:Class="SteveLauncher.Views.Setting.Pages.McSettingPage"
+             x:DataType="vm:SettingPopupViewModel">
+    <VerticalStackLayout Spacing="20" Margin="20">
+        <!--Minecraft Path-->
+        <VerticalStackLayout Spacing="10">
+            <Label Text="Install Path"/>
+            <HorizontalStackLayout Spacing="5">
+                <Entry IsReadOnly="True" Placeholder="F:/Game/Minecraft" Text="{Binding MinecraftPath}" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Change"/>
+                <Button Text="Open "/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        
+        <!--Minecraft Resolution-->
+        <VerticalStackLayout Spacing="10">
+            <Label Text=" Game Resolution"/>
+            <HorizontalStackLayout Spacing="5">
+                <Entry Placeholder="Width" Keyboard="Numeric" WidthRequest="150" Text="{Binding Width}">
+                    <Entry.Behaviors>
+                        <toolkit:NumericValidationBehavior/>
+                    </Entry.Behaviors>  
+                </Entry>
+                <Entry Placeholder="Height" Keyboard="Numeric" WidthRequest="150" BindingContext="{Binding Height}">
+                    <Entry.Behaviors>
+                        <toolkit:NumericValidationBehavior/>
+                    </Entry.Behaviors>
+                </Entry>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        
+        <!--Minecraft Memory Allocation-->
+        <VerticalStackLayout Spacing="10">
+            <Label Text="Allocated Memory"/>
+            <Entry Text="{Binding AllocatedMemory}" Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <toolkit:NumericValidationBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Slider x:Name="MemorySldier" Maximum="8192" Minimum="1024" Value="{Binding AllocatedMemory}"/>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

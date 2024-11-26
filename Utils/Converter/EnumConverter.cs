@@ -1,7 +1,7 @@
 ﻿
 namespace SteveLauncher.Utils.Converter;
 
-public class AuthStateConverter : IValueConverter {
+public class EnumToStringConverter : IValueConverter {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) {
         if (value is Enum enumValue)
         {

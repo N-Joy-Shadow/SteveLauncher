@@ -16,6 +16,7 @@
 
         </VerticalStackLayout>
         <Button
+            Command="{Binding StartGameCommand}"
             Margin="5"
             FlexLayout.Grow="0"
             Text="Start"
