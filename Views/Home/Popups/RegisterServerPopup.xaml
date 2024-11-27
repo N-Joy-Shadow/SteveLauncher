@@ -30,21 +30,9 @@
             </ImageButton>
         </FlexLayout>
         <VerticalStackLayout Grid.Row="1">
-            <Label
-                FontAttributes="Bold"
-                FontSize="48"
-                HorizontalTextAlignment="Start"
-                Text="Register Server" />
             <input:FormView Spacing="15" SubmitCommand="{Binding SubmitServerCommand}">
                 <BoxView StyleClass="Divider" />
-                <material:TextField
-                    Title="Host Name"
-                    AllowClear="True"
-                    HorizontalOptions="StartAndExpand"
-                    Icon="{FontImageSource FontFamily=MaterialRegular,
-                                           Glyph={x:Static m:MaterialRegular.Home_filled}}"
-                    MinimumWidthRequest="360"
-                    Text="{Binding Hostname, Mode=TwoWay}" />
+                <Entry Placeholder="ex)mc.hypixel.net:25565" Text="{Binding Hostname}"/>
                 <Button
                     input:FormView.IsSubmitButton="True"
                     HorizontalOptions="EndAndExpand"

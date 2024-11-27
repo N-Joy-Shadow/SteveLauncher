@@ -8,7 +8,9 @@ using Microsoft.Maui.LifecycleEvents;
 using SteveLauncher.Data.Database;
 using Microsoft.Extensions.Logging;
 using SteveLauncher.API.Repository;
+using SteveLauncher.API.Service;
 using SteveLauncher.Data.RepositoryImpl;
+using SteveLauncher.Domain.Service;
 using SteveLauncher.Utils.Popups;
 using SteveLauncher.Views.GameLog;
 using SteveLauncher.Views.Home;
@@ -39,7 +41,9 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.UseMauiCommunityToolkit()
+			.UseMauiCommunityToolkit(options => {
+				options.SetShouldEnableSnackbarOnWindows(true);
+			})
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
 			.UseUraniumUIBlurs()
@@ -92,10 +96,11 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IMinecraftLoginRepository, MinecraftLoginRepository>();
 		builder.Services.AddSingleton<ILocalServerListRepository, LocalServerRepository>();
 		builder.Services.AddSingleton<IMinecraftServerStatusRepository, MinecraftServerStatusRepository>();
-		builder.Services.AddSingleton<ISecureStorageRepository, SecureStorageRepository>();
+		builder.Services.AddSingleton<IStorageRepository, StorageRepository>();
 		//misc
 		builder.Services.AddSingleton<PopupSizeConstants>();
 		builder.Services.AddSingleton<IDeviceDisplay>(DeviceDisplay.Current);
+		builder.Services.AddSingleton<IDirectoryLaunchService, DirectoryLaunchService>();
 		builder.Services.AddHttpClient();
 #if MACCATALYST
 		builder.ConfigureLifecycleEvents(events => {

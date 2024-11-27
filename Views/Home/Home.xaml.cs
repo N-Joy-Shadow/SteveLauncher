@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Alerts;
 using Microsoft.Maui.Controls.Shapes;
 using SteveLauncher.Domain.Entity;
 
@@ -16,6 +17,11 @@ public partial class Home : ContentPage {
         this.vm = (HomeViewModel)BindingContext;
         
         vm.OnServerInfoChange += OnOnServerInfoChange;
+        vm.OnShowToast += OnOnShowToast;
+    }
+
+    private async void OnOnShowToast(ToastMessage obj) {
+        await DisplayAlert(obj.Title,obj.Content,"Ok");
     }
 
     private void OnOnServerInfoChange(MinecraftServerInfo serverinfo) {

@@ -17,7 +17,7 @@ public partial class RegisterServerPopup : Popup {
         InitializeComponent();
         BindingContext = viewModel;
         this.vm = (RegisterServerPopupViewModel)BindingContext;
-        Size = sizeConstants.MediumRatio;
+        Size = sizeConstants.Medium;
         vm.OnClosePopup += OnClosedPopup;
     }
 

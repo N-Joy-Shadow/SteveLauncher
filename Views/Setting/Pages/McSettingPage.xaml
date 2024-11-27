@@ -10,11 +10,17 @@
         <!--Minecraft Path-->
         <VerticalStackLayout Spacing="10">
             <Label Text="Install Path"/>
-            <HorizontalStackLayout Spacing="5">
-                <Entry IsReadOnly="True" Placeholder="F:/Game/Minecraft" Text="{Binding MinecraftPath}" HorizontalOptions="FillAndExpand"/>
-                <Button Text="Change"/>
-                <Button Text="Open "/>
-            </HorizontalStackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Entry Grid.Column="0" IsReadOnly="True" Placeholder="Minecraft Path" Text="{Binding MinecraftPath}" 
+                       Margin="0,0,5,0"/>
+                <Button Grid.Column="2" Text="Open " WidthRequest="100" Command="{Binding ShowDirectoryCommand}" CornerRadius="10"/>
+                <Button Grid.Column="1" Text="Change" WidthRequest="100" Margin="0,0,5,0" Command="{Binding ChangeDirectoryCommand}" CornerRadius="10"/>
+            </Grid>
         </VerticalStackLayout>
         
         <!--Minecraft Resolution-->
@@ -26,7 +32,7 @@
                         <toolkit:NumericValidationBehavior/>
                     </Entry.Behaviors>  
                 </Entry>
-                <Entry Placeholder="Height" Keyboard="Numeric" WidthRequest="150" Text="{Binding  MinecraftWidth}">
+                <Entry Placeholder="Height" Keyboard="Numeric" WidthRequest="150" Text="{Binding  MinecraftHeight}">
                     <Entry.Behaviors>
                         <toolkit:NumericValidationBehavior/>
                     </Entry.Behaviors>

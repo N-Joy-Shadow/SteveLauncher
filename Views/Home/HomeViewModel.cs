@@ -1,10 +1,13 @@
-﻿using CommunityToolkit.Maui.Core;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Messaging;
 using Maui.Plugins.PageResolver.Attributes;
 using McLib.Auth.Model.Minecraft;
 using McLib.Model.Network.Dns;
 using Microsoft.EntityFrameworkCore.Query;
+using SteveLauncher.API;
 using SteveLauncher.API.Enum;
+using SteveLauncher.API.Exception;
 using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
 using SteveLauncher.Data.Database;
@@ -20,10 +23,9 @@ namespace SteveLauncher.Views.Home;
 
 public partial class HomeViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
-    private readonly ISecureStorageRepository secureStorageRepository;
+    private readonly IStorageRepository _storageRepository;
     private readonly IPopupService popupService;
     private readonly IMinecraftGameService gameService;
-
     [ObservableProperty]
     private RangeObservableCollection<MinecraftServerInfo> serverStatusList = new();
 
@@ -43,14 +45,15 @@ public partial class HomeViewModel : BaseViewModel {
 
     public event Action<MinecraftServerInfo> OnServerInfoChange;
 
+    public event Action<ToastMessage> OnShowToast;
     public HomeViewModel(
         IMinecraftServerService minecraftServerService,
-        ISecureStorageRepository secureStorageRepository,
+        IStorageRepository storageRepository,
         IPopupService popupService,
         IMinecraftGameService gameService
     ) {
         this.serverService = minecraftServerService;
-        this.secureStorageRepository = secureStorageRepository; //나중에 서비스로 빼야함 
+        this._storageRepository = storageRepository; //나중에 서비스로 빼야함 
         this.popupService = popupService;
         this.gameService = gameService;
     }
@@ -107,16 +110,10 @@ public partial class HomeViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task ShowSettingPopup() {
-        var settings = await gameService.GetSetting();
+        var settings = gameService.GetSetting();
         
-        var resultSetting = await popupService.ShowPopupAsync<SettingPopupViewModel>((settingViewModel) => {
-            if (settings is not null) {
-                settingViewModel.MinecraftHeight = settings.Height;
-                settingViewModel.MinecraftWidth = settings.Width;
-                settingViewModel.AllocatedMemory = settings.AllocatedMemory;
-                settingViewModel.MinecraftPath = settings.MinecraftPath;
-            }
-        },CancellationToken.None);
+        var resultSetting = await popupService.ShowPopupAsync<SettingPopupViewModel>(settingViewModel 
+            => settingViewModel.SetSettings(settings),CancellationToken.None);
         
         if(resultSetting is MinecraftGameSetting setting) {
             gameService.SetSettings(setting);
@@ -131,7 +128,7 @@ public partial class HomeViewModel : BaseViewModel {
         }
         //성공 할 경우
         else if (res is McUserProfile profile) {
-            secureStorageRepository.InsertAsync(SecureStorageEnum.USER_PROFILE, profile);
+            _storageRepository.Insert(StorageEnum.USER_PROFILE, profile);
             CurrentAuthState = AuthStateEnum.Auth;
             //나중에 리팩토링 필요 
             UserProfile = new UserProfile(profile.UserName, profile.UUID);
@@ -146,8 +143,24 @@ public partial class HomeViewModel : BaseViewModel {
     
     [RelayCommand]
     async void StartGame() {
-        if (SelectedServerInfo is not null) {
+        if (SelectedServerInfo is null) {
+            OnShowToast.Invoke(new () {
+                Content = "서버를 선택해주세요",
+                Title = "서버 선택 필요",
+            });
+            return;
+        }
+
+        try {
             await gameService.StartGame(SelectedServerInfo.HostName);
+        }
+        catch (Exception e) {
+            if (e is MinecraftLauncherNotAuthorizedException) {
+                OnShowToast.Invoke(new () {
+                    Content = "게임시작전 로그인을 해주세요.",
+                    Title = "로그인 필요",
+                });
+            }
         }
     }
 }

@@ -7,7 +7,6 @@ namespace SteveLauncher.API.Service;
 public interface IMinecraftGameService {
     Task StartGame(MinecraftURL url);
     void SetSettings(MinecraftGameSetting setting);
-    void SetGamePath(string Path);
     void SetGameVersion(string version);
-    Task<MinecraftGameSetting?> GetSetting();
+    MinecraftGameSetting GetSetting();
 }

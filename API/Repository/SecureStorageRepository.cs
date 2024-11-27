@@ -2,21 +2,15 @@
 
 namespace SteveLauncher.API.Repository;
 
-public interface ISecureStorageRepository {
+public interface IStorageRepository {
     [Obsolete("This method is not recommended. Consider using 'Get<T>(SecureStorageEnum)'", false)]
-    Task<T> GetAsync<T>(string key);
-    Task<T> GetAsync<T>(SecureStorageEnum key);
-    Task<string> GetRawValueAsync(string key);
-    Task<string> GetRawValueAsync(SecureStorageEnum key);
-    /// <summary>
-    /// 기본적으로 덮어씌우기임
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="item"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    Task InsertAsync<T>(string key, T item);
-    Task InsertAsync<T>(SecureStorageEnum key, T item);
+    T Get<T>(string key);
+    T Get<T>(StorageEnum key);
+    string GetRawValue(string key);
+    string GetRawValue(StorageEnum key);
+    
+    void Insert<T>(string key, T item);
+    void Insert<T>(StorageEnum key, T item);
     bool Remove(string key);
-    bool Remove(SecureStorageEnum key);
+    bool Remove(StorageEnum key);
 }
