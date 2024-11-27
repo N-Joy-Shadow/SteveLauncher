@@ -93,7 +93,6 @@ public static class MauiProgram
 		builder.Services.AddSingleton<ILocalServerListRepository, LocalServerRepository>();
 		builder.Services.AddSingleton<IMinecraftServerStatusRepository, MinecraftServerStatusRepository>();
 		builder.Services.AddSingleton<ISecureStorageRepository, SecureStorageRepository>();
-
 		//misc
 		builder.Services.AddSingleton<PopupSizeConstants>();
 		builder.Services.AddSingleton<IDeviceDisplay>(DeviceDisplay.Current);

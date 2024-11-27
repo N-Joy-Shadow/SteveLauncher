@@ -21,12 +21,12 @@
         <VerticalStackLayout Spacing="10">
             <Label Text=" Game Resolution"/>
             <HorizontalStackLayout Spacing="5">
-                <Entry Placeholder="Width" Keyboard="Numeric" WidthRequest="150" Text="{Binding Width}">
+                <Entry Placeholder="Width" Keyboard="Numeric" WidthRequest="150" Text="{Binding MinecraftWidth}">
                     <Entry.Behaviors>
                         <toolkit:NumericValidationBehavior/>
                     </Entry.Behaviors>  
                 </Entry>
-                <Entry Placeholder="Height" Keyboard="Numeric" WidthRequest="150" BindingContext="{Binding Height}">
+                <Entry Placeholder="Height" Keyboard="Numeric" WidthRequest="150" Text="{Binding  MinecraftWidth}">
                     <Entry.Behaviors>
                         <toolkit:NumericValidationBehavior/>
                     </Entry.Behaviors>

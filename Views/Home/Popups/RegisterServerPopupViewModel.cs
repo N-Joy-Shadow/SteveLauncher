@@ -21,6 +21,12 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
 
 
     [RelayCommand]
+    async Task ClosePopup() {
+        OnClosePopup?.Invoke(false);
+
+    }
+
+    [RelayCommand]
     async Task SubmitServer() {
         if (string.IsNullOrEmpty(Hostname))
             return;

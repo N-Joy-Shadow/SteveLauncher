@@ -15,8 +15,8 @@ public interface ISecureStorageRepository {
     /// <param name="item"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    void InsertAsync<T>(string key, T item);
-    void InsertAsync<T>(SecureStorageEnum key, T item);
+    Task InsertAsync<T>(string key, T item);
+    Task InsertAsync<T>(SecureStorageEnum key, T item);
     bool Remove(string key);
     bool Remove(SecureStorageEnum key);
 }

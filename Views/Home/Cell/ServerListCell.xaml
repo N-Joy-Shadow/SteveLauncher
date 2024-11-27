@@ -9,7 +9,6 @@
     xmlns:motd="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
     xmlns:pixel="using:SteveLauncher.Views.Components.UI"
     xmlns:type="using:SteveLauncher.Domain.Entity"
-    xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
     x:DataType="type:MinecraftServerInfo">
     <Grid
         x:Name="CellItem"

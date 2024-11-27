@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <toolkit:Popup
     x:Class="SteveLauncher.Views.Home.Popups.RegisterServerPopup"
@@ -8,12 +8,28 @@
     xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    CanBeDismissedByTappingOutsideOfPopup="False"
     xmlns:vm="using:SteveLauncher.Views.Home.Popups"
+
     x:DataType="vm:RegisterServerPopupViewModel"
     Color="Transparent">
-
-    <Frame BackgroundColor="#1f808080" CornerRadius="20">
-        <FlexLayout AlignItems="Center" Direction="Column">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <FlexLayout Grid.Row="0" Grid.ColumnSpan="2" JustifyContent="SpaceBetween"
+                    BackgroundColor="{StaticResource Secondary}" Padding="40,0"
+                    AlignItems="Center">
+            <Label Text="Register Server" FontAttributes="Bold" FontSize="32" VerticalTextAlignment="Center" />
+            <ImageButton Command="{Binding ClosePopupCommand}" StyleClass="OutlinedButton"
+                         BackgroundColor="Transparent">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Close}" />
+                </ImageButton.Source>
+            </ImageButton>
+        </FlexLayout>
+        <VerticalStackLayout Grid.Row="1">
             <Label
                 FontAttributes="Bold"
                 FontSize="48"
@@ -35,6 +51,6 @@
                     Text="Submit" />
             </input:FormView>
 
-        </FlexLayout>
-    </Frame>
+        </VerticalStackLayout>
+    </Grid>
 </toolkit:Popup>

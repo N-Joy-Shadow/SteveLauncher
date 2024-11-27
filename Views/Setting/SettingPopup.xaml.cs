@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Views;
+using SteveLauncher.Domain.Entity;
 using SteveLauncher.Utils.Popups;
 
 namespace SteveLauncher.Views.Setting;
@@ -20,7 +21,7 @@ public partial class SettingPopup : Popup {
         vm.OnClosePopup += OnClosePopup;
     }
 
-    private async void OnClosePopup(object? obj) {
-        await CloseAsync(obj);
+    private async void OnClosePopup(MinecraftGameSetting setting) {
+        await CloseAsync(setting);
     }
 }

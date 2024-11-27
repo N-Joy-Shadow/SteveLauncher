@@ -55,10 +55,18 @@ public partial class HomeViewModel : BaseViewModel {
         this.gameService = gameService;
     }
 
+    
+    
     protected override void BindingMessageCenter() {
         WeakReferenceMessenger.Default.Register<ServerAddedMessage>(this, (r, m) => {
             if (m.Value)
                 LoadServerStatusAsync();
+        });
+        
+        WeakReferenceMessenger.Default.Register<LoadingStateMessage>(this, (r, m) => {
+            if (m.Value.IsLoading) {
+                
+            }
         });
     }
 
@@ -101,15 +109,18 @@ public partial class HomeViewModel : BaseViewModel {
     async Task ShowSettingPopup() {
         var settings = await gameService.GetSetting();
         
-        var res = await popupService.ShowPopupAsync<SettingPopupViewModel>((settingViewModel) => {
+        var resultSetting = await popupService.ShowPopupAsync<SettingPopupViewModel>((settingViewModel) => {
             if (settings is not null) {
                 settingViewModel.MinecraftHeight = settings.Height;
                 settingViewModel.MinecraftWidth = settings.Width;
                 settingViewModel.AllocatedMemory = settings.AllocatedMemory;
                 settingViewModel.MinecraftPath = settings.MinecraftPath;
             }
-            
         },CancellationToken.None);
+        
+        if(resultSetting is MinecraftGameSetting setting) {
+            gameService.SetSettings(setting);
+        }
     }
 
     [RelayCommand]
@@ -135,6 +146,8 @@ public partial class HomeViewModel : BaseViewModel {
     
     [RelayCommand]
     async void StartGame() {
-        await gameService.StartGame("1.20.1");
+        if (SelectedServerInfo is not null) {
+            await gameService.StartGame(SelectedServerInfo.HostName);
+        }
     }
 }
