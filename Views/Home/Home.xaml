@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="SteveLauncher.Views.Home.Home"
@@ -30,38 +30,39 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <VerticalStackLayout Grid.Column="0">
-                <CollectionView
-                    Margin="20,10"
-                    HorizontalOptions="Fill"
-                    ItemSizingStrategy="MeasureFirstItem"
-                    ItemsSource="{Binding ServerStatusList}"
-                    SelectionMode="None"
-                    VerticalOptions="Fill">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="type:MinecraftServerInfo">
-                            <cell:ServerListCell
-                                Margin="5"
-                                BindingContext="{Binding}"
-                                ContextMenuCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=DeleteServerCommand}"
-                                TappedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GetServerInfoCommand}" />
+            <CollectionView
+                
+                Grid.Column="0"
+                Margin="20,10"
+                HorizontalOptions="Fill"
+                ItemSizingStrategy="MeasureFirstItem"
+                ItemsSource="{Binding ServerStatusList}"
+                SelectionMode="None"
+                VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="type:MinecraftServerInfo">
+                        <cell:ServerListCell
+                            Margin="5"
+                            BindingContext="{Binding}"
+                            ContextMenuCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=DeleteServerCommand}"
+                            TappedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GetServerInfoCommand}" />
 
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
 
-                    <CollectionView.EmptyView>
-                        <!--  나중에 따로 컴포넌트로 빼기  -->
-                        <ContentView>
-                            <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-                                <Label IsVisible="{Binding IsLoading}" Text="Loading..." />
-                                <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
-                            </VerticalStackLayout>
-                        </ContentView>
-                    </CollectionView.EmptyView>
-                </CollectionView>
-            </VerticalStackLayout>
+                <CollectionView.EmptyView>
+                    <!--  나중에 따로 컴포넌트로 빼기  -->
+                    <ContentView>
+                        <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                            <Label IsVisible="{Binding IsLoading}" Text="Loading..." />
+                            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+                        </VerticalStackLayout>
+                    </ContentView>
+                </CollectionView.EmptyView>
+            </CollectionView>
             <!-- <ui:AcrylicView Grid.Column="1" EffectStyle="ExtraDark"> -->
-            <homecomponent:ServerInfoView Grid.Column="1" IsVisible="{Binding SelectedServerInfo,Converter={StaticResource NullToBoolConverter}}" />
+            <homecomponent:ServerInfoView Grid.Column="1"
+                                          IsVisible="{Binding SelectedServerInfo,Converter={StaticResource NullToBoolConverter}}" />
             <!-- </ui:AcrylicView> -->
         </Grid>
 

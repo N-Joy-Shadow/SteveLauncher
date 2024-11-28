@@ -66,12 +66,13 @@ public partial class HomeViewModel : BaseViewModel {
     private string installProgress = string.Empty;
     
     protected override void BindingMessageCenter() {
-        WeakReferenceMessenger.Default.Register<ServerAddedMessage>(this, (r, m) => {
+        WeakReferenceMessenger.Default.Register<ServerListUpdateMessage>(this, (r, m) => {
             if (m.Value)
                 LoadServerStatusAsync();
         });
         
         WeakReferenceMessenger.Default.Register<LoadingStateMessage>(this, (r, m) => {
+            //흠.. 이건 나중에 해야할 듯
             if (m.Value.IsLoading) {
                 
             }
@@ -89,6 +90,7 @@ public partial class HomeViewModel : BaseViewModel {
     //TOOD: 나중에 커맨드로 빼기
     public async void LoadServerStatusAsync() {
         try {
+            //로직을 나중에 최적화 해야함
             var serverStatusList = await Task.Run(() => serverService.GetServerStatusList());
             this.ServerStatusList.Clear();
             this.ServerStatusList.AddRange(serverStatusList);

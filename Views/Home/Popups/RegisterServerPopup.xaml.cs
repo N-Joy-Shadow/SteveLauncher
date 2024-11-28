@@ -13,11 +13,11 @@ namespace SteveLauncher.Views.Home.Popups;
 public partial class RegisterServerPopup : Popup {
     private RegisterServerPopupViewModel vm;
     public RegisterServerPopup(RegisterServerPopupViewModel viewModel,
-        PopupSizeConstants  sizeConstants) {
+        PopupSizeConstants size) {
         InitializeComponent();
         BindingContext = viewModel;
         this.vm = (RegisterServerPopupViewModel)BindingContext;
-        Size = sizeConstants.Medium;
+        Size = size.Medium;
         vm.OnClosePopup += OnClosedPopup;
     }
 

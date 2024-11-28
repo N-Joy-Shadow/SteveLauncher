@@ -10,13 +10,14 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     CanBeDismissedByTappingOutsideOfPopup="False"
     xmlns:vm="using:SteveLauncher.Views.Home.Popups"
+    xmlns:cell="using:SteveLauncher.Views.Home.Cell"
 
     x:DataType="vm:RegisterServerPopupViewModel"
     Color="Transparent">
-    <Grid>
+    <Grid BackgroundColor="#000000f8">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <FlexLayout Grid.Row="0" Grid.ColumnSpan="2" JustifyContent="SpaceBetween"
                     BackgroundColor="{StaticResource Secondary}" Padding="40,0"
@@ -29,16 +30,38 @@
                 </ImageButton.Source>
             </ImageButton>
         </FlexLayout>
-        <VerticalStackLayout Grid.Row="1">
-            <input:FormView Spacing="15" SubmitCommand="{Binding SubmitServerCommand}">
-                <BoxView StyleClass="Divider" />
-                <Entry Placeholder="ex)mc.hypixel.net:25565" Text="{Binding Hostname}"/>
+        <VerticalStackLayout Grid.Row="1" BackgroundColor="Transparent">
+            <input:FormView Spacing="15" SubmitCommand="{Binding SubmitServerCommand}" Margin="10">
+                <Label Text="Minecraft IP" />
+                <Entry Placeholder="ex)mc.hypixel.net:25565" Text="{Binding Hostname}" />
                 <Button
                     input:FormView.IsSubmitButton="True"
                     HorizontalOptions="EndAndExpand"
+                    IsEnabled="{Binding IsLoading,Converter={toolkit:InvertedBoolConverter}}"
                     Text="Submit" />
             </input:FormView>
-
+            <Grid
+                toolkit:StateContainer.CurrentState="{Binding ServerState,Converter={StaticResource EnumToStringConverter}}">
+                <toolkit:StateContainer.StateViews>
+                    <Grid toolkit:StateView.StateKey="None" IsVisible="False" />
+                    <ActivityIndicator toolkit:StateView.StateKey="Loading" IsRunning="True" />
+                    <Grid toolkit:StateView.StateKey="Loaded">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <cell:ServerListCell Grid.Column="0" BindingContext="{Binding ServerInfo}"
+                                              IsEnabled="False"/>
+                        <ImageButton Grid.Column="1" StyleClass="TextButton" Margin="10" Command="{Binding RegisterServerCommand}"
+                                     IsEnabled="{Binding IsLoading,Converter={toolkit:InvertedBoolConverter}}" BackgroundColor="Transparent">
+                            <ImageButton.Source>
+                                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Add}" />
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </Grid>
+                    <Label toolkit:StateView.StateKey="Error" Text="서버를 찾을 수 없습니다."/>
+                </toolkit:StateContainer.StateViews>
+            </Grid>
         </VerticalStackLayout>
     </Grid>
 </toolkit:Popup>

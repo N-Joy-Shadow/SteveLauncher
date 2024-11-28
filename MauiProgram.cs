@@ -126,6 +126,9 @@ public static class MauiProgram
 					#if WINDOWS10_0_17763_0_OR_GREATER
 					window.SystemBackdrop = new DesktopAcrylicBackdrop();
 					#endif
+					var nativeWindow = window as Microsoft.UI.Xaml.Window;
+					nativeWindow.AppWindow.Resize(new Windows.Graphics.SizeInt32 { Width = 1280, Height = 720 });
+					
 					var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);               
 					var id = Win32Interop.GetWindowIdFromWindow(handle);
 

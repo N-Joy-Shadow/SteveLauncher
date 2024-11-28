@@ -1,4 +1,5 @@
-﻿using SteveLauncher.Domain.Service;
+﻿using Microsoft.Maui.Platform;
+using SteveLauncher.Domain.Service;
 using SteveLauncher.Views.Home;
 
 #if MACCATALYST
@@ -9,6 +10,9 @@ namespace SteveLauncher;
 
 public partial class App : Application {
     private readonly IServiceProvider serviceProvider;
+
+    private const string LastX = "LastWindowLeft";
+    private const string LastY = "LastWindowTop";
 
     public App(IServiceProvider serviceProvider) {
         InitializeComponent();
@@ -23,6 +27,11 @@ public partial class App : Application {
         var root = serviceProvider.GetService<Home>();
         window.Title = "SteveLauncher";
         window.Page = root;
+
+#if WINDOWS
+        window.X = Preferences.Get(LastX, 100);
+        window.Y = Preferences.Get(LastY, 100);
+#endif
         return window;
     }
 
@@ -35,7 +44,16 @@ public partial class App : Application {
             uiWindow.WindowScene.Titlebar.TitleVisibility = UITitlebarTitleVisibility.Hidden;
             uiWindow.WindowScene.Titlebar.ToolbarStyle = UITitlebarToolbarStyle.Expanded;
         }
-#elif WINDOWS
 #endif
     }
+
+    public override void CloseWindow(Window window) {
+#if WINDOWS
+        var appWindow = Application.Current.Windows[0].Handler.PlatformView as Microsoft.UI.Xaml.Window;
+        Preferences.Set(LastX, window.X);
+        Preferences.Set(LastY, window.Y);
+#endif
+        base.CloseWindow(window);
+    }
+    
 }

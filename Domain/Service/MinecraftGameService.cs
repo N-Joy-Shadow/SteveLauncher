@@ -40,7 +40,6 @@ public class MinecraftGameService : IMinecraftGameService {
             launcher.FileProgressChanged += LauncherOnFileProgressChanged;
             launcher.ByteProgressChanged += LauncherOnByteProgressChanged;
             
-            
             var process = await launcher.InstallAndBuildProcessAsync(version, new MLaunchOption {
                 Session = session,
                 ScreenWidth = setting.Width,
@@ -49,14 +48,19 @@ public class MinecraftGameService : IMinecraftGameService {
                 MinimumRamMb = setting.AllocatedMemory,
                 ServerPort = url.Port,
                 ServerIp = url.HostName,
+#if MACCATALYST
                 DockName = "SteveLauncher-Minecraft",
                 DockIcon = "appicon.svg"
+#endif
             });
+            
 
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
             process.OutputDataReceived += ProcessOnOutputDataReceived;
             
             process.Start();
-            
+            process.BeginOutputReadLine();
         }
         catch (Exception e) {
             if (e is UnauthorizedAccessException) {
@@ -101,8 +105,8 @@ public class MinecraftGameService : IMinecraftGameService {
     }
 
 
-    public async void SetGamePath(string path) {
-        this.storageRepository.Insert(StorageEnum.GAME_PATH, path);
+    public async void SetGamePath(string hostname) {
+        
     }
     
 

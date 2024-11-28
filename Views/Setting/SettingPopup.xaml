@@ -37,7 +37,7 @@
             <Button Text="Minecraft Setting" CornerRadius="0" />
         </VerticalStackLayout>
         <!--Content-->
-        <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="Transparent">
+        <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="#000000f8">
             <pages:McSettingPage/>
         </Grid>
     </Grid>

@@ -47,10 +47,12 @@ public partial class ServerListCell : ContentView {
 
 
     private void OnTapped(object? sender, TappedEventArgs e) {
-        TappedCommand.Execute(serverInfo);
+        if(IsEnabled)
+            TappedCommand.Execute(serverInfo);
     }
 
     private void OnContextMenuClicked(object? sender, EventArgs e) {
-        ContextMenuCommand.Execute(serverInfo);
+        if(IsEnabled)
+            ContextMenuCommand.Execute(serverInfo);
     }
 }

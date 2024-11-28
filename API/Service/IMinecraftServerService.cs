@@ -7,4 +7,6 @@ public interface IMinecraftServerService {
     ICollection<MinecraftServerInfo> GetServerStatusList();
     bool DeleteServer(MinecraftServerInfo serverInfo);
     Task<bool> RegisterServer(MinecraftURL hostname);
+
+    Task<MinecraftServerInfo?> FetchServerInfo(MinecraftURL hostname);
 }
