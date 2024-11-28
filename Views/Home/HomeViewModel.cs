@@ -58,7 +58,12 @@ public partial class HomeViewModel : BaseViewModel {
         this.gameService = gameService;
     }
 
+
+    [ObservableProperty]
+    private double byteInstallProgress = 0;
     
+    [ObservableProperty]
+    private string installProgress = string.Empty;
     
     protected override void BindingMessageCenter() {
         WeakReferenceMessenger.Default.Register<ServerAddedMessage>(this, (r, m) => {
@@ -70,6 +75,14 @@ public partial class HomeViewModel : BaseViewModel {
             if (m.Value.IsLoading) {
                 
             }
+        });
+        
+        WeakReferenceMessenger.Default.Register<MinecraftByteProgressMessage>(this, (r, m) => {
+            ByteInstallProgress = m.Value;
+        });
+        
+        WeakReferenceMessenger.Default.Register<MinecraftInstallProgressMessage>(this, (r, m) => {
+            InstallProgress = $"{m.Value.ProgressedTasks} / {m.Value.TotalTasks} - {m.Value.Name}";
         });
     }
 

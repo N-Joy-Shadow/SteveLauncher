@@ -57,7 +57,7 @@ public partial class SettingPopupViewModel : BaseViewModel {
     async Task ChangeDirectory() {
         var result = await FolderPicker.Default.PickAsync(CancellationToken.None);
         if (result.IsSuccessful && result.Folder is not null) {
-            MinecraftPath = result.Folder.Path;
+            MinecraftPath = Path.Combine(result.Folder.Path,MinecraftGameSetting.GameDirectoryName);
         }
     }
 }

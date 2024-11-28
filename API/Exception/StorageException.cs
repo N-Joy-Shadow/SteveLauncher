@@ -8,7 +8,7 @@ public class StorageException : System.Exception {
 
 public class StorageKeyNotFoundException : StorageException {
     public StorageKeyNotFoundException(string key)
-        : base($"The key '{key}' was not found in secure storage.") {
+        : base($"The key '{key}' was not found in storage.") {
         this.Data.Add("key", key);
     }
 }
