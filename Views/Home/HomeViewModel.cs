@@ -15,8 +15,8 @@ using SteveLauncher.Domain.Entity;
 using SteveLauncher.Domain.Service;
 using SteveLauncher.Utils;
 using SteveLauncher.Views.Home.Message;
-using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Login;
+using SteveLauncher.Views.RegisterServer;
 using SteveLauncher.Views.Setting;
 
 namespace SteveLauncher.Views.Home;

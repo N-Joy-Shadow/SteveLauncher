@@ -7,7 +7,7 @@ using SteveLauncher.API.Service;
 using SteveLauncher.Domain.Entity;
 using SteveLauncher.Views.Home.Message;
 
-namespace SteveLauncher.Views.Home.Popups;
+namespace SteveLauncher.Views.RegisterServer;
 
 public partial class RegisterServerPopupViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;

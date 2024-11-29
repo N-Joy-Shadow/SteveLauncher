@@ -8,7 +8,7 @@ using CommunityToolkit.Maui.Views;
 using McLib.Model.Network.Dns;
 using SteveLauncher.Utils.Popups;
 
-namespace SteveLauncher.Views.Home.Popups;
+namespace SteveLauncher.Views.RegisterServer;
 
 public partial class RegisterServerPopup : Popup {
     private RegisterServerPopupViewModel vm;

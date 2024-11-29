@@ -1,8 +1,11 @@
 ﻿using System.Reflection;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
+using CmlLib.Core.FileExtractors;
 using CmlLib.Core.Installers;
+using CmlLib.Core.Java;
 using CmlLib.Core.ProcessBuilder;
+using CmlLib.Core.Rules;
 using CmlLib.Core.Version;
 using CommunityToolkit.Mvvm.Messaging;
 using McLib.Auth.Model.Minecraft;
@@ -49,8 +52,10 @@ public class MinecraftGameService : IMinecraftGameService {
                 ServerPort = url.Port,
                 ServerIp = url.HostName,
 #if MACCATALYST
-                DockName = "SteveLauncher-Minecraft",
-                DockIcon = "appicon.svg"
+                //맥은 자바 문제로 실행이 되지 않음
+                JavaPath = "/usr/bin/java",
+                //DockName = "SteveLauncher-Minecraft",
+                //DockIcon = "AppIcon/appicon.svg" 
 #endif
             });
             
@@ -80,7 +85,7 @@ public class MinecraftGameService : IMinecraftGameService {
                 return;
             }
             else {
-                Debug.WriteLine(e.Message);
+                Debug.WriteLine($"Uncatchable Exception: {e.Message}");
             }
         }
     }

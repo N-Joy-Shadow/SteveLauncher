@@ -14,12 +14,12 @@ using SteveLauncher.Domain.Service;
 using SteveLauncher.Utils.Popups;
 using SteveLauncher.Views.GameLog;
 using SteveLauncher.Views.Home;
-using SteveLauncher.Views.Home.Popups;
 using SteveLauncher.Views.Setting;
 using SteveLauncher.Views.Login;
+using SteveLauncher.Views.RegisterServer;
 using UraniumUI;
 
-#if MACCATALYST
+#if MACCATALYST							
 using UIKit;
 #endif
 

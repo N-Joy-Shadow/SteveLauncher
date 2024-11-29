@@ -77,6 +77,14 @@
             <DependentUpon>SettingPopup.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Update="Views\RegisterServer\RegisterServerPopup.xaml.cs">
+          <DependentUpon>RegisterServerPopup.xaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Views\Home\Popups\RegisterServerPopup.xaml.cs">
+          <DependentUpon>RegisterServerPopup.xaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -145,6 +153,12 @@
         </MauiXaml>
         <MauiXaml Update="Views\Setting\SettingPopup.xaml">
             <SubType>Designer</SubType>
+        </MauiXaml>
+        <MauiXaml Update="Views\RegisterServer\RegisterServerPopup.xaml">
+          <SubType>Designer</SubType>
+        </MauiXaml>
+        <MauiXaml Update="Views\Home\Popups\RegisterServerPopup.xaml">
+          <SubType>Designer</SubType>
         </MauiXaml>
     </ItemGroup>
 
