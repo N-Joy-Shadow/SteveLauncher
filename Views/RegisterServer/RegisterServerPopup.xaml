@@ -1,47 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <toolkit:Popup
     x:Class="SteveLauncher.Views.RegisterServer.RegisterServerPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cell="using:SteveLauncher.Views.Home.Cell"
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    CanBeDismissedByTappingOutsideOfPopup="False"
     xmlns:vm="using:SteveLauncher.Views.RegisterServer"
-    xmlns:cell="using:SteveLauncher.Views.Home.Cell"
-
     x:DataType="vm:RegisterServerPopupViewModel"
-    Color="Transparent">
-    <Grid BackgroundColor="#000000f8">
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Color="#d0000000">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <FlexLayout Grid.Row="0" Grid.ColumnSpan="2" JustifyContent="SpaceBetween"
-                    BackgroundColor="{StaticResource Secondary}" Padding="40,0"
-                    AlignItems="Center">
-            <Label Text="Register Server" FontAttributes="Bold" FontSize="32" VerticalTextAlignment="Center" />
-            <ImageButton Command="{Binding ClosePopupCommand}" StyleClass="OutlinedButton"
-                         BackgroundColor="Transparent">
+        <FlexLayout
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Padding="40,0"
+            AlignItems="Center"
+            BackgroundColor="{StaticResource Secondary}"
+            JustifyContent="SpaceBetween">
+            <Label
+                FontAttributes="Bold"
+                FontSize="32"
+                Text="Register Server"
+                VerticalTextAlignment="Center" />
+            <ImageButton
+                BackgroundColor="Transparent"
+                Command="{Binding ClosePopupCommand}"
+                StyleClass="OutlinedButton">
                 <ImageButton.Source>
                     <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Close}" />
                 </ImageButton.Source>
             </ImageButton>
         </FlexLayout>
-        <VerticalStackLayout Grid.Row="1" BackgroundColor="Transparent" Margin="40,0">
-            <input:FormView Spacing="15" SubmitCommand="{Binding SubmitServerCommand}" Margin="10">
-                <Label Text="Minecraft IP" />
+        <VerticalStackLayout
+            Grid.Row="1"
+            Margin="40,0"
+            BackgroundColor="Transparent">
+            <input:FormView
+                Margin="10"
+                Spacing="15"
+                SubmitCommand="{Binding SubmitServerCommand}">
+                <Label FontSize="18" Text="Minecraft IP" />
                 <Entry Placeholder="ex)mc.hypixel.net:25565" Text="{Binding Hostname}" />
                 <Button
                     input:FormView.IsSubmitButton="True"
                     HorizontalOptions="EndAndExpand"
-                    IsEnabled="{Binding IsLoading,Converter={toolkit:InvertedBoolConverter}}"
+                    IsEnabled="{Binding IsLoading, Converter={toolkit:InvertedBoolConverter}}"
                     Text="Submit" />
             </input:FormView>
-            <Grid
-                toolkit:StateContainer.CurrentState="{Binding ServerState,Converter={StaticResource EnumToStringConverter}}">
+            <Grid toolkit:StateContainer.CurrentState="{Binding ServerState, Converter={StaticResource EnumToStringConverter}}">
                 <toolkit:StateContainer.StateViews>
                     <Grid toolkit:StateView.StateKey="None" IsVisible="False" />
                     <ActivityIndicator toolkit:StateView.StateKey="Loading" IsRunning="True" />
@@ -50,16 +64,25 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
-                        <cell:ServerListCell Grid.Column="0" BindingContext="{Binding ServerInfo}"
-                                              IsEnabled="False"/>
-                        <ImageButton Grid.Column="1" StyleClass="TextButton" Margin="10" Command="{Binding RegisterServerCommand}"
-                                     IsEnabled="{Binding IsLoading,Converter={toolkit:InvertedBoolConverter}}" BackgroundColor="Transparent">
+                        <cell:ServerListCell
+                            Grid.Column="0"
+                            BindingContext="{Binding ServerInfo}"
+                            IsEnabled="False" />
+                        <ImageButton
+                            Grid.Column="1"
+                            Margin="10"
+                            Command="{Binding RegisterServerCommand}"
+                            CornerRadius="5"
+                            HeightRequest="60"
+                            IsEnabled="{Binding IsLoading, Converter={toolkit:InvertedBoolConverter}}"
+                            StyleClass="TextButton"
+                            WidthRequest="60">
                             <ImageButton.Source>
                                 <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Add}" />
                             </ImageButton.Source>
                         </ImageButton>
                     </Grid>
-                    <Label toolkit:StateView.StateKey="Error" Text="서버를 찾을 수 없습니다."/>
+                    <Label toolkit:StateView.StateKey="Error" Text="서버를 찾을 수 없습니다." />
                 </toolkit:StateContainer.StateViews>
             </Grid>
         </VerticalStackLayout>

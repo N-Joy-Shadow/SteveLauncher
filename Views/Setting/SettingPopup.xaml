@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
-<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-               xmlns:vm="clr-namespace:SteveLauncher.Views.Setting"
-               xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
-               xmlns:pages="using:SteveLauncher.Views.Setting.Pages"
-               x:Class="SteveLauncher.Views.Setting.SettingPopup"
-               CanBeDismissedByTappingOutsideOfPopup="False"
-               Color="#1f818181"
-               x:DataType="vm:SettingPopupViewModel">
-    <Grid >
+<toolkit:Popup
+    x:Class="SteveLauncher.Views.Setting.SettingPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="using:SteveLauncher.Views.Setting.Pages"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+    xmlns:vm="clr-namespace:SteveLauncher.Views.Setting"
+    x:DataType="vm:SettingPopupViewModel"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Color="#d0000000">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="*" />
@@ -19,26 +20,42 @@
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <!--Top Titlebar-->
-        <FlexLayout Grid.Row="0" Grid.ColumnSpan="2" JustifyContent="SpaceBetween"
-                    BackgroundColor="{StaticResource Secondary}" Padding="40,0"
-                    AlignItems="Center">
-            <Label Text="Settings" FontAttributes="Bold" FontSize="32" VerticalTextAlignment="Center" />
-            <ImageButton Command="{Binding ClosePopupCommand}" StyleClass="OutlinedButton"
-                         BackgroundColor="Transparent">
+        <!--  Top Titlebar  -->
+        <FlexLayout
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Padding="40,0"
+            AlignItems="Center"
+            BackgroundColor="{StaticResource Secondary}"
+            JustifyContent="SpaceBetween">
+            <Label
+                FontAttributes="Bold"
+                FontSize="32"
+                Text="Settings"
+                VerticalTextAlignment="Center" />
+            <ImageButton
+                BackgroundColor="Transparent"
+                Command="{Binding ClosePopupCommand}"
+                StyleClass="OutlinedButton">
                 <ImageButton.Source>
                     <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static uranium:MaterialSharp.Close}" />
                 </ImageButton.Source>
             </ImageButton>
         </FlexLayout>
 
-        <!--Side NavigationBar-->
-        <VerticalStackLayout Grid.Row="1" Grid.Column="0" BackgroundColor="Transparent">
-            <Button Text="Minecraft Setting" CornerRadius="0" />
+        <!--  Side NavigationBar  -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            Grid.Column="0"
+            BackgroundColor="Transparent">
+            <Button CornerRadius="0" Text="Minecraft Setting" />
         </VerticalStackLayout>
-        <!--Content-->
-        <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="#000000f8">
-            <pages:McSettingPage/>
+        <!--  Content  -->
+        <Grid
+            Grid.Row="1"
+            Grid.Column="1"
+            BackgroundColor="#000000f8">
+            <pages:McSettingPage />
         </Grid>
     </Grid>
 </toolkit:Popup>

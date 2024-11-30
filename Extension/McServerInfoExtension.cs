@@ -16,7 +16,7 @@ public static class McServerInfoExtension {
             PlayerInfo = new() {
                 Max = info.ServerUpdatable.MaxPlayer ?? 0,
                 Currnet = info.ServerUpdatable.CurrentPlayer ?? 0,
-                UserNames = info.ServerUpdatable.Player.Select(x => x.Name).ToHashSet().ToObservableCollection()
+                Players = info.ServerUpdatable.Player.Select(x => new MinecraftPlayerName { Name = x.Name }).ToHashSet().ToObservableCollection()
             }
         };
     }

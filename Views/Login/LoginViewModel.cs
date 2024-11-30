@@ -6,29 +6,24 @@ using McLib.Auth.Utils;
 namespace SteveLauncher.Views.Login;
 
 public partial class LoginViewModel : BaseViewModel {
-    private readonly IMcLoginService _loginService;
+    private readonly IMcLoginService loginService;
     private const string clientId = "22253aaa-98bd-48b6-a004-f732131d6961";
     
     public McUserProfile userProfile;
     
     public LoginViewModel(
-        IPopupService popupService,
         IMcLoginService loginService) {
-        this._loginService = loginService;
+        this.loginService = loginService;
     }
 
     public async Task<bool> LoginAsync(string redirectUrl) {
-        // if (!MicrosoftAuthCodeParser.TryParseCode(redirectUrl, out var code)) {
-        //     return false;
-        // } 
-
         if (!redirectUrl.Contains("code=")) {
             return false;
         }
         string code = redirectUrl.Split("=")[1].Split("&")[0];
 
         try {
-            userProfile = await _loginService.LoginAsync(code, clientId);
+            userProfile = await loginService.LoginAsync(code, clientId);
             return true;
         }catch (Exception e) {
             return false;
@@ -37,6 +32,6 @@ public partial class LoginViewModel : BaseViewModel {
     }
     
     public string GetAuthUrl() {
-        return _loginService.GetLoginUrl(clientId);
+        return loginService.GetLoginUrl(clientId);
     }
 }

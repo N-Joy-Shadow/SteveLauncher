@@ -10,5 +10,8 @@ namespace SteveLauncher.Views.Home.Components;
 public partial class ServerInfoView : ContentView {
     public ServerInfoView() {
         InitializeComponent();
+        
     }
+
+
 }

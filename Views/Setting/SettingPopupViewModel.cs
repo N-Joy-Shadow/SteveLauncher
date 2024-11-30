@@ -50,14 +50,20 @@ public partial class SettingPopupViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task ShowDirectory() {
-        directoryLauncher.Open(MinecraftPath);
+        try {
+            directoryLauncher.Open(MinecraftPath);
+        }
+        catch (Exception e) {
+            if (e is DirectoryNotFoundException)
+                Directory.CreateDirectory(MinecraftPath);
+        }
     }
 
     [RelayCommand]
     async Task ChangeDirectory() {
         var result = await FolderPicker.Default.PickAsync(CancellationToken.None);
         if (result.IsSuccessful && result.Folder is not null) {
-            MinecraftPath = Path.Combine(result.Folder.Path,MinecraftGameSetting.GameDirectoryName);
+            MinecraftPath = Path.Combine(result.Folder.Path, MinecraftGameSetting.GameDirectoryName);
         }
     }
 }

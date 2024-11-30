@@ -1,63 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentView
     x:Class="SteveLauncher.Views.Home.Components.ServerInfoView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:entity="clr-namespace:SteveLauncher.Domain.Entity"
     xmlns:extension="clr-namespace:SteveLauncher.Extension"
+    xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:type="using:SteveLauncher.Domain.Entity"
     xmlns:view="clr-namespace:McMotdParser.MAUI.View;assembly=McMotd.MAUI"
-    xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui">
+    xmlns:vm="clr-namespace:SteveLauncher.Views.Home"
+    x:DataType="vm:HomeViewModel">
+
     <Grid Margin="10" VerticalOptions="FillAndExpand">
-        <VerticalStackLayout>
-            <Label
-                FontFamily="MonocraftBold"
-                FontSize="48"
-                Text="{Binding SelectedServerInfo.HostName.HostName}" />
-            <Label
-                FontSize="14"
-                Text="{Binding SelectedServerInfo.Version}" />
-            <FlexLayout Direction="Row">
-                <!--  드랍 다운 추가  -->
-            </FlexLayout>
-            <BoxView
-                Margin="0,10"
-                BackgroundColor="LightGray"
-                HeightRequest="2" />
-            <view:MotdView FontSize="24" Motd="{Binding SelectedServerInfo.Motd}" />
-            <BoxView BackgroundColor="Gray" />
-            <CollectionView ItemsSource="{Binding SelectedServerInfo.PlayerInfo.UserNames}"
-                            VerticalOptions="FillAndExpand">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="230" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <VerticalStackLayout>
+                <Label
+                    FontFamily="MonocraftBold"
+                    FontSize="48"
+                    Text="{Binding SelectedServerInfo.HostName.HostName}" />
+                <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+                    <HorizontalStackLayout Spacing="5">
+                        <Label
+                            FontSize="18"
+                            Text="Version: "
+                            VerticalTextAlignment="Center" />
+                        <Picker ItemsSource="{Binding SelectedServerInfo.AvilableVersions}" SelectedItem="{Binding SelectedVersion}" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="5">
+                        <ImageButton Command="{Binding OpenServerFolderCommand}" CommandParameter="{Binding SelectedServerInfo}">
+                            <ImageButton.Source>
+                                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Folder_open}" />
+                            </ImageButton.Source>
+                        </ImageButton>
+                        <ImageButton Command="{Binding DeleteServerCommand}" CommandParameter="{Binding SelectedServerInfo}">
+                            <ImageButton.Source>
+                                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Delete}" />
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </HorizontalStackLayout>
+                </FlexLayout>
+                <BoxView
+                    BackgroundColor="LightGray"
+                    HeightRequest="2"
+                    StyleClass="Divider" />
+                <view:MotdView FontSize="24" Motd="{Binding SelectedServerInfo.Motd}" />
+                <VerticalStackLayout IsVisible="{Binding SelectedServerInfo.PlayerInfo.Players, Converter={StaticResource CollectionZeroToBoolConverter}}">
+                    <Label FontSize="18" Text="Player List" />
+                    <BoxView Margin="0,10" StyleClass="Divider" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding SelectedServerInfo.PlayerInfo.Players}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="x:String">
-                        <Label Text="{Binding .}" TextColor="White" />
+                    <DataTemplate x:DataType="entity:MinecraftPlayerName">
+                        <Frame BackgroundColor="#80000000">
+                            <HorizontalStackLayout Spacing="10">
+                                <Image Source="{Binding IconUrl}" WidthRequest="42" />
+                                <Label
+                                    Text="{Binding Name}"
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center" />
+                            </HorizontalStackLayout>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </VerticalStackLayout>
-        <AbsoluteLayout>
-            <HorizontalStackLayout Spacing="10"
-                                   AbsoluteLayout.LayoutBounds="1, 1, 200, 200"
-                                   AbsoluteLayout.LayoutFlags="PositionProportional">
-                <ImageButton>
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Folder_open}" />
-                    </ImageButton.Source>
-                </ImageButton>
-                <ImageButton>
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Refresh}" />
-                    </ImageButton.Source>
-                </ImageButton>
-                <ImageButton>
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Delete}" />
-                    </ImageButton.Source>
-                </ImageButton>
 
-            </HorizontalStackLayout>
-        </AbsoluteLayout>
-        <AbsoluteLayout>
+        </Grid>
+
+        <AbsoluteLayout InputTransparent="True">
             <extension:ImageViewExtension
                 AbsoluteLayout.LayoutBounds="1, 1, 200, 200"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
@@ -65,6 +81,10 @@
                 Opacity="0.5"
                 SourceFromBase64="{Binding SelectedServerInfo.Icon}"
                 WidthRequest="200" />
+            <HorizontalStackLayout
+                AbsoluteLayout.LayoutBounds="0, 1, 160,50"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                Spacing="10" />
         </AbsoluteLayout>
     </Grid>
 </ContentView>

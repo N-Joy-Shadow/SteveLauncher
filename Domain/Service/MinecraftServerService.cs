@@ -2,6 +2,7 @@
 using Maui.Plugins.PageResolver.Attributes;
 using McLib.API.Services;
 using McLib.Model.Network.Dns;
+using SteveLauncher.API.Exception;
 using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
 using SteveLauncher.Domain.Entity;
@@ -51,11 +52,15 @@ public class MinecraftServerService: IMinecraftServerService {
 
     //TODO: 나중에 전부 예외처리로 바꾸기~
     public async Task<bool> RegisterServer(MinecraftURL hostname) {
+        var existServer =  this.localServerListRepository.FindServer(hostname);
+        if (existServer is not null)
+            throw new MinecraftServerAlreadyExistException($"Server : '{hostname}' is already exist");
         var srv = await this.dnsService.executeAsync(hostname);
         var result = serverRepository.FetchServer(new MinecraftHost(srv,hostname));
-        if(result.ServerUpdatable.isOnline || result.ServerUpdatable.Motd is not null)
-            return await this.localServerListRepository.AddServer(new (hostname,srv));
-        return false;
+        if (result.ServerUpdatable.isOnline || result.ServerUpdatable.Motd is not null)
+            return await this.localServerListRepository.AddServer(new(hostname, srv));
+        else
+            throw new MinecraftServerNotFoundException($"Server : '{hostname}' is not found");
     }
 
     public async Task<MinecraftServerInfo> FetchServerInfo(MinecraftURL hostname) {

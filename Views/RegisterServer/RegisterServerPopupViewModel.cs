@@ -25,6 +25,7 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
 
     [ObservableProperty]
     private bool isLoading = false;
+
     public RegisterServerPopupViewModel(
         IMinecraftServerService serverService) {
         this.serverService = serverService;
@@ -50,7 +51,7 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
         var res = await serverService.FetchServerInfo(new MinecraftURL(Hostname));
         ServerInfo = res;
         ServerState = ServerRegisterStateEnum.Loaded;
-        
+
         IsLoading = false;
     }
 
@@ -60,19 +61,27 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
         if (ServerInfo is null)
             return;
         try {
-            Task.Run(() => {
-                var res = serverService.RegisterServer(new MinecraftURL(Hostname)).Result;
+            Task.Run(async () => {
+                try {
+                    ServerState = ServerRegisterStateEnum.Loading;
+                    var res = await serverService.RegisterServer(new MinecraftURL(Hostname));
 
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
-                    if (!res)
+                    MainThread.BeginInvokeOnMainThread(() => {
+                        if (!res)
+                            ServerState = ServerRegisterStateEnum.Error;
+                        WeakReferenceMessenger.Default.Send<ServerListUpdateMessage>(new(res));
+                        IsLoading = false;
+                        OnClosePopup.Invoke(true);
+                    });
+                }
+                catch (Exception e) {
+                    MainThread.BeginInvokeOnMainThread(() => {
                         ServerState = ServerRegisterStateEnum.Error;
-                    WeakReferenceMessenger.Default.Send<ServerListUpdateMessage>(new(res));
-                    IsLoading = false;
-
-                });
-
+                        IsLoading = false;
+                    });
+                }
             });
+            return;
         }
         catch (Exception e) {
             if (e is NotFoundSRVNameException) {
@@ -81,8 +90,7 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
 
             ServerState = ServerRegisterStateEnum.Error;
         }
-        IsLoading = false;
 
+        ServerState = ServerRegisterStateEnum.None;
     }
-    
 }

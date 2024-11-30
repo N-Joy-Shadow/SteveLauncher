@@ -40,8 +40,8 @@
 
                 <VerticalStackLayout>
                     <Label
-                        FontSize="24"
                         FontAttributes="Bold"
+                        FontSize="24"
                         Text="{Binding HostName.HostName}" />
                     <motd:MotdView FontSize="18" Motd="{Binding Motd}" />
                 </VerticalStackLayout>
@@ -50,7 +50,7 @@
                 FontFamily="MonocraftSemiBold"
                 FontSize="24"
                 Text="{Binding PlayerInfo.Currnet}"
-                ToolTipProperties.Text="aaa"
+                ToolTipProperties.Text="Online Player"
                 VerticalOptions="Center" />
         </FlexLayout>
     </Grid>

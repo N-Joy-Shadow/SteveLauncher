@@ -16,6 +16,7 @@ using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
 using SteveLauncher.Domain.Entity;
 using SteveLauncher.Extension;
+using SteveLauncher.Utils.Minecraft;
 using SteveLauncher.Views.Home.Message;
 
 namespace SteveLauncher.Domain.Service;
@@ -23,8 +24,9 @@ namespace SteveLauncher.Domain.Service;
 public class MinecraftGameService : IMinecraftGameService {
     private readonly IMinecraftLoginRepository loginRepository;
     private readonly IStorageRepository storageRepository;
-    private string version = "1.21.1"; //나중에 바꾸기
-
+    
+    private string version;
+    private MinecraftLauncher launcher;
     public MinecraftGameService(
         IMinecraftLoginRepository loginRepository,
         IStorageRepository storageRepository
@@ -33,12 +35,26 @@ public class MinecraftGameService : IMinecraftGameService {
         this.storageRepository = storageRepository;
     }
 
-    public async Task StartGame(MinecraftURL url) {
+    private void SetLauncher() {
+        
+    }
+    
+    public async Task<List<string>> GetAvailableVersions(string version) {
+        launcher = new MinecraftLauncher();
+        var versions =  await launcher.GetAllVersionsAsync();
+
+        return MinecraftVersionHandler.ParsingVersions(version,versions);
+    }
+    public async Task StartGame(MinecraftURL url) { 
         try {
             var session = GetSession();
             var setting = GetSetting();
 
-            var launcher = new MinecraftLauncher(new MinecraftPath(setting.MinecraftPath));
+            if(string.IsNullOrEmpty(version))
+                throw new NullReferenceException("version is null");
+            
+            var path = Path.Combine(setting.MinecraftPath, url.ToDirectoryFriendly());
+            var launcher = new MinecraftLauncher(new MinecraftPath(path));
             
             launcher.FileProgressChanged += LauncherOnFileProgressChanged;
             launcher.ByteProgressChanged += LauncherOnByteProgressChanged;
@@ -72,6 +88,9 @@ public class MinecraftGameService : IMinecraftGameService {
                 throw new UnreachableException();
             }
 
+            if (e is NullReferenceException) {
+                throw new NullReferenceException(e.Message);
+            }
             if (e is StorageKeyNotFoundException) {
                 var rkey = (string)e.Data["key"];
                 var key = Enum.TryParse(rkey, out StorageEnum result);
@@ -124,9 +143,10 @@ public class MinecraftGameService : IMinecraftGameService {
             return storageRepository.Get<MinecraftGameSetting>(StorageEnum.GAME_SETTING);
         }
         catch (Exception e) {
-            if (e is StorageException) {
+            if (e is StorageException) 
                 storageRepository.Insert(StorageEnum.GAME_SETTING, MinecraftGameSetting.InitialSetting());
-            }
+            else
+                throw new UnreachableException();
         }
 
         return GetSetting();
