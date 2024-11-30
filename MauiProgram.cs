@@ -1,5 +1,4 @@
-﻿using DotNet.Meteor.HotReload.Plugin;
-using McLib.API.Services;
+﻿using McLib.API.Services;
 using McLib.Auth.API;
 using McLib.Auth.Service;
 using McLib.Service;
@@ -50,10 +49,7 @@ public static class MauiProgram
 			.UseSkiaSharp()
 			.UsePageResolver(true)
 			.UseAutodependencies()
-#if DEBUG
-			.EnableHotReload()
-#endif
-
+			
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("Monocraft.ttf","Monocraft");
@@ -93,7 +89,6 @@ public static class MauiProgram
 		builder.Services.AddTransientPopup<Login,LoginViewModel>();
 
 		//Repositories
-		builder.Services.AddSingleton<IMinecraftLoginRepository, MinecraftLoginRepository>();
 		builder.Services.AddSingleton<ILocalServerListRepository, LocalServerRepository>();
 		builder.Services.AddSingleton<IMinecraftServerStatusRepository, MinecraftServerStatusRepository>();
 		builder.Services.AddSingleton<IStorageRepository, StorageRepository>();

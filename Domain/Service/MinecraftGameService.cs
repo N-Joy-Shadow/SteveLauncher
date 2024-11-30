@@ -22,22 +22,16 @@ using SteveLauncher.Views.Home.Message;
 namespace SteveLauncher.Domain.Service;
 
 public class MinecraftGameService : IMinecraftGameService {
-    private readonly IMinecraftLoginRepository loginRepository;
     private readonly IStorageRepository storageRepository;
     
     private string version;
     private MinecraftLauncher launcher;
     public MinecraftGameService(
-        IMinecraftLoginRepository loginRepository,
         IStorageRepository storageRepository
     ) {
-        this.loginRepository = loginRepository;
         this.storageRepository = storageRepository;
     }
 
-    private void SetLauncher() {
-        
-    }
     
     public async Task<List<string>> GetAvailableVersions(string version) {
         launcher = new MinecraftLauncher();
@@ -45,6 +39,7 @@ public class MinecraftGameService : IMinecraftGameService {
 
         return MinecraftVersionHandler.ParsingVersions(version,versions);
     }
+    
     public async Task StartGame(MinecraftURL url) { 
         try {
             var session = GetSession();
@@ -129,9 +124,6 @@ public class MinecraftGameService : IMinecraftGameService {
     }
 
 
-    public async void SetGamePath(string hostname) {
-        
-    }
     
 
     public void SetGameVersion(string version) {

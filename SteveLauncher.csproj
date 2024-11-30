@@ -102,7 +102,6 @@
         <PackageReference Include="CmlLib.Core" Version="4.0.3"/>
         <PackageReference Include="CommunityToolkit.Maui" Version="9.1.0"/>
         <PackageReference Include="CommunityToolkit.MVVM" Version="8.3.2"/>
-        <PackageReference Include="DotNetMeteor.HotReload.Plugin" Version="3.3.0"/>
         <PackageReference Include="Goldie.MauiPlugins.PageResolver" Version="2.5.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
