@@ -5,5 +5,5 @@ using SteveLauncher.Domain.Entity;
 namespace SteveLauncher.API.Repository;
 
 public interface IMinecraftServerStatusRepository {
-     McServerInfo FetchServer(MinecraftHost hostname);
+     Task<McServerInfo> FetchServerAsync(MinecraftURL hostname);
 }

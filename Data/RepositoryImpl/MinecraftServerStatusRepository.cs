@@ -15,7 +15,7 @@ public class MinecraftServerStatusRepository: IMinecraftServerStatusRepository {
         ) {
         this.mcStatusRequestService = mcStatusRequestService;
     }
-    public McServerInfo FetchServer(MinecraftHost hostname) {
-        return this.mcStatusRequestService.executeWithSRVAsync(hostname.Host,hostname.SRVHost);
+    public Task<McServerInfo> FetchServerAsync(MinecraftURL hostname) {
+        return this.mcStatusRequestService.executeWithSRVAsync(hostname);
     }
 }

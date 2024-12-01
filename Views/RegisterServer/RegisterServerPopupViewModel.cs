@@ -46,13 +46,19 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
         IsLoading = true;
         if (string.IsNullOrEmpty(Hostname))
             return;
+        Task.Run(async () => {
+            MainThread.BeginInvokeOnMainThread(() => { ServerState = ServerRegisterStateEnum.Loading; });
+            var res = await serverService.FetchTempServerInfo(new MinecraftURL(Hostname));
+            MainThread.BeginInvokeOnMainThread(() => {
+                if (res is null) {
+                    ServerState = ServerRegisterStateEnum.Error;
+                }
+                ServerInfo = res;
+                ServerState = ServerRegisterStateEnum.Loaded;
+                IsLoading = false;
+            });
 
-        ServerState = ServerRegisterStateEnum.Loading;
-        var res = await serverService.FetchServerInfo(new MinecraftURL(Hostname));
-        ServerInfo = res;
-        ServerState = ServerRegisterStateEnum.Loaded;
-
-        IsLoading = false;
+        });
     }
 
     [RelayCommand]
@@ -63,7 +69,7 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
         try {
             Task.Run(async () => {
                 try {
-                    ServerState = ServerRegisterStateEnum.Loading;
+                    MainThread.BeginInvokeOnMainThread(() => { ServerState = ServerRegisterStateEnum.Loading; });
                     var res = await serverService.RegisterServer(new MinecraftURL(Hostname));
 
                     MainThread.BeginInvokeOnMainThread(() => {

@@ -111,7 +111,7 @@ public partial class HomeViewModel : BaseViewModel {
     public async void LoadServerStatusAsync() {
         try {
             //로직을 나중에 최적화 해야함
-            var serverStatusList = await Task.Run(() => serverService.GetServerStatusList());
+            var serverStatusList = await Task.Run(() => serverService.GetServerStatusListAsync());
             this.ServerStatusList.Clear();
             this.ServerStatusList.AddRange(serverStatusList);
         }

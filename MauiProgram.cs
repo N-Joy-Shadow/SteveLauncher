@@ -122,7 +122,7 @@ public static class MauiProgram
 					window.SystemBackdrop = new DesktopAcrylicBackdrop();
 					#endif
 					var nativeWindow = window as Microsoft.UI.Xaml.Window;
-					nativeWindow.AppWindow.Resize(new Windows.Graphics.SizeInt32 { Width = 1280, Height = 720 });
+					nativeWindow.AppWindow.Resize(new Windows.Graphics.SizeInt32 { Width = 1600, Height = 900 });
 					
 					var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);               
 					var id = Win32Interop.GetWindowIdFromWindow(handle);
