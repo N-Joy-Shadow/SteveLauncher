@@ -23,7 +23,7 @@
                 <Label
                     FontFamily="MonocraftBold"
                     FontSize="48"
-                    Text="{Binding SelectedServerInfo.HostName.HostName}" />
+                    Text="{Binding SelectedServerInfo.HostName.DoaminName}" />
                 <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
                     <HorizontalStackLayout Spacing="5">
                         <Label

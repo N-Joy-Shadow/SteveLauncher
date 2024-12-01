@@ -1,5 +1,5 @@
 ﻿using McLib.Extension;
-using McLib.Model.Network.Dns;
+using McLib.Model.Network;
 using SteveLauncher.API.Repository;
 using SteveLauncher.Data.Database;
 using SteveLauncher.Domain.Entity;
@@ -13,24 +13,24 @@ public class LocalServerRepository : ILocalServerListRepository {
         this.context = context;
     }
 
-    public List<MinecraftHost> GetServerList() {
+    public List<MinecraftMultiHost> GetServerList() {
         return this.context.LocalServerList.Select(x =>
-                new MinecraftHost(x.SRVHostName, x.SRVPort, x.HostName, x.Port))
+                new MinecraftMultiHost(x.SRVHostName, x.SRVPort, x.HostName, x.Port))
             .ToList();
     }
 
-    public async Task<bool> AddServer(MinecraftHost host) {
-        var result = this.context.LocalServerList.FindOneMinecraft(host.Host);
+    public async Task<bool> AddServer(MinecraftHost host,MinecraftHost srvHost) {
+        var result = this.context.LocalServerList.FindOneMinecraft(host);
         if (result is not null)
             return false;
 
 
         try {
             this.context.LocalServerList.Add(new LocalServerListDatabase() {
-                HostName = host.Host.HostName,
-                Port = host.Host.Port,
-                SRVHostName = host.SRVHost.HostName,
-                SRVPort = host.SRVHost.Port
+                HostName = host.DoaminName,
+                Port = host.Port,
+                SRVHostName = srvHost.DoaminName,
+                SRVPort = srvHost.Port
             });
 
             this.context.SaveChanges();
@@ -44,7 +44,7 @@ public class LocalServerRepository : ILocalServerListRepository {
     }
 
 
-    public bool RemoveServer(MinecraftURL server) {
+    public bool RemoveServer(MinecraftHost server) {
         var result = this.context.LocalServerList.FindOneMinecraft(server);
         if (result is null)
             return false;
@@ -60,10 +60,10 @@ public class LocalServerRepository : ILocalServerListRepository {
     }
 
 
-    public MinecraftHost? FindServer(MinecraftURL server) {
+    public MinecraftMultiHost? FindServer(MinecraftHost server) {
         var result = this.context.LocalServerList.FindOneMinecraft(server);
         if (result is null)
             return null;
-        return new MinecraftHost(result.SRVHostName, result.SRVPort, result.HostName, result.Port);
+        return new MinecraftMultiHost(result.SRVHostName, result.SRVPort, result.HostName, result.Port);
     }
 }

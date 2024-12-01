@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.Messaging;
 using McLib.Exceptions;
-using McLib.Model.Network.Dns;
+using McLib.Model.Network;
 using SteveLauncher.API.Enum;
 using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
@@ -44,15 +44,18 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
     [RelayCommand]
     async Task SubmitServer() {
         IsLoading = true;
+        var url = new MinecraftHost(Hostname);
         if (string.IsNullOrEmpty(Hostname))
             return;
         Task.Run(async () => {
             MainThread.BeginInvokeOnMainThread(() => { ServerState = ServerRegisterStateEnum.Loading; });
-            var res = await serverService.FetchTempServerInfo(new MinecraftURL(Hostname));
+            var res = await serverService.FetchTempServerInfo(url);
             MainThread.BeginInvokeOnMainThread(() => {
                 if (res is null) {
                     ServerState = ServerRegisterStateEnum.Error;
                 }
+
+                res.HostName = url;
                 ServerInfo = res;
                 ServerState = ServerRegisterStateEnum.Loaded;
                 IsLoading = false;
@@ -70,7 +73,7 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
             Task.Run(async () => {
                 try {
                     MainThread.BeginInvokeOnMainThread(() => { ServerState = ServerRegisterStateEnum.Loading; });
-                    var res = await serverService.RegisterServer(new MinecraftURL(Hostname));
+                    var res = await serverService.RegisterServer(new MinecraftHost(Hostname));
 
                     MainThread.BeginInvokeOnMainThread(() => {
                         if (!res)

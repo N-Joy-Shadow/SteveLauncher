@@ -74,8 +74,8 @@ public static class MauiProgram
 		});
 
 		//external services
-		builder.Services.AddSingleton<IDnsCheckService,DnsCheckService>();
-		builder.Services.AddSingleton<IMcStatusRequestService,McStatusRequestService>();
+		builder.Services.AddSingleton<IMLDnsService,MLDnsService>();
+		builder.Services.AddSingleton<IMLServerStatusService,MLServerStatusService>();
 
 		builder.Services.AddSingleton<IMcLoginService, McLoginService>();
 		
@@ -90,7 +90,6 @@ public static class MauiProgram
 
 		//Repositories
 		builder.Services.AddSingleton<ILocalServerListRepository, LocalServerRepository>();
-		builder.Services.AddSingleton<IMinecraftServerStatusRepository, MinecraftServerStatusRepository>();
 		builder.Services.AddSingleton<IStorageRepository, StorageRepository>();
 		//misc
 		builder.Services.AddSingleton<PopupSizeConstants>();

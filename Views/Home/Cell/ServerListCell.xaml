@@ -42,7 +42,7 @@
                     <Label
                         FontAttributes="Bold"
                         FontSize="24"
-                        Text="{Binding HostName.HostName}" />
+                        Text="{Binding HostName.DoaminName}" />
                     <motd:MotdView FontSize="18" Motd="{Binding Motd}" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>

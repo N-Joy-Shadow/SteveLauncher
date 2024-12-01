@@ -1,5 +1,4 @@
 ﻿using McLib.Model.Network;
-using McLib.Model.Network.Dns;
 using McMotd;
 
 namespace SteveLauncher.Domain.Entity;
@@ -8,7 +7,7 @@ public class MinecraftServerInfo {
     public bool isOnline { get; set; }
     public Motd Motd { get; set; }
     public string Icon { get; set; }
-    public MinecraftURL HostName { get; set; }
+    public MinecraftHost HostName { get; set; }
     public string Version { get; set; }
     public MinecraftPlayer PlayerInfo { get; set; }
 

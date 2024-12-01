@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
-using McLib.Model.Network.Dns;
+using McLib.Model.Network;
 using SteveLauncher.Utils.Popups;
 
 namespace SteveLauncher.Views.RegisterServer;

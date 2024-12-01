@@ -1,4 +1,4 @@
-using McLib.Model.Network.Dns;
+using McLib.Model.Network;
 using SteveLauncher.Domain.Entity;
 
 namespace SteveLauncher.API.Service;
@@ -6,8 +6,8 @@ namespace SteveLauncher.API.Service;
 public interface IMinecraftServerService {
     Task<ICollection<MinecraftServerInfo>> GetServerStatusListAsync();
     bool DeleteServer(MinecraftServerInfo serverInfo);
-    Task<bool> RegisterServer(MinecraftURL hostname);
-    Task<MinecraftServerInfo?> FetchServerInfo(MinecraftURL hostname);
+    Task<bool> RegisterServer(MinecraftHost hostname);
+    Task<MinecraftServerInfo?> FetchServerInfo(MinecraftHost hostname);
     
-    Task<MinecraftServerInfo?> FetchTempServerInfo(MinecraftURL hostname);
+    Task<MinecraftServerInfo?> FetchTempServerInfo(MinecraftHost hostname);
 }

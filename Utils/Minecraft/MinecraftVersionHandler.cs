@@ -7,6 +7,11 @@ public class MinecraftVersionHandler {
     private static readonly Regex VersionRegex = new Regex(@"\d+\.\d+(\.\d+)?", RegexOptions.Compiled);
 
     public static List<string> ParsingVersions(string version, VersionMetadataCollection versionMetadataCollection) {
+        if(string.IsNullOrEmpty(version))
+            return new List<string>() {
+                versionMetadataCollection.First().Name
+            };
+        
         var parsedVersions = VersionRegex.Matches(version)
             .Select(match => match.Value)
             .Distinct()

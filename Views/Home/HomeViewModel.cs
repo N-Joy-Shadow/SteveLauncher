@@ -3,7 +3,7 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Messaging;
 using Maui.Plugins.PageResolver.Attributes;
 using McLib.Auth.Model.Minecraft;
-using McLib.Model.Network.Dns;
+using McLib.Model.Network;
 using Microsoft.EntityFrameworkCore.Query;
 using SteveLauncher.API;
 using SteveLauncher.API.Enum;

@@ -7,6 +7,10 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using SteveLauncher.Utils.Popups;
 
+#if WINDOWS
+using Microsoft.UI.Xaml.Controls;
+#endif
+
 namespace SteveLauncher.Views.Login;
 
 public partial class Login : Popup {
@@ -18,7 +22,9 @@ public partial class Login : Popup {
         this.viewModel = (LoginViewModel)BindingContext;
         this.Size = size.Medium;
         Opened += OnOpened;
+
     }
+
 
 
     private async void WebView_OnNavigated(object? sender, WebNavigatedEventArgs e) {

@@ -9,7 +9,7 @@ using CmlLib.Core.Rules;
 using CmlLib.Core.Version;
 using CommunityToolkit.Mvvm.Messaging;
 using McLib.Auth.Model.Minecraft;
-using McLib.Model.Network.Dns;
+using McLib.Model.Network;
 using SteveLauncher.API.Enum;
 using SteveLauncher.API.Exception;
 using SteveLauncher.API.Repository;
@@ -40,7 +40,7 @@ public class MinecraftGameService : IMinecraftGameService {
         return MinecraftVersionHandler.ParsingVersions(version,versions);
     }
     
-    public async Task StartGame(MinecraftURL url) { 
+    public async Task StartGame(MinecraftHost host) { 
         try {
             var session = GetSession();
             var setting = GetSetting();
@@ -48,7 +48,7 @@ public class MinecraftGameService : IMinecraftGameService {
             if(string.IsNullOrEmpty(version))
                 throw new NullReferenceException("version is null");
             
-            var path = Path.Combine(setting.MinecraftPath, url.ToDirectoryFriendly());
+            var path = Path.Combine(setting.MinecraftPath, host.ToDirectoryFriendly());
             var launcher = new MinecraftLauncher(new MinecraftPath(path));
             
             launcher.FileProgressChanged += LauncherOnFileProgressChanged;
@@ -60,8 +60,8 @@ public class MinecraftGameService : IMinecraftGameService {
                 ScreenHeight = setting.Height,
                 MaximumRamMb = setting.AllocatedMemory,
                 MinimumRamMb = setting.AllocatedMemory,
-                ServerPort = url.Port,
-                ServerIp = url.HostName,
+                ServerPort = host.Port,
+                ServerIp = host.DoaminName,
 #if MACCATALYST
                 //맥은 자바 문제로 실행이 되지 않음
                 JavaPath = "/usr/bin/java",
