@@ -7,6 +7,7 @@ using CmlLib.Core.Java;
 using CmlLib.Core.ProcessBuilder;
 using CmlLib.Core.Rules;
 using CmlLib.Core.Version;
+using CmlLib.Core.VersionMetadata;
 using CommunityToolkit.Mvvm.Messaging;
 using McLib.Auth.Model.Minecraft;
 using McLib.Model.Network;
@@ -25,7 +26,7 @@ public class MinecraftGameService : IMinecraftGameService {
     private readonly IStorageRepository storageRepository;
     
     private string version;
-    private MinecraftLauncher launcher;
+    private VersionMetadataCollection versions;
     public MinecraftGameService(
         IStorageRepository storageRepository
     ) {
@@ -34,12 +35,14 @@ public class MinecraftGameService : IMinecraftGameService {
 
     
     public async Task<List<string>> GetAvailableVersions(string version) {
-        launcher = new MinecraftLauncher();
-        var versions =  await launcher.GetAllVersionsAsync();
-
         return MinecraftVersionHandler.ParsingVersions(version,versions);
     }
-    
+
+    public async Task GetVersions() {
+        var launcher = new MinecraftLauncher();
+        versions =  await launcher.GetAllVersionsAsync();
+    }
+
     public async Task StartGame(MinecraftHost host) { 
         try {
             var session = GetSession();
@@ -122,9 +125,6 @@ public class MinecraftGameService : IMinecraftGameService {
     public void SetSettings(MinecraftGameSetting setting) {
         this.storageRepository.Insert(StorageEnum.GAME_SETTING, setting);
     }
-
-
-    
 
     public void SetGameVersion(string version) {
         this.version = version;

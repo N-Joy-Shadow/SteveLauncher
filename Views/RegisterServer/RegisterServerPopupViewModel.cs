@@ -51,7 +51,7 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
             MainThread.BeginInvokeOnMainThread(() => { ServerState = ServerRegisterStateEnum.Loading; });
             var res = await serverService.FetchTempServerInfo(url);
             MainThread.BeginInvokeOnMainThread(() => {
-                if (res is null) {
+                if (res.isOnline) {
                     ServerState = ServerRegisterStateEnum.Error;
                 }
 

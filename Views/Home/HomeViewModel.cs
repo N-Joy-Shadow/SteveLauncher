@@ -237,6 +237,10 @@ public partial class HomeViewModel : BaseViewModel {
         });
     }
 
+    public async Task GetVersion() {
+        await gameService.GetVersions();
+    }
+    
     partial void OnSelectedVersionChanged(string value) {
         gameService.SetGameVersion(value);
     }
