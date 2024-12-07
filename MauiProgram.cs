@@ -10,6 +10,7 @@ using SteveLauncher.API.Repository;
 using SteveLauncher.API.Service;
 using SteveLauncher.Data.RepositoryImpl;
 using SteveLauncher.Domain.Service;
+using SteveLauncher.Domain.Service.BackgroundService;
 using SteveLauncher.Utils.Popups;
 using SteveLauncher.Views.GameLog;
 using SteveLauncher.Views.Home;
@@ -96,6 +97,9 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IDeviceDisplay>(DeviceDisplay.Current);
 		builder.Services.AddSingleton<IDirectoryLaunchService, DirectoryLaunchService>();
 		builder.Services.AddHttpClient();
+		
+		//background services
+		builder.Services.AddHostedService<ServerBackgroundWorker>();
 #if MACCATALYST
 		builder.ConfigureLifecycleEvents(events => {
 			events.AddiOS(osx => {
