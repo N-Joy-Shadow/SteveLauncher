@@ -132,15 +132,14 @@ public partial class HomeViewModel : BaseViewModel {
     }
 
     [RelayCommand]
-    async Task DeleteServer(MinecraftServerInfo serverInfo) {
+    void DeleteServer(MinecraftServerInfo serverInfo) {
         var result = serverService.DeleteServer(serverInfo);
         if (result)
             LoadServerStatusAsync();
-
     }
 
     [RelayCommand]
-    async Task OpenServerFolder(MinecraftServerInfo serverInfo) {
+    void OpenServerFolder(MinecraftServerInfo serverInfo) {
         var mpath = gameService.GetSetting().MinecraftPath;
 
         //임마도 따로 로직 빼기
@@ -162,8 +161,11 @@ public partial class HomeViewModel : BaseViewModel {
     [RelayCommand]
     async Task ShowRegisterPopup() {
         var obj = await popupService.ShowPopupAsync<RegisterServerPopupViewModel>(CancellationToken.None);
-        if (obj is bool isRegistered)
-            LoadServerStatusAsync();
+        if (obj is MinecraftServerInfo info) {
+            ServerStatusList.Add(info);
+        }
+            
+            
     }
 
     [RelayCommand]
@@ -196,7 +198,7 @@ public partial class HomeViewModel : BaseViewModel {
     }
 
     [RelayCommand]
-    async void Logout() {
+    void Logout() {
         UserProfile = null;
         storageRepository.Remove(StorageEnum.USER_PROFILE);
         CurrentAuthState = AuthStateEnum.UnAuth;

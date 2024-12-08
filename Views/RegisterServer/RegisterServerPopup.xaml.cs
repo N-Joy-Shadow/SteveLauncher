@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using McLib.Model.Network;
+using SteveLauncher.Domain.Entity;
 using SteveLauncher.Utils.Popups;
 
 namespace SteveLauncher.Views.RegisterServer;
@@ -21,7 +22,7 @@ public partial class RegisterServerPopup : Popup {
         vm.OnClosePopup += OnClosedPopup;
     }
 
-    private async void OnClosedPopup(bool isRegistered) {
-        Close();
+    private async void OnClosedPopup(MinecraftServerInfo? info) {
+        Close(info);
     }
 }

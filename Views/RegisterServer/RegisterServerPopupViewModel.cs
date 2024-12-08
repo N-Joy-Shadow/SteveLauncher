@@ -12,7 +12,7 @@ namespace SteveLauncher.Views.RegisterServer;
 public partial class RegisterServerPopupViewModel : BaseViewModel {
     private readonly IMinecraftServerService serverService;
 
-    public event Action<bool> OnClosePopup;
+    public event Action<MinecraftServerInfo?> OnClosePopup;
 
     [ObservableProperty]
     private string hostname = "";
@@ -34,7 +34,7 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
 
     [RelayCommand]
     async Task ClosePopup() {
-        OnClosePopup?.Invoke(false);
+        OnClosePopup?.Invoke(null);
     }
 
     [RelayCommand]
@@ -49,18 +49,18 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
             return;
         Task.Run(async () => {
             MainThread.BeginInvokeOnMainThread(() => { ServerState = ServerRegisterStateEnum.Loading; });
-            var res = await serverService.FetchTempServerInfo(url);
+            var info = await serverService.FetchTempServerInfo(url);
             MainThread.BeginInvokeOnMainThread(() => {
-                if (res.isOnline) {
+                if (info is null || !info.isOnline) {
                     ServerState = ServerRegisterStateEnum.Error;
                 }
-
-                res.HostName = url;
-                ServerInfo = res;
-                ServerState = ServerRegisterStateEnum.Loaded;
-                IsLoading = false;
+                else {
+                    info.HostName = url;
+                    ServerInfo = info;
+                    ServerState = ServerRegisterStateEnum.Loaded;
+                    IsLoading = false;
+                }
             });
-
         });
     }
 
@@ -78,9 +78,9 @@ public partial class RegisterServerPopupViewModel : BaseViewModel {
                     MainThread.BeginInvokeOnMainThread(() => {
                         if (!res)
                             ServerState = ServerRegisterStateEnum.Error;
-                        WeakReferenceMessenger.Default.Send<ServerListUpdateMessage>(new(res));
+                        //WeakReferenceMessenger.Default.Send<ServerListUpdateMessage>(new(res));
                         IsLoading = false;
-                        OnClosePopup.Invoke(true);
+                        OnClosePopup.Invoke(ServerInfo);
                     });
                 }
                 catch (Exception e) {

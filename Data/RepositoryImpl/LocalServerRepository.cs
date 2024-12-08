@@ -29,8 +29,8 @@ public class LocalServerRepository : ILocalServerListRepository {
             this.context.LocalServerList.Add(new LocalServerListDatabase() {
                 HostName = host.DoaminName,
                 Port = host.Port,
-                SRVHostName = srvHost.DoaminName,
-                SRVPort = srvHost.Port
+                SRVHostName = srvHost is null ? host.DoaminName : srvHost.DoaminName,
+                SRVPort = srvHost is null ? host.Port : srvHost.Port
             });
 
             this.context.SaveChanges();

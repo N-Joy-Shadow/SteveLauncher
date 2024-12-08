@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Platform;
+using SteveLauncher.Data.Database;
 using SteveLauncher.Domain.Service;
 using SteveLauncher.Views.Home;
 
@@ -32,6 +33,9 @@ public partial class App : Application {
         window.X = Preferences.Get(LastX, 100);
         window.Y = Preferences.Get(LastY, 100);
 #endif
+        var context = serviceProvider.GetRequiredService<SteveDbContext>();
+        context.Database.EnsureCreated();
+        
         return window;
     }
 
