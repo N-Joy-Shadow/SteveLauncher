@@ -2,6 +2,9 @@
 
 namespace SteveLauncher.API.Exception;
 
+/// <summary>
+/// MAUI에서 제공하는 Storage관련 예외처리 클래스
+/// </summary>
 public class StorageException : System.Exception {
     public StorageException(string message) : base(message) { }
 }
