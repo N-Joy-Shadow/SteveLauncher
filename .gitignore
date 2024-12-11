@@ -4,3 +4,5 @@ obj/*
 .vscode/*
 .idea/*
 .vs/*!/Views/Home/Cell/ServerListCell.xaml.cs
+SteveLauncher.sln.DotSettings.user
+.DS_Store
