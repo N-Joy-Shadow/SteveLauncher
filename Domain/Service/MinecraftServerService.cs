@@ -34,7 +34,7 @@ public class MinecraftServerService : IMinecraftServerService {
             var tasks = list.Select(async host => {
                 await semaphore.WaitAsync(); // 작업 시작 전에 세마포어에서 토큰을 얻음
                 try {
-                    var info = await serverStatusService.FetchServerStatus(host.SRVHost);
+                    var info = await serverStatusService.FetchServerInfoWithSRV(host.SRVHost);
                     lock (result) {
                         result.Add(info.ToMinecraftServerInfo(host.Host));
                     }
@@ -83,7 +83,7 @@ public class MinecraftServerService : IMinecraftServerService {
     }
 
     public async Task<MinecraftServerInfo> FetchServerInfo(MinecraftHost hostname) {
-        return (await serverStatusService.FetchServerStatus(hostname)).ToMinecraftServerInfo(hostname);
+        return (await serverStatusService.FetchServerInfoWithSRV(hostname)).ToMinecraftServerInfo(hostname);
     }
 
     public async Task<MinecraftServerInfo?> FetchTempServerInfo(MinecraftHost hostname) {
